@@ -3,12 +3,17 @@ import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
+import { NewConsultantPage } from '../pages/new-consultant/new-consultant';
+import { NewClientPage } from '../pages/new-client/new-client'
+import { BMappApi } from '../shared/BMappApi';
 
 @NgModule({
   declarations: [
     MyApp,
     Page1,
-    Page2
+    Page2,
+    NewConsultantPage,
+    NewClientPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -17,8 +22,12 @@ import { Page2 } from '../pages/page2/page2';
   entryComponents: [
     MyApp,
     Page1,
-    Page2
+    Page2,
+    NewConsultantPage,
+    NewClientPage
   ],
-  providers: []
+  providers: [
+    BMappApi
+  ]
 })
 export class AppModule {}

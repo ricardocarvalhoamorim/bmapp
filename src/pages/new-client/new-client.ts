@@ -1,21 +1,19 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController, NavParams, AlertController } from 'ionic-angular';
-
 import { BMappApi } from '../../shared/BMappApi';
-
 /*
-  Generated class for the NewConsultant page.
+  Generated class for the NewClient page.
 
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
 @Component({
-  selector: 'page-new-consultant',
-  templateUrl: 'new-consultant.html'
+  selector: 'page-new-client',
+  templateUrl: 'new-client.html'
 })
-export class NewConsultantPage {
+export class NewClientPage {
 
-  consultant: any;
+  client: any;
 
   constructor(
     public navCtrl: NavController,
@@ -26,38 +24,34 @@ export class NewConsultantPage {
 
     if (!navParams.get('consultant')) {
       console.log("Setting up a new consultant");
-      this.consultant = {
+      this.client = {
         id: new Date().getUTCMilliseconds(),
         name: '',
         email: '',
+        contact_email: '',
         telephone: '',
-        starting_date: '',
-        skills: '',
-        languages: '',
-        client: 'Undefined (tap to edit)',
-        car: false
+        address: ''
       };
     } else {
-      this.consultant = navParams.get('consultant');
+      this.client = navParams.get('client');
     }
   }
-
   ionViewDidLoad() {
-
+    console.log('Hello NewClientPage Page');
   }
 
   /**
    * Attempts to save the provided information in a new consultant record
    */
   saveConsultant() {
-    console.log(this.consultant);
+    console.log(this.client);
 
-    if (!this.consultant.name) {
+    if (!this.client.name) {
       this.presentToast('You must provide a name for this record');
       return;
     }
 
-    if (this.bmappApi.saveConsultant(this.consultant)) {
+    if (this.bmappApi.saveClient(this.client)) {
       this.presentToast('Saved successfully');
       this.navCtrl.pop();
       return;
@@ -75,34 +69,6 @@ export class NewConsultantPage {
       duration: 3000
     });
     toast.present();
-  }
-
-  /**
-   * Displays an interface to pick a mission and associates it with the 
-   * current record
-   */
-  pickMission() {
-    let alert = this.alertCtrl.create();
-    alert.setTitle('Lightsaber color');
-
-    var clients = this.bmappApi.getClients();
-    for (let client of clients) {
-      alert.addInput({
-        type: 'radio',
-        label: client.name,
-        value: client.name,
-        checked: false
-      });
-    }
-
-    alert.addButton('Cancel');
-    alert.addButton({
-      text: 'OK',
-      handler: data => {
-        this.consultant.client = data;
-      }
-    });
-    alert.present();
   }
 
 }
