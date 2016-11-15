@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.bmapp652327" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>bmapp</name>
-  <description>An awesome Ionic/Cordova app.</description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+<widget id="com.adneom.ramorim.bmapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>BMapp</name>
+  <description>Consultants management app</description>
+  <author email="ramorim@adneom.com" href="http://adneom.com">ADNEOM Belgique</author>
   <content src="index.html"/>
   <access origin="*"/>
   <allow-intent href="http://*/*"/>

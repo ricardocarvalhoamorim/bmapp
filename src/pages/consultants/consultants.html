@@ -7,12 +7,64 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>consultants</ion-title>
+    <button ion-button menuToggle> 
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Consultants</ion-title>
+
   </ion-navbar>
 
 </ion-header>
+<ion-content>
 
+  <ion-list no-lines>
 
-<ion-content padding>
+    <ion-item *ngFor="let consultant of consultants" text-wrap>
+      <ion-card>
+        <ion-item>
+          <ion-avatar item-left>
+            <!--<img src="img/marty-avatar.png"> -->
+            <!--<ion-icon name="briefcase"></ion-icon>-->
+            <h1>{{consultant.name.substring(0,1)}}</h1>
+          </ion-avatar>
+          <h2>{{consultant.name}}</h2>
+          <p>
+            <ion-badge item-right>{{consultant.client}}</ion-badge>
+          </p>
+        </ion-item>
+        
+        <ion-card-content>
+          <p>
+            <ion-icon name="bookmark"> {{consultant.department}}</ion-icon>
+          </p>
+          <p>
+            <ion-icon name="build"> {{consultant.skills}}</ion-icon>
+          </p>
+          <p>
+            <ion-icon name="calendar"> Started: {{consultant.starting_date}}</ion-icon>
+          </p>
+          <p>
+            <ion-icon name="microphone"> {{consultant.languages}}</ion-icon>
+          </p>
+          <p>
+            <ion-icon name="car"> {{consultant.car ? 'Yes' : 'No'}}</ion-icon>
+          </p>
+        </ion-card-content>
+
+        <ion-item actions>
+          <button ion-button clear item-right icon-right *ngIf="consultant.contact" (click)="call($event, consultant)">
+      <ion-icon name='call'></ion-icon>
+       Call
+    </button>
+
+          <button ion-button clear item-right icon-right *ngIf="consultant.email" (click)="email($event, consultant)">
+      <ion-icon name='mail'></ion-icon>
+       Mail
+    </button>
+        </ion-item>
+
+      </ion-card>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

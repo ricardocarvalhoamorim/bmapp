@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
+import { BMappApi } from '../../shared/BMappApi';
 
 /*
   Generated class for the Consultants page.
@@ -13,10 +14,26 @@ import { NavController } from 'ionic-angular';
 })
 export class ConsultantsPage {
 
-  constructor(public navCtrl: NavController) {}
+consultants: any[];
+  constructor(
+    public navCtrl: NavController,
+    public platform: Platform,
+    public bmappAPI: BMappApi) {}
 
   ionViewDidLoad() {
-    console.log('Hello ConsultantsPage Page');
+    this.consultants = this.bmappAPI.getConsultants();
+  }
+
+  /**
+   * Place a call to the client's number
+   */
+  call($event, client) {
+    window.open(`tel:${client.contact}`, '_system')
+  }
+
+  email($event, client) {
+
+    window.open(`mailto:${client.email}`, '_system')
   }
 
 }

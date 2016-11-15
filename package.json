@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "0.0.43",
+    "ng2-chartjs2": "^1.2.0",
     "typescript": "2.0.6"
   },
   "description": "bmapp: An Ionic project",

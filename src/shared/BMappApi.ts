@@ -12,6 +12,14 @@ export class BMappApi {
     constructor(public platform: Platform) {
     }
 
+    user = {
+        name: 'Ricardo Amorim',
+        email: 'ramorim@adneom.com',
+        contact: '+32 478 62 11 12',
+        target: 25,
+        notifications: true,
+        auto_inactive: true
+    };
 
     clients = [
         {
@@ -59,25 +67,75 @@ export class BMappApi {
     consultants = [
         {
             id: '919182',
-            name: 'Rudolph',
-            email: 'ru@dolph.com',
-            telephone: '+32 444 11 11',
+            name: 'Franz Lizst',
+            email: 'flizst@dolph.com',
+            contact: '+32 444 11 11',
             starting_date: '2009-08-11',
-            skills: 'Java',
-            client: '',
+            department: 'Development',
+            skills: 'Java, Java EE',
+            client: 'deloitte',
             languages: 'Portuguese, Spanish',
             car: true
         },
         {
             id: '9112',
-            name: 'Joana',
-            email: 'jOana@dolph.com',
-            telephone: '+32 991 11 11',
+            name: 'Antonín Dvořák',
+            email: 'advorak@dolph.com',
+            contact: '+32 991 11 11',
             starting_date: '2009-01-29',
+            department: 'Development',
             skills: 'AngularJs',
-            languages: 'French, Dutch',
-            client: '',
+            languages: 'French, Dutch, German',
+            client: 'FreeeDrive',
             car: true
+        },
+        {
+            id: '19200',
+            name: 'Gustav Mahler',
+            email: 'gmahler@symphony.com',
+            contact: '+32 001 12 22',
+            starting_date: '2009-01-10',
+            department: 'Development',
+            skills: 'Python, SQL Server, Android, Ruby on Rails',
+            languages: 'French, Dutch, Portuguese, German',
+            client: 'ZipCar',
+            car: false
+        },
+        {
+            id: '88272',
+            name: 'Antonio Vivaldi',
+            email: 'avivaldi@music.com',
+            contact: '+32 001 12 22',
+            starting_date: '2009-01-10',
+            department: 'Engineering',
+            skills: 'Civil Engineering, Fracture Mechanics, Load balancing',
+            languages: 'French, Dutch, Portuguese, German',
+            client: 'Telenet',
+            car: false
+        },
+        {
+            id: '66251',
+            name: 'Johann Sebastian Bach',
+            email: 'jbach@music.com',
+            contact: '+32 001 12 22',
+            starting_date: '2009-01-10',
+            department: 'Engineering',
+            skills: 'Mechanical Engineering',
+            languages: 'French, Dutch, Portuguese, German',
+            client: 'FreeeDrive',
+            car: false
+        },
+        {
+            id: '11121',
+            name: 'Wolfgang Amadeus Mozart',
+            email: 'wmozart@music.com',
+            contact: '+32 001 12 22',
+            starting_date: '2009-01-10',
+            department: 'IT Support',
+            skills: 'Server Maintenance, Linux servers, Microsoft SQL server',
+            languages: 'French, Dutch, Portuguese, German',
+            client: 'FreeeDrive',
+            car: false
         }
     ];
 
@@ -132,5 +190,13 @@ export class BMappApi {
         this.clients.push(client);
         console.log("NEW CLIENT" + this.clients.length);
         return true;
+    }
+
+    getUser() {
+        return this.user;
+    }
+
+    saveUser(user) {
+        this.user = user;
     }
 }
