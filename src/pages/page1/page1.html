@@ -7,23 +7,31 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>BM app</h3>
+<ion-content>
 
-
- <ion-card *ngIf="!consultants">
+  <ion-card *ngIf="!consultants">
     <ion-card-header>
       No consultants
     </ion-card-header>
     <ion-card-content>
-      You haven't registered any consultants. To do so tap the button below. BMapp will help you manage your consultants and client portfolio.
-    <button ion-button full primary outline padding (click)="newConsultantPage()">New record</button>
+      You haven't registered any consultants. To do so tap the button below. BMapp will help you manage your consultants and client
+      portfolio.
+      <button ion-button primary outline padding (click)="newConsultantPage()">New record</button>
     </ion-card-content>
   </ion-card>
 
-  <p *ngIf="(consultants)">
+  <p *ngIf="consultants" padding>
     You have {{clients.lenght}} registered clients and {{consultants.lenght}} consultants under your supervision
   </p>
 
   <button ion-button secondary menuToggle>Toggle Menu</button>
+
+  <ion-fab padding right bottom>
+    <button ion-fab color="primary"><ion-icon name="add"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button ion-fab (click)="pushNewConsultant()"><ion-icon name="person"></ion-icon></button>
+      <button ion-fab (click)="pushNewClient()"><ion-icon name="briefcase"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
 </ion-content>

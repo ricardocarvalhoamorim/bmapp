@@ -5,6 +5,8 @@ import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
 import { NewConsultantPage } from '../pages/new-consultant/new-consultant';
 import { NewClientPage } from '../pages/new-client/new-client'
+import { ConsultantsPage } from '../pages/consultants/consultants'
+import { ClientsPage } from '../pages/clients/clients'
 import { BMappApi } from '../shared/BMappApi';
 
 @NgModule({
@@ -13,7 +15,9 @@ import { BMappApi } from '../shared/BMappApi';
     Page1,
     Page2,
     NewConsultantPage,
-    NewClientPage
+    NewClientPage,
+    ConsultantsPage,
+    ClientsPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -24,7 +28,9 @@ import { BMappApi } from '../shared/BMappApi';
     Page1,
     Page2,
     NewConsultantPage,
-    NewClientPage
+    NewClientPage,
+    ConsultantsPage,
+    ClientsPage
   ],
   providers: [
     BMappApi

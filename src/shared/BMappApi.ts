@@ -19,18 +19,21 @@ export class BMappApi {
             name: 'ADNEOM Lab',
             address: 'Rue Knappen 92',
             contact: '+32 123 45 67',
+            email: 'general@adneom.com'
         },
         {
             id: '877120',
             name: 'Don Giovanni',
             address: 'Palais des beaux arts',
             contact: '+32 123 45 67',
+            email: 'giovanni@adneom.com'
         },
         {
             id: '0012314',
             name: 'Proximus',
             address: 'Rue de la Loi',
             contact: '+32 123 45 67',
+            email: 'general@proximus.com'
         }
     ];
 
@@ -117,6 +120,8 @@ export class BMappApi {
      * Attempts to save a new consultant to de database
      */
     saveConsultant(consultant) {
+        this.consultants.push(consultant);
+        console.log("NEW CONS" + this.consultants.length);
         return true;
     }
 
@@ -124,6 +129,8 @@ export class BMappApi {
      * Attempts to save a new client to de database
      */
     saveClient(client) {
+        this.clients.push(client);
+        console.log("NEW CLIENT" + this.clients.length);
         return true;
     }
 }
