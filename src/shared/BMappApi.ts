@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
-
 import { Platform } from 'ionic-angular';
 
-
-
+import { Storage } from '@ionic/storage';
 //import { Http /*, Response*/ } from '@angular/http';
 
 @Injectable()
 export class BMappApi {
 
-    constructor(public platform: Platform) {
-    }
+    public storage: Storage;
 
     user = {
         name: 'Ricardo Amorim',
@@ -20,6 +17,33 @@ export class BMappApi {
         notifications: true,
         auto_inactive: true
     };
+
+    bms = [
+        {
+            name: 'Ricardo Amorim',
+            email: 'ramorim@adneom.com',
+            contact: '+32 478 62 11 12',
+            target: 25,
+            notifications: true,
+            auto_inactive: true
+        },
+        {
+            name: 'Susan Boyle',
+            email: 'sboyle@adneom.com',
+            contact: '+32 478 62 11 12',
+            target: 10,
+            notifications: true,
+            auto_inactive: true
+        },
+        {
+            name: 'Jack Sparrow',
+            email: 'jsparrow@adneom.com',
+            contact: '+32 478 62 11 12',
+            target: 15,
+            notifications: true,
+            auto_inactive: true
+        }
+    ];
 
     clients = [
         {
@@ -42,25 +66,6 @@ export class BMappApi {
             address: 'Rue de la Loi',
             contact: '+32 123 45 67',
             email: 'general@proximus.com'
-        }
-    ];
-
-    missions = [
-        {
-            id: '1112',
-            clientId: '9191',
-            startingDate: '2016-09-29',
-            endingDate: '2016-12-30',
-            name: 'New features on the mobile app',
-            description: 'No description provided'
-        },
-        {
-            id: '9910',
-            clientId: '9191',
-            startingDate: '2016-01-01',
-            endingDate: '2017-12-30',
-            name: 'New features on the mobile app',
-            description: 'No description provided'
         }
     ];
 
@@ -139,48 +144,34 @@ export class BMappApi {
         }
     ];
 
-    getClients() {
-        return this.clients;
+
+    constructor(public platform: Platform, storage: Storage) {
+        this.storage = storage;
+        //storage.set('user', this.user);
+        //storage.set('consultants', this.consultants);
+        //storage.set('clients', this.clients);
     }
 
-    getMissions() {
-        return this.missions;
-    }
-
+    /**
+     * Returns the list of registered cosultants
+     */
     getConsultants() {
-        return this.consultants;
+        return this.storage.get('consultants');
     }
-    /** 
-        constructor(public platform: Platform) {
-    
-            platform.ready().then(() => {
-                let db = new SQLite();
-                db.openDatabase({
-                    name: "data.db",
-                    location: "default"
-                }).then(() => {
-                    db.executeSql(
-                        'CREATE TABLE IF NOT EXISTS consultants (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT, telephone TEXT, starting_date TEXT, skills TEXT, languages TEXT)' +
-                        'CREATE TABLE IF NOT EXISTS clients (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT, telephone TEXT)' +
-                        'CREATE TABLE IF NOT EXISTS missions (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, starting_date TEXT, ending_date TEXT)', {}).then((data) => {
-                            console.log("TABLE CREATED: ", data);
-                        }, (error) => {
-                            console.error("Unable to execute sql", error);
-                        })
-                }, (error) => {
-                    console.error("Unable to open database", error);
-                });
-            });
-        }
-        */
+
+    /**
+     * Returns the list of registered clients
+     */
+    getClients() {
+        return this.storage.get('clients');
+    }
 
     /**
      * Attempts to save a new consultant to de database
      */
     saveConsultant(consultant) {
         this.consultants.push(consultant);
-        console.log("NEW CONS" + this.consultants.length);
-        return true;
+        this.storage.set('consultants', this.consultants);
     }
 
     /**
@@ -188,15 +179,14 @@ export class BMappApi {
      */
     saveClient(client) {
         this.clients.push(client);
-        console.log("NEW CLIENT" + this.clients.length);
-        return true;
+        this.storage.set('clients', this.clients);
     }
 
     getUser() {
-        return this.user;
+        return this.storage.get('user');
     }
 
     saveUser(user) {
-        this.user = user;
+        this.storage.set('user', user);
     }
 }

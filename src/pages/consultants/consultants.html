@@ -11,12 +11,14 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Consultants</ion-title>
-
   </ion-navbar>
 
 </ion-header>
 <ion-content>
 
+<p *ngIf="consultants!==undefined">
+  You have no consultants
+</p>
   <ion-list no-lines>
 
     <ion-item *ngFor="let consultant of consultants" text-wrap>

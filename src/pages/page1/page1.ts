@@ -5,26 +5,38 @@ import { NewClientPage } from '../new-client/new-client';
 import { SettingsPage } from '../settings/settings';
 import { BMappApi } from '../../shared/BMappApi';
 
+
 @Component({
   selector: 'page-page1',
   templateUrl: 'page1.html'
 })
 export class Page1 {
 
-  consultants: any[];
-  clients: any[];
+  consultants;
+  clients;
   today = new Date().toDateString();
 
 
   constructor(
     public navCtrl: NavController,
-    public bmappAPI: BMappApi ) {
+    public bmappAPI: BMappApi ) {;
 
   }
 
   ionViewDidLoad() {
-    this.consultants = this.bmappAPI.getConsultants();
-    this.clients = this.bmappAPI.getClients();
+    //load clients and consultants
+    this.bmappAPI.getConsultants().then((val) => {
+      this.consultants = val;
+      console.log("Loaded " + val);
+    });
+
+    this.bmappAPI.getClients().then((val) => {
+      this.clients = val;
+    });
+  }
+
+  ionViewWillEnter() {
+    this.ionViewDidLoad();
   }
 
   pushNewConsultant() {

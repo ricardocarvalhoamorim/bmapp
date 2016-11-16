@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, Platform } from 'ionic-angular';
+import { Storage } from '@ionic/storage'
 import { BMappApi } from '../../shared/BMappApi';
+
+
 /*
   Generated class for the Clients page.
 
@@ -18,13 +21,16 @@ export class ClientsPage {
   constructor(
     public navCtrl: NavController,
     public platform: Platform,
+    public storage: Storage,
     public bmappAPI: BMappApi
   ) { }
 
   ionViewDidLoad() {
     console.log('Hello ClientsPage Page');
 
-    this.clients = this.bmappAPI.getClients();
+    this.storage.get('clients').then((val) => {
+      this.clients = val;
+    });
   }
 
 

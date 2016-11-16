@@ -8,6 +8,7 @@ import { ConsultantsPage } from '../pages/consultants/consultants'
 import { ClientsPage } from '../pages/clients/clients'
 import { SettingsPage } from '../pages/settings/settings'
 import { BMappApi } from '../shared/BMappApi';
+import { Storage } from '@ionic/storage';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { BMappApi } from '../shared/BMappApi';
     SettingsPage
   ],
   providers: [
-    BMappApi
+    BMappApi,
+    Storage
   ]
 })
 export class AppModule {}

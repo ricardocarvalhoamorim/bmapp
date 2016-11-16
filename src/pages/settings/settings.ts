@@ -14,6 +14,8 @@ import { BMappApi } from '../../shared/BMappApi';
 })
 export class SettingsPage {
 
+  public storage: Storage;
+
   user = {
     name: '',
     email: '',
@@ -22,13 +24,17 @@ export class SettingsPage {
     notifications: true,
     auto_inactive: true
   };
+  
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
-    public bmappAPI: BMappApi) { }
+    public bmappAPI: BMappApi) {
+    }
 
   ionViewDidLoad() {
-    console.log('Hello SettingsPage Page');
-    this.user = this.bmappAPI.getUser();
+    this.bmappAPI.getUser().then((val) => {
+        this.user = val;
+        console.log(val.name);
+    });
   }
 
   saveSettings() {

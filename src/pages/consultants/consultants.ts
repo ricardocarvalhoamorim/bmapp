@@ -14,14 +14,17 @@ import { BMappApi } from '../../shared/BMappApi';
 })
 export class ConsultantsPage {
 
-consultants: any[];
+  consultants: any[];
   constructor(
     public navCtrl: NavController,
     public platform: Platform,
-    public bmappAPI: BMappApi) {}
+    public bmappAPI: BMappApi) { }
 
   ionViewDidLoad() {
-    this.consultants = this.bmappAPI.getConsultants();
+    this.bmappAPI.getConsultants().then((data) => {
+        this.consultants = data;
+        console.log(data);
+    });
   }
 
   /**

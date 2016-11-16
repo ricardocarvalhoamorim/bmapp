@@ -51,13 +51,10 @@ export class NewClientPage {
       return;
     }
 
-    if (this.bmappApi.saveClient(this.client)) {
+    
+      this.bmappApi.saveClient(this.client);
       this.presentToast('Saved successfully');
       this.navCtrl.pop();
-      return;
-    }
-
-    this.presentToast('An error occurred when saving the record');
   }
 
   /**

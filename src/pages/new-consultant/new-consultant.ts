@@ -16,6 +16,7 @@ import { BMappApi } from '../../shared/BMappApi';
 export class NewConsultantPage {
 
   consultant: any;
+  clients: any[];
 
   constructor(
     public navCtrl: NavController,
@@ -43,7 +44,9 @@ export class NewConsultantPage {
   }
 
   ionViewDidLoad() {
-
+    this.bmappApi.getClients().then((val) => {
+      this.clients = val;
+    });
   }
 
   /**
@@ -57,13 +60,9 @@ export class NewConsultantPage {
       return;
     }
 
-    if (this.bmappApi.saveConsultant(this.consultant)) {
-      this.presentToast('Saved successfully');
-      this.navCtrl.pop();
-      return;
-    }
-
-    this.presentToast('An error occurred when saving the record');
+    this.bmappApi.saveConsultant(this.consultant);
+    this.presentToast('Saved successfully');
+    this.navCtrl.pop();
   }
 
   /**
@@ -85,8 +84,7 @@ export class NewConsultantPage {
     let alert = this.alertCtrl.create();
     alert.setTitle('Lightsaber color');
 
-    var clients = this.bmappApi.getClients();
-    for (let client of clients) {
+    for (let client of this.clients) {
       alert.addInput({
         type: 'radio',
         label: client.name,
