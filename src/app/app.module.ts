@@ -9,6 +9,7 @@ import { ClientsPage } from '../pages/clients/clients'
 import { SettingsPage } from '../pages/settings/settings'
 import { BMappApi } from '../shared/BMappApi';
 import { Storage } from '@ionic/storage';
+import { ChartModule } from 'ng2-chartjs2';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { Storage } from '@ionic/storage';
     SettingsPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    ChartModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -39,4 +41,4 @@ import { Storage } from '@ionic/storage';
     Storage
   ]
 })
-export class AppModule {}
+export class AppModule { }

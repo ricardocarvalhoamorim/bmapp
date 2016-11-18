@@ -24,16 +24,17 @@ export class SettingsPage {
     notifications: true,
     auto_inactive: true
   };
-  
+
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
     public bmappAPI: BMappApi) {
-    }
+  }
 
   ionViewDidLoad() {
     this.bmappAPI.getUser().then((val) => {
+      if (val !== null) {
         this.user = val;
-        console.log(val.name);
+      }
     });
   }
 
@@ -51,4 +52,14 @@ export class SettingsPage {
     toast.present();
   }
 
+  loadDummyData() {
+    this.bmappAPI.loadDummyData();
+    this.ionViewDidLoad();
+    this.presentToast('Dummy data successfully loaded');
+  }
+
+  reset() {
+    this.bmappAPI.reset();
+    this.ionViewDidLoad();
+  }
 }

@@ -16,9 +16,20 @@
 </ion-header>
 <ion-content>
 
-<p *ngIf="consultants!==undefined">
-  You have no consultants
-</p>
+  <ion-card *ngIf="consultants===undefined">
+    <ion-card-header>
+      No records available
+    </ion-card-header>
+    <ion-card-content>
+      You have no registered consultants. You can add new consultants by tapping the button below.
+    </ion-card-content>
+
+  </ion-card>
+
+    <ion-fab padding right bottom>
+    <button ion-fab color="primary" (click)="newConsultant()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+  
   <ion-list no-lines>
 
     <ion-item *ngFor="let consultant of consultants" text-wrap>
@@ -34,7 +45,7 @@
             <ion-badge item-right>{{consultant.client}}</ion-badge>
           </p>
         </ion-item>
-        
+
         <ion-card-content>
           <p>
             <ion-icon name="bookmark"> {{consultant.department}}</ion-icon>

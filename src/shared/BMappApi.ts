@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, Events } from 'ionic-angular';
 
 import { Storage } from '@ionic/storage';
 //import { Http /*, Response*/ } from '@angular/http';
@@ -9,16 +9,91 @@ export class BMappApi {
 
     public storage: Storage;
 
-    user = {
-        name: 'Ricardo Amorim',
-        email: 'ramorim@adneom.com',
-        contact: '+32 478 62 11 12',
-        target: 25,
+    user: any;
+    consultants: any[];
+    clients: any[];
+
+    constructor(
+        public platform: Platform,
+        storage: Storage,
+        public events: Events) {
+        this.storage = storage;
+
+    }
+
+    /**
+     * Returns the list of registered cosultants
+     */
+    getConsultants() {
+        return this.storage.get('consultants');
+    }
+
+    /**
+     * Returns the list of registered clients
+     */
+    getClients() {
+        return this.storage.get('clients');
+    }
+
+    /**
+     * Attempts to save a new consultant to de database
+     */
+    saveConsultant(consultant) {
+        this.getConsultants().then((val) => {
+            if (val === null) {
+                val = [];
+            }
+            val.push(consultant);
+            this.consultants = val;
+            this.storage.set('consultants', this.consultants);
+            this.events.publish('consultant:new', consultant);
+        });
+    }
+
+    /**
+     * Attempts to save a new client to de database
+     */
+    saveClient(client) {
+        this.getConsultants().then((val) => {
+            if (val === null) {
+                val = [];
+            }
+            val.push(client);
+            this.clients = val;
+            this.storage.set('clients', this.clients);
+            this.events.publish('client:new', client);
+        });
+    }
+
+    getUser() {
+        return this.storage.get('user');
+    }
+
+    saveUser(user) {
+        this.storage.set('user', user);
+    }
+
+    loadDummyData() {
+        this.storage.set('user', this.dummy_user);
+        this.storage.set('consultants', this.dummy_consultants);
+        this.storage.set('clients', this.dummy_clients);
+    }
+
+    reset() {
+        this.storage.clear();
+    }
+
+
+    dummy_user = {
+        name: 'George Frideric Handel',
+        email: 'gfhandel@adneom.com',
+        contact: '+32 148 99 98',
+        target: 12,
         notifications: true,
         auto_inactive: true
     };
 
-    bms = [
+    dummy_bms = [
         {
             name: 'Ricardo Amorim',
             email: 'ramorim@adneom.com',
@@ -45,7 +120,7 @@ export class BMappApi {
         }
     ];
 
-    clients = [
+    dummy_clients = [
         {
             id: '9191',
             name: 'ADNEOM Lab',
@@ -69,7 +144,7 @@ export class BMappApi {
         }
     ];
 
-    consultants = [
+    dummy_consultants = [
         {
             id: '919182',
             name: 'Franz Lizst',
@@ -141,52 +216,18 @@ export class BMappApi {
             languages: 'French, Dutch, Portuguese, German',
             client: 'FreeeDrive',
             car: false
+        },
+        {
+            id: '11121',
+            name: 'Wolfgang Amadeus Mozart',
+            email: 'wmozart@music.com',
+            contact: '+32 001 12 22',
+            starting_date: '2009-01-10',
+            department: 'IT Support',
+            skills: 'Server Maintenance, Linux servers, Microsoft SQL server',
+            languages: 'French, Dutch, Portuguese, German',
+            client: 'Not defined',
+            car: false
         }
     ];
-
-
-    constructor(public platform: Platform, storage: Storage) {
-        this.storage = storage;
-        //storage.set('user', this.user);
-        //storage.set('consultants', this.consultants);
-        //storage.set('clients', this.clients);
-    }
-
-    /**
-     * Returns the list of registered cosultants
-     */
-    getConsultants() {
-        return this.storage.get('consultants');
-    }
-
-    /**
-     * Returns the list of registered clients
-     */
-    getClients() {
-        return this.storage.get('clients');
-    }
-
-    /**
-     * Attempts to save a new consultant to de database
-     */
-    saveConsultant(consultant) {
-        this.consultants.push(consultant);
-        this.storage.set('consultants', this.consultants);
-    }
-
-    /**
-     * Attempts to save a new client to de database
-     */
-    saveClient(client) {
-        this.clients.push(client);
-        this.storage.set('clients', this.clients);
-    }
-
-    getUser() {
-        return this.storage.get('user');
-    }
-
-    saveUser(user) {
-        this.storage.set('user', user);
-    }
 }

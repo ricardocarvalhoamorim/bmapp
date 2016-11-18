@@ -9,54 +9,89 @@
 
 <ion-content>
 
-<ion-card>
+  <ion-card>
 
-  <ion-item>
-    <ion-avatar item-left>
-      <ion-icon name="analytics"> </ion-icon>
-    </ion-avatar>
-    <h2>Summary</h2>
-    <p>{{today}}</p>
-  </ion-item>
+    <ion-item>
+      <h2><b>Summary</b></h2>
+      <p>{{today}}</p>
+    </ion-item>
 
-  <ion-card-content>
-    <p *ngIf="consultants && clients">You are currently supervising <b>{{consultants.length}}</b> consultants at the moment. Your portfolio comprises a total of <b>{{clients.length}}</b> clients</p>
-    <p *ngIf="!consultants">You have no registered consultants so far, you can register new ones by tapping the button below</p>
-  </ion-card-content>
+    <ion-card-content>
+      <ion-grid>
 
-</ion-card>
+        <ion-row text-wrap *ngIf="clients">
+          <ion-col width-10>
+            <ion-icon name="briefcase"></ion-icon>
+          </ion-col>
 
-<ion-card>
+          <ion-col width-90>
+            <b color="primary" (click)="switchToClientsList()">{{clients.length}} clients in your portfolio</b>
+          </ion-col>
+        </ion-row>
 
-  <ion-item>
-    <ion-avatar item-left>
-      <ion-icon name="calculator"> </ion-icon>
-    </ion-avatar>
-    <h2>Performance</h2>
-  </ion-item>
+        <ion-row text-wrap *ngIf="consultants">
+          <ion-col width-10>
+            <ion-icon name="person"></ion-icon>
+          </ion-col>
 
-  <ion-card-content >
-    <p>4 of your consultants have no mission assigned</p>
-    <p>You have 12 ongoing missions</p>
-    <p>Of these, 3 are coming to a deadline</p>
-    <p><b>This will show a chart for your ongoing missions</b></p>
-  </ion-card-content>
-</ion-card>
+          <ion-col width-90>
+            <b color="primary" (click)="switchToConsultantsList()">{{consultants.length}} consultants under your supervision</b>
+          </ion-col>
+        </ion-row>
 
-<ion-card>
+        <ion-row text-wrap *ngIf="undefinedCount > 0">
+          <ion-col width-10>
+            <ion-icon name="clock"></ion-icon>
+          </ion-col>
 
-  <ion-item>
-    <ion-avatar item-left>
-      <ion-icon name="cloud"> </ion-icon>
-    </ion-avatar>
-    <h2>Objectives</h2>
-  </ion-item>
+          <ion-col width-90>
+            <b color="primary" (click)="switchToClientsList()">{{undefinedCount}} consultants on the bench</b>
+          </ion-col>
+        </ion-row>
 
-  <ion-card-content >
-    <p>You established that you want to have <b>32</b> running missions. You can change this and other settings by tapping the button bellow. Notice that by changing your objectives, some warnings can become obsolete.</p>
-    <button ion-button outline block (click)="switchToSettings()">Application Settings</button>
-  </ion-card-content>
-</ion-card>
+        <ion-row>
+          <ion-col width-50>
+            <button ion-button outline small block (click)="switchToConsultantsList()"><b>My Consultants</b></button>
+          </ion-col>
+
+          <ion-col width-50>
+            <button ion-button outline small block (click)="switchToClientsList()"><b>My Clients</b></button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card>
+
+    <ion-item>
+      <ion-avatar item-right>
+        <ion-icon name="analytics"> </ion-icon>
+      </ion-avatar>
+      <h2>Performance</h2>
+    </ion-item>
+
+    <ion-card-content>
+      <chart id="perfChart"[labels]="labels" [data]="data" type="bar"></chart>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+
+    <ion-item>
+      <ion-avatar item-right>
+        <ion-icon name="cloud"> </ion-icon>
+      </ion-avatar>
+      <h2>Objectives</h2>
+    </ion-item>
+
+    <ion-card-content>
+      <p>You established that you want to have <b>32</b> running missions. You can change this and other settings by tapping
+        the button bellow. Notice that by changing your objectives, some warnings can become obsolete.</p>
+      <button ion-button outline block (click)="switchToSettings()">Application Settings</button>
+    </ion-card-content>
+  </ion-card>
 
 
 

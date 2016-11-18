@@ -35,7 +35,7 @@ export class NewConsultantPage {
         starting_date: '',
         skills: '',
         languages: '',
-        client: 'Undefined (tap to edit)',
+        client: 'Not defined',
         car: false
       };
     } else {

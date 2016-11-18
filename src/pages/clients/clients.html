@@ -15,7 +15,22 @@
 </ion-header>
 <ion-content>
 
-  <ion-list>
+
+  <ion-card *ngIf="clients===undefined">
+    <ion-card-header>
+      No records available
+    </ion-card-header>
+    <ion-card-content>
+      You have no registered clients. You can add new clients by tapping the button below.
+    </ion-card-content>
+
+  </ion-card>
+
+    <ion-fab padding right bottom>
+    <button ion-fab color="primary" (click)="newClient()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+
+  <ion-list no-lines>
 
     <ion-item *ngFor="let client of clients">
       <ion-card>

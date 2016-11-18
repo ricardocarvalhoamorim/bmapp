@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { NavController, Platform, Events } from 'ionic-angular';
 import { BMappApi } from '../../shared/BMappApi';
+import { NewConsultantPage } from '../new-consultant/new-consultant';
 
 /*
   Generated class for the Consultants page.
@@ -18,12 +19,18 @@ export class ConsultantsPage {
   constructor(
     public navCtrl: NavController,
     public platform: Platform,
-    public bmappAPI: BMappApi) { }
+    public events: Events,
+    public bmappAPI: BMappApi) {
+
+    events.subscribe('consultants:new', (data) => {
+      this.consultants.push(data);
+      console.log("UPDATED");
+    });
+  }
 
   ionViewDidLoad() {
     this.bmappAPI.getConsultants().then((data) => {
-        this.consultants = data;
-        console.log(data);
+      this.consultants = data;
     });
   }
 
@@ -39,4 +46,8 @@ export class ConsultantsPage {
     window.open(`mailto:${client.email}`, '_system')
   }
 
+  newConsultant() {
+    this.navCtrl.push(NewConsultantPage);
+  }
 }
+

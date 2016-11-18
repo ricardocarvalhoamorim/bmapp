@@ -21,7 +21,6 @@
 
 </ion-header>
 
-
 <ion-content>
 
   <ion-list>
@@ -63,6 +62,14 @@
     <ion-item>
       <ion-label>My objectives</ion-label>
       <ion-input type="number" [(ngModel)]="user.target" ngControl="target"></ion-input>
+    </ion-item>
+
+    <ion-item> 
+      <button ion-button block primary outline padding (click)="loadDummyData()">Load dummy data</button>
+    </ion-item>
+
+    <ion-item> 
+      <button ion-button block primary outline padding (click)="reset()">Reset application</button>
     </ion-item>
   </ion-list>
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage'
 import { BMappApi } from '../../shared/BMappApi';
+import { NewClientPage } from '../new-client/new-client';
 
 
 /*
@@ -60,5 +61,9 @@ export class ClientsPage {
     }
     window.open("http://maps.google.com/?q=" + client.address, '_system');
     return;
+  }
+
+  newClient() {
+    this.navCtrl.push(NewClientPage);
   }
 }
