@@ -31,42 +31,44 @@
   </ion-fab>
 
   <ion-list no-lines [virtualScroll]="clients">
-      <ion-card *virtualItem="let client" (click)="editClient($event, client)">
-        <ion-item>
-          <ion-avatar item-left>
-            <!--<img src="img/marty-avatar.png"> -->
-            <h1>{{client.name.substring(0,1)}}</h1>
-          </ion-avatar>
-          <h2>{{client.name}}</h2>
-          <p *ngIf="client.address">{{client.address}}</p>
-          <p *ngIf="client.email">{{client.email}}</p>
-          <p *ngIf="client.contact">{{client.contact}}</p>
-        </ion-item>
-        <ion-card-content *ngIf="client.description">
-          <p>{{client.description}}</p>
-        </ion-card-content>
+    <ion-card *virtualItem="let client">
+      <ion-item  (click)="editClient($event, client)">
+        <ion-avatar item-left>
+          <!--<img src="img/marty-avatar.png"> -->
+          <h1>{{client.name.substring(0,1)}}</h1>
+        </ion-avatar>
+        <h2>{{client.name}}</h2>
+        <p *ngIf="client.address">{{client.address}}</p>
+        <p *ngIf="client.email">{{client.email}}</p>
+        <p *ngIf="client.contact">{{client.contact}}</p>
+      </ion-item>
+      <ion-card-content *ngIf="client.description">
+        <p>{{client.description}}</p>
+      </ion-card-content>
 
-        <ion-row>
-          <ion-col width-33>
-            <button ion-button primary clear small *ngIf="client.contact" (click)="call($event, client)">
-        <ion-icon name="call"> Call</ion-icon>
-      </button>
+      <ion-row no-padding>
+        <ion-col>
+          <button ion-button clear color="primary" icon-left (click)="share($event, client)">
+          <ion-icon name='share-alt'></ion-icon>
+          Share
+        </button>
+        </ion-col>
+        <ion-col text-center>
+          <button ion-button clear color="primary" icon-left *ngIf="client.email" (click)="email($event, client)">
+          <ion-icon name='mail'></ion-icon>
+          Mail
+        </button>
+        </ion-col>
+        <ion-col text-right>
+          <button ion-button clear color="primary" icon-left *ngIf="client.contact" (click)="call($event, client)">
+          <ion-icon name='call'></ion-icon>
+          Share
+        </button>
+        </ion-col>
+      </ion-row>
 
-          </ion-col>
-          <ion-col width-33>
-            <button ion-button primary clear small *ngIf="client.email" (click)="email($event, client)">
-        <ion-icon name="mail"> Mail</ion-icon>
-      </button>
 
-          </ion-col>
-          <ion-col width-33>
-            <button ion-button primary clear small *ngIf="client.address" (click)="navigate($event, client)">
-        <ion-icon name="navigate"> Go</ion-icon>
-      </button>
-          </ion-col>
-
-        </ion-row>
-      </ion-card>
+    </ion-card>
   </ion-list>
 
 </ion-content>

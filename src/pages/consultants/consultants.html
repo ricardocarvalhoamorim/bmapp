@@ -32,8 +32,8 @@
 
   <ion-list no-lines [virtualScroll]="consultants">
 
-      <ion-card *virtualItem="let consultant" text-wrap (click)="editConsultant($event, consultant)">
-        <ion-item>
+      <ion-card *virtualItem="let consultant" text-wrap>
+        <ion-item  (click)="editConsultant($event, consultant)">
           <ion-avatar item-left>
             <h1>{{consultant.name.substring(0,1)}}</h1>
           </ion-avatar>
@@ -60,18 +60,28 @@
             <ion-icon name="car"> {{consultant.car ? 'Yes' : 'No'}}</ion-icon>
           </p>
         </ion-card-content>
+      
+      <ion-row no-padding>
+      <ion-col>
+        <button ion-button clear color="primary" icon-left (click)="share($event, consultant)">
+          <ion-icon name='share-alt'></ion-icon>
+          Share
+        </button>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button clear color="primary" icon-left *ngIf="consultant.email" (click)="email($event, consultant)">
+          <ion-icon name='mail'></ion-icon>
+          Mail
+        </button>
+      </ion-col>
+      <ion-col text-right>
+        <button ion-button clear color="primary" icon-left *ngIf="consultant.contact" (click)="call($event, consultant)">
+          <ion-icon name='call'></ion-icon>
+          Call
+        </button>
+      </ion-col>
+    </ion-row>
 
-        <ion-item actions>
-          <button ion-button clear item-right icon-right *ngIf="consultant.contact" (click)="call($event, consultant)">
-      <ion-icon name='call'></ion-icon>
-       Call
-    </button>
-
-          <button ion-button clear item-right icon-right *ngIf="consultant.email" (click)="email($event, consultant)">
-      <ion-icon name='mail'></ion-icon>
-       Mail
-    </button>
-        </ion-item>
 
       </ion-card>
   </ion-list>
