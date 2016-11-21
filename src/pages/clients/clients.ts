@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { NavController, Platform, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage'
 import { BMappApi } from '../../shared/BMappApi';
 import { NewClientPage } from '../new-client/new-client';
@@ -23,13 +23,19 @@ export class ClientsPage {
     public navCtrl: NavController,
     public platform: Platform,
     public storage: Storage,
+    public events: Events,
     public bmappAPI: BMappApi
-  ) { }
+  ) {
+    events.subscribe('client:new', (data) => {
+      //this.clients.push(data)
+      console.log("UPDATED");
+    });
+  }
 
   ionViewDidLoad() {
     console.log('Hello ClientsPage Page');
 
-    this.storage.get('clients').then((val) => {
+    this.bmappAPI.getClients().then((val) => {
       this.clients = val;
     });
   }
@@ -65,5 +71,10 @@ export class ClientsPage {
 
   newClient() {
     this.navCtrl.push(NewClientPage);
+  }
+
+  editClient($event, client) {
+    console.log(client.name);
+    this.navCtrl.push(NewClientPage, { 'client': client });
   }
 }

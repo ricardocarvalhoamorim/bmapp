@@ -42,12 +42,16 @@ export class ConsultantsPage {
   }
 
   email($event, client) {
-
     window.open(`mailto:${client.email}`, '_system')
   }
 
   newConsultant() {
     this.navCtrl.push(NewConsultantPage);
+  }
+
+  editConsultant($event, consultant) {
+    console.log(consultant.name);
+    this.navCtrl.push(NewConsultantPage, {'consultant': consultant});
   }
 }
 

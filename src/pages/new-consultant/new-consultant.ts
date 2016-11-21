@@ -40,6 +40,7 @@ export class NewConsultantPage {
       };
     } else {
       this.consultant = navParams.get('consultant');
+      console.log("EDITING USER " + this.consultant.id);
     }
   }
 

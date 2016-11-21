@@ -22,14 +22,14 @@ export class NewClientPage {
     public alertCtrl: AlertController,
     public bmappApi: BMappApi) {
 
-    if (!navParams.get('consultant')) {
-      console.log("Setting up a new consultant");
+    if (!navParams.get('client')) {
+      console.log("Setting up a new client");
       this.client = {
         id: new Date().getUTCMilliseconds(),
         name: '',
         email: '',
         contact_email: '',
-        telephone: '',
+        contact: '',
         address: ''
       };
     } else {

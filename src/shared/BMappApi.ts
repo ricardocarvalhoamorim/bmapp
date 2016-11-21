@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Platform, Events } from 'ionic-angular';
-
+import * as _ from 'lodash';
 import { Storage } from '@ionic/storage';
 //import { Http /*, Response*/ } from '@angular/http';
 
@@ -43,9 +43,12 @@ export class BMappApi {
             if (val === null) {
                 val = [];
             }
-            val.push(consultant);
+
+            var index = _.indexOf(val, _.find(val, { id: consultant.id }));
+            val.splice(index, 1, consultant);
+            
             this.consultants = val;
-            this.storage.set('consultants', this.consultants);
+            this.storage.set('consultants', val);
             this.events.publish('consultant:new', consultant);
         });
     }
@@ -54,13 +57,16 @@ export class BMappApi {
      * Attempts to save a new client to de database
      */
     saveClient(client) {
-        this.getConsultants().then((val) => {
+        this.getClients().then((val) => {
             if (val === null) {
                 val = [];
             }
-            val.push(client);
+
+            var index = _.indexOf(val, _.find(val, { id: client.id }));
+            val.splice(index, 1, client);
+            
             this.clients = val;
-            this.storage.set('clients', this.clients);
+            this.storage.set('clients', val);
             this.events.publish('client:new', client);
         });
     }
@@ -132,14 +138,14 @@ export class BMappApi {
             id: '877120',
             name: 'Don Giovanni',
             address: 'Palais des beaux arts',
-            contact: '+32 123 45 67',
+            contact: '+32 123 45 88',
             email: 'giovanni@adneom.com'
         },
         {
             id: '0012314',
             name: 'Proximus',
             address: 'Rue de la Loi',
-            contact: '+32 123 45 67',
+            contact: '+00012 99070120 123 45 67',
             email: 'general@proximus.com'
         }
     ];

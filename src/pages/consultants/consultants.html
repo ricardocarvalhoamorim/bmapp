@@ -14,7 +14,7 @@
   </ion-navbar>
 
 </ion-header>
-<ion-content>
+<ion-content no-padding>
 
   <ion-card *ngIf="consultants===undefined">
     <ion-card-header>
@@ -29,15 +29,12 @@
     <ion-fab padding right bottom>
     <button ion-fab color="primary" (click)="newConsultant()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
-  
-  <ion-list no-lines>
 
-    <ion-item *ngFor="let consultant of consultants" text-wrap>
-      <ion-card>
+  <ion-list no-lines [virtualScroll]="consultants">
+
+      <ion-card *virtualItem="let consultant" text-wrap (click)="editConsultant($event, consultant)">
         <ion-item>
           <ion-avatar item-left>
-            <!--<img src="img/marty-avatar.png"> -->
-            <!--<ion-icon name="briefcase"></ion-icon>-->
             <h1>{{consultant.name.substring(0,1)}}</h1>
           </ion-avatar>
           <h2>{{consultant.name}}</h2>
@@ -77,7 +74,6 @@
         </ion-item>
 
       </ion-card>
-    </ion-item>
   </ion-list>
 
 </ion-content>

@@ -73,7 +73,7 @@
     </ion-item>
 
     <ion-card-content>
-      <chart id="perfChart"[labels]="labels" [data]="data" type="bar"></chart>
+      <chart [options]="options"></chart>
     </ion-card-content>
   </ion-card>
 
@@ -87,7 +87,7 @@
     </ion-item>
 
     <ion-card-content>
-      <p>You established that you want to have <b>32</b> running missions. You can change this and other settings by tapping
+      <p *ngIf="user">You established that you want to have <b>{{user.target}}</b> running missions. You can change this and other settings by tapping
         the button bellow. Notice that by changing your objectives, some warnings can become obsolete.</p>
       <button ion-button outline block (click)="switchToSettings()">Application Settings</button>
     </ion-card-content>

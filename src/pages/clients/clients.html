@@ -26,22 +26,21 @@
 
   </ion-card>
 
-    <ion-fab padding right bottom>
+  <ion-fab padding right bottom>
     <button ion-fab color="primary" (click)="newClient()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
-  <ion-list no-lines>
-
-    <ion-item *ngFor="let client of clients">
-      <ion-card>
+  <ion-list no-lines [virtualScroll]="clients">
+      <ion-card *virtualItem="let client" (click)="editClient($event, client)">
         <ion-item>
           <ion-avatar item-left>
             <!--<img src="img/marty-avatar.png"> -->
             <h1>{{client.name.substring(0,1)}}</h1>
           </ion-avatar>
           <h2>{{client.name}}</h2>
-          <p>{{client.address}}</p>
-          <p>{{client.contact}}</p>
+          <p *ngIf="client.address">{{client.address}}</p>
+          <p *ngIf="client.email">{{client.email}}</p>
+          <p *ngIf="client.contact">{{client.contact}}</p>
         </ion-item>
         <ion-card-content *ngIf="client.description">
           <p>{{client.description}}</p>
@@ -68,7 +67,6 @@
 
         </ion-row>
       </ion-card>
-    </ion-item>
   </ion-list>
 
 </ion-content>
