@@ -45,8 +45,14 @@ export class BMappApi {
             }
 
             var index = _.indexOf(val, _.find(val, { id: consultant.id }));
-            val.splice(index, 1, consultant);
-            
+
+            if (index === -1) {
+                val.push(consultant);
+            } else {
+                val.splice(index, 1, consultant);
+            }
+
+
             this.consultants = val;
             this.storage.set('consultants', val);
             this.events.publish('consultant:new', consultant);
@@ -63,8 +69,14 @@ export class BMappApi {
             }
 
             var index = _.indexOf(val, _.find(val, { id: client.id }));
-            val.splice(index, 1, client);
-            
+            if (index === -1) {
+                val.push(client);
+            } else {
+                val.splice(index, 1, client);
+            }
+
+
+
             this.clients = val;
             this.storage.set('clients', val);
             this.events.publish('client:new', client);
@@ -106,7 +118,10 @@ export class BMappApi {
             contact: '+32 478 62 11 12',
             target: 25,
             notifications: true,
-            auto_inactive: true
+            auto_inactive: true,
+            consultants: [
+                919182, 9112, 19200
+            ]
         },
         {
             name: 'Susan Boyle',
