@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Platform, Events } from 'ionic-angular';
-import * as _ from 'lodash';
 import { Storage } from '@ionic/storage';
+
+import * as _ from 'lodash';
 //import { Http /*, Response*/ } from '@angular/http';
 
 @Injectable()
@@ -9,7 +10,6 @@ export class BMappApi {
 
     public storage: Storage;
 
-    user: any;
     consultants: any[];
     clients: any[];
 
@@ -18,7 +18,6 @@ export class BMappApi {
         storage: Storage,
         public events: Events) {
         this.storage = storage;
-
     }
 
     /**
@@ -33,6 +32,20 @@ export class BMappApi {
      */
     getClients() {
         return this.storage.get('clients');
+    }
+
+    /**
+     * Gets the registered business managers
+     */
+    getBms() {
+        return this.storage.get('bms');
+    }
+
+    /**
+    * Gets the active user from the bms pool
+    */
+    getUser() {
+        return _.find(this.bms, { active: true });
     }
 
     /**
@@ -83,16 +96,30 @@ export class BMappApi {
         });
     }
 
-    getUser() {
-        return this.storage.get('user');
-    }
+    /**
+         * Attempts to save a business manager or create a new one
+         */
+    saveBM(bm) {
+        this.getBms().then((val) => {
+            if (val === null) {
+                val = [];
+            }
 
-    saveUser(user) {
-        this.storage.set('user', user);
+            var index = _.indexOf(val, _.find(val, { id: bm.id }));
+            if (index === -1) {
+                val.push(bm);
+            } else {
+                val.splice(index, 1, bm);
+            }
+
+            this.bms = val;
+            this.storage.set('bms', val);
+            this.events.publish('bm:new', bm);
+        });
     }
 
     loadDummyData() {
-        this.storage.set('user', this.dummy_user);
+        this.storage.set('bms', this.bms);
         this.storage.set('consultants', this.dummy_consultants);
         this.storage.set('clients', this.dummy_clients);
     }
@@ -101,49 +128,53 @@ export class BMappApi {
         this.storage.clear();
     }
 
-
-    dummy_user = {
-        name: 'George Frideric Handel',
-        email: 'gfhandel@adneom.com',
-        contact: '+32 148 99 98',
-        target: 12,
-        notifications: true,
-        auto_inactive: true
-    };
-
-    dummy_bms = [
+    bms = [
         {
+            id: '9',
             name: 'Ricardo Amorim',
             email: 'ramorim@adneom.com',
             contact: '+32 478 62 11 12',
             target: 25,
-            notifications: true,
-            auto_inactive: true,
-            consultants: [
-                919182, 9112, 19200
-            ]
+            active: false
         },
         {
+            id: '8',
             name: 'Susan Boyle',
             email: 'sboyle@adneom.com',
             contact: '+32 478 62 11 12',
             target: 10,
-            notifications: true,
-            auto_inactive: true
+            active: false
         },
         {
+            id: '7',
             name: 'Jack Sparrow',
             email: 'jsparrow@adneom.com',
             contact: '+32 478 62 11 12',
             target: 15,
-            notifications: true,
-            auto_inactive: true
+            active: false
+        },
+        {
+            id: '6',
+            name: 'Daniel Wijnans',
+            email: 'dwijnans@adneom.com',
+            contact: '+32 478 62 11 12',
+            target: 10,
+            active: false
+        },
+        {
+            id: '5',
+            name: 'Tristan Dumont',
+            email: 'tdumont@adneom.com',
+            contact: '+32 478 62 11 12',
+            target: 40,
+            active: false
         }
     ];
 
     dummy_clients = [
         {
             id: '9191',
+            bm: '7',
             name: 'ADNEOM Lab',
             address: 'Rue Knappen 92',
             contact: '+32 123 45 67',
@@ -151,6 +182,7 @@ export class BMappApi {
         },
         {
             id: '877120',
+            bm: '8',
             name: 'Don Giovanni',
             address: 'Palais des beaux arts',
             contact: '+32 123 45 88',
@@ -158,6 +190,7 @@ export class BMappApi {
         },
         {
             id: '0012314',
+            bm: '8',
             name: 'Proximus',
             address: 'Rue de la Loi',
             contact: '+00012 99070120 123 45 67',
@@ -168,10 +201,12 @@ export class BMappApi {
     dummy_consultants = [
         {
             id: '919182',
+            bm: '9',
             name: 'Franz Lizst',
             email: 'flizst@dolph.com',
             contact: '+32 444 11 11',
             starting_date: '2009-08-11',
+            ending_date: '2016-11-31',
             department: 'Development',
             skills: 'Java, Java EE',
             client: 'deloitte',
@@ -180,10 +215,12 @@ export class BMappApi {
         },
         {
             id: '9112',
+            bm: '8',
             name: 'Antonín Dvořák',
             email: 'advorak@dolph.com',
             contact: '+32 991 11 11',
             starting_date: '2009-01-29',
+            ending_date: '2016-11-31',
             department: 'Development',
             skills: 'AngularJs',
             languages: 'French, Dutch, German',
@@ -192,10 +229,12 @@ export class BMappApi {
         },
         {
             id: '19200',
+            bm: '7',
             name: 'Gustav Mahler',
             email: 'gmahler@symphony.com',
             contact: '+32 001 12 22',
             starting_date: '2009-01-10',
+            ending_date: '2016-11-31',
             department: 'Development',
             skills: 'Python, SQL Server, Android, Ruby on Rails',
             languages: 'French, Dutch, Portuguese, German',
@@ -204,10 +243,12 @@ export class BMappApi {
         },
         {
             id: '88272',
+            bm: '8',
             name: 'Antonio Vivaldi',
             email: 'avivaldi@music.com',
             contact: '+32 001 12 22',
             starting_date: '2009-01-10',
+            ending_date: '2016-11-31',
             department: 'Engineering',
             skills: 'Civil Engineering, Fracture Mechanics, Load balancing',
             languages: 'French, Dutch, Portuguese, German',
@@ -216,10 +257,12 @@ export class BMappApi {
         },
         {
             id: '66251',
+            bm: '9',
             name: 'Johann Sebastian Bach',
             email: 'jbach@music.com',
             contact: '+32 001 12 22',
             starting_date: '2009-01-10',
+            ending_date: '2016-11-31',
             department: 'Engineering',
             skills: 'Mechanical Engineering',
             languages: 'French, Dutch, Portuguese, German',
@@ -228,10 +271,12 @@ export class BMappApi {
         },
         {
             id: '11121',
+            bm: '7',
             name: 'Wolfgang Amadeus Mozart',
             email: 'wmozart@music.com',
             contact: '+32 001 12 22',
             starting_date: '2009-01-10',
+            ending_date: '2016-09-31',
             department: 'IT Support',
             skills: 'Server Maintenance, Linux servers, Microsoft SQL server',
             languages: 'French, Dutch, Portuguese, German',
@@ -240,10 +285,12 @@ export class BMappApi {
         },
         {
             id: '11121',
+            bm: '8',
             name: 'Wolfgang Amadeus Mozart',
             email: 'wmozart@music.com',
             contact: '+32 001 12 22',
             starting_date: '2009-01-10',
+            ending_date: '',
             department: 'IT Support',
             skills: 'Server Maintenance, Linux servers, Microsoft SQL server',
             languages: 'French, Dutch, Portuguese, German',

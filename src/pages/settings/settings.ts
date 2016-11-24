@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController, ToastController, AlertController } from 'ionic-angular';
 import { BMappApi } from '../../shared/BMappApi';
+import * as _ from 'lodash';
 
 /*
   Generated class for the Settings page.
@@ -17,6 +18,7 @@ export class SettingsPage {
   public storage: Storage;
 
   user = {
+    id: new Date().getUTCMilliseconds(),
     name: '',
     email: '',
     contact: '',
@@ -25,21 +27,29 @@ export class SettingsPage {
     auto_inactive: true
   };
 
+  bms: any[];
+
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
+    public alertCtrl: AlertController,
     public bmappAPI: BMappApi) {
   }
 
   ionViewDidLoad() {
-    this.bmappAPI.getUser().then((val) => {
-      if (val !== null) {
-        this.user = val;
+    this.user = this.bmappAPI.getUser();
+
+    this.bmappAPI.getBms().then((val) => {
+      console.log("BMS->" + val);
+      this.bms = val;
+
+      if (this.user.name === '') {
+        this.pickProfile();
       }
     });
   }
 
   saveSettings() {
-    this.bmappAPI.saveUser(this.user);
+    this.bmappAPI.saveBM(this.user);
     this.presentToast('Settings successfully save')
   }
 
@@ -62,4 +72,54 @@ export class SettingsPage {
     this.bmappAPI.reset();
     this.ionViewDidLoad();
   }
+
+  /**
+  * Displays an interface to pick a mission and associates it with the 
+  * current record
+  */
+  pickProfile() {
+    if (this.bms === null)
+      return;
+
+    let alert = this.alertCtrl.create();
+    alert.setTitle('Pick a profile');
+    for (let bm of this.bms) {
+      alert.addInput({
+        type: 'radio',
+        label: bm.name,
+        value: bm.name,
+        checked: false
+      });
+    }
+
+    alert.addInput({
+      type: 'radio',
+      label: 'New record',
+      value: 'New record',
+      checked: true
+    });
+
+    //alert.addButton('Cancel');
+    alert.addButton({
+      text: 'OK',
+      handler: data => {
+        if (data === 'New record') {
+          this.user = {
+            id: new Date().getUTCMilliseconds(),
+            name: '',
+            email: '',
+            contact: '',
+            target: 0,
+            notifications: true,
+            auto_inactive: true
+          };
+        } else {
+          this.user = _.find(this.bms, { name: data })
+        }
+
+      }
+    });
+    alert.present();
+  }
+
 }

@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
@@ -26,18 +27,21 @@ export class MyApp {
     this.pages = [
       { title: 'Home', component: Page1 },
       { title: 'Consultants', component: ConsultantsPage },
-      { title: 'Client portfolio', component: ClientsPage},
-      { title: 'Settings', component: SettingsPage}
+      { title: 'Client portfolio', component: ClientsPage },
+      { title: 'Settings', component: SettingsPage }
     ];
   }
 
   initializeApp() {
+
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
     });
+
+
   }
 
   openPage(page) {

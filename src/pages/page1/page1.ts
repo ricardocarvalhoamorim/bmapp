@@ -17,10 +17,8 @@ import * as _ from 'lodash';
 })
 export class Page1 {
 
-  consultants;
-  undefinedCount = 0;
   @ViewChild(ChartComponent) chartComp;
-  options = {
+  barOptions = {
     type: 'bar',
     responsive: false,
     data: {
@@ -30,9 +28,34 @@ export class Page1 {
           label: 'Running missions',
           data: [1, 2],
           backgroundColor: [
-          'rgba(215, 40, 40, 0.9)',
-          'rgba(222, 222, 222, 0.9)'
-        ]
+            'rgba(215, 40, 40, 0.9)',
+            'rgba(222, 222, 222, 0.9)'
+          ]
+        }
+      ]
+    }
+  };
+
+  @ViewChild(ChartComponent) lineChartComponent;
+  lineOptions = {
+    type: 'bar',
+    responsive: false,
+    data: {
+      labels: ['ME', 'AN', 'DW', 'GG', 'AL', 'DP', 'LJ', 'PD'],
+      datasets: [
+        {
+          label: 'November',
+          data: [9, 2, 5, 1, 20, 10, 1, 9],
+          backgroundColor: [
+            'rgb(255, 5, 5)',
+            'rgb(222, 222, 222)',
+            'rgb(222, 222, 222)',
+            'rgb(222, 222, 222)',
+            'rgb(222, 222, 222)',
+            'rgb(222, 222, 222)',
+            'rgb(222, 222, 222)',
+            'rgb(222, 222, 222)'
+          ]
         }
       ]
     }
@@ -41,31 +64,51 @@ export class Page1 {
   /**
    * Assigned
    */
-  assignedCount = 0;
   user: any;
+  consultants: any[];
   clients: any[];
-  today = new Date().toDateString();
+  bms: any[];
+  undefinedCount = 0;
+  assignedCount = 0;
 
+  today = new Date().toDateString();
 
   constructor(
     public navCtrl: NavController,
     public events: Events,
     public bmappAPI: BMappApi) {
 
-    events.subscribe('clients:updated', (clients) => {
-      this.ionViewDidLoad();
-    });
-
-    events.subscribe('consultants:updated', (clients) => {
-      this.ionViewDidLoad();
-    });
-
   }
 
   ionViewDidLoad() {
-    //load clients and consultants
+
+    this.bmappAPI.getBms().then((val) => {
+      this.bms = val;
+
+      if (this.bms.length > 0) {
+        this.user = this.bmappAPI.getUser();
+      } else {
+        this.user = {
+          id: new Date().getUTCMilliseconds(),
+          name: 'Unregistered User',
+          email: '',
+          contact: '',
+          target: 10,
+          active: true
+
+        };
+        this.bmappAPI.saveBM(this.user);
+        console.log("Welcome " + this.user.name);
+      }
+
+    });
     this.bmappAPI.getConsultants().then((val) => {
       this.consultants = val;
+      console.log("Consultants: " + val);
+      if (this.consultants.length === 0) {
+        return;
+      }
+
 
       this.undefinedCount = _.filter(
         this.consultants,
@@ -79,11 +122,6 @@ export class Page1 {
       this.clients = val;
     });
 
-    this.bmappAPI.getUser().then((val) => {
-      this.user = val;
-      this.updateChart();
-    });
-
   }
 
   /**
@@ -95,15 +133,16 @@ export class Page1 {
 
     if (this.assignedCount === undefined)
       return;
-      
-    console.log("UPDATE: " + this.assignedCount + " " + this.user.target);
+
     let chart = this.chartComp.chart;
     chart.data.datasets[0].data = [this.assignedCount, this.user.target];
     chart.update();
-  }
 
-  ionViewWillEnter() {
-    this.ionViewDidLoad();
+    var ongoingMissions = _.filter(
+      this.consultants,
+      function (consultant) {
+        return consultant.client !== 'Not defined' && new Date(consultant.ending_date) < new Date();
+      });
   }
 
   pushNewConsultant() {
