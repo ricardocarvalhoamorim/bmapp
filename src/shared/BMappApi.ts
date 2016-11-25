@@ -10,9 +10,6 @@ export class BMappApi {
 
     public storage: Storage;
 
-    consultants: any[];
-    clients: any[];
-
     constructor(
         public platform: Platform,
         storage: Storage,
@@ -42,13 +39,6 @@ export class BMappApi {
     }
 
     /**
-    * Gets the active user from the bms pool
-    */
-    getUser() {
-        return _.find(this.bms, { active: true });
-    }
-
-    /**
      * Attempts to save a new consultant to de database
      */
     saveConsultant(consultant) {
@@ -65,8 +55,6 @@ export class BMappApi {
                 val.splice(index, 1, consultant);
             }
 
-
-            this.consultants = val;
             this.storage.set('consultants', val);
             this.events.publish('consultant:new', consultant);
         });
@@ -81,6 +69,7 @@ export class BMappApi {
                 val = [];
             }
 
+            
             var index = _.indexOf(val, _.find(val, { id: client.id }));
             if (index === -1) {
                 val.push(client);
@@ -88,9 +77,6 @@ export class BMappApi {
                 val.splice(index, 1, client);
             }
 
-
-
-            this.clients = val;
             this.storage.set('clients', val);
             this.events.publish('client:new', client);
         });
@@ -99,27 +85,37 @@ export class BMappApi {
     /**
          * Attempts to save a business manager or create a new one
          */
-    saveBM(bm) {
+    saveBM(businessManager) {
         this.getBms().then((val) => {
             if (val === null) {
                 val = [];
             }
 
-            var index = _.indexOf(val, _.find(val, { id: bm.id }));
-            if (index === -1) {
-                val.push(bm);
-            } else {
-                val.splice(index, 1, bm);
-            }
+            //disable all other users
+            _.map(val, function (v) {
+                v.active = false;
+            });
+            
+            businessManager.active = true;
 
-            this.bms = val;
+            var index = _.indexOf(val, _.find(val, { id: businessManager.id }));
+            if (index === -1) {
+                //doesn't exist, just push a new one
+                console.log("NEW");
+                val.push(businessManager);
+            } else {
+                //update an existing one
+                console.log("UPDATE");
+                val.splice(index, 1, businessManager);
+            }
+            console.log(val);
             this.storage.set('bms', val);
-            this.events.publish('bm:new', bm);
+            this.events.publish('bm:new', businessManager);
         });
     }
 
     loadDummyData() {
-        this.storage.set('bms', this.bms);
+        this.storage.set('bms', this.dummy_bms);
         this.storage.set('consultants', this.dummy_consultants);
         this.storage.set('clients', this.dummy_clients);
     }
@@ -128,14 +124,14 @@ export class BMappApi {
         this.storage.clear();
     }
 
-    bms = [
+    dummy_bms = [
         {
             id: '9',
             name: 'Ricardo Amorim',
             email: 'ramorim@adneom.com',
             contact: '+32 478 62 11 12',
             target: 25,
-            active: false
+            active: true
         },
         {
             id: '8',

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, Platform, Events } from 'ionic-angular';
 import { BMappApi } from '../../shared/BMappApi';
 import { NewConsultantPage } from '../new-consultant/new-consultant';
+import * as _ from 'lodash';
 
 /*
   Generated class for the Consultants page.
@@ -16,6 +17,10 @@ import { NewConsultantPage } from '../new-consultant/new-consultant';
 export class ConsultantsPage {
 
   consultants: any[];
+  filteredConsultants: any[];
+  user;
+  consultantsFilter = 'mine';
+
   constructor(
     public navCtrl: NavController,
     public platform: Platform,
@@ -32,6 +37,25 @@ export class ConsultantsPage {
     this.bmappAPI.getConsultants().then((data) => {
       this.consultants = data;
     });
+
+    this.bmappAPI.getBms().then((data) => {
+      if (data === undefined)
+        return;
+      this.user = _.find(data, { active: true });
+      this.filterConsultants();
+    });
+  }
+
+ filterConsultants(){
+    if(this.consultantsFilter === 'all'){
+      this.filteredConsultants = this.consultants;
+    } else {
+      this.filteredConsultants = _.filter(this.filteredConsultants, s => s.bm === this.user.id);      
+    }
+
+
+   console.log(this.consultantsFilter);
+   console.log(this.filteredConsultants);
   }
 
   /**

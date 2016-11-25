@@ -29,6 +29,7 @@ export class NewConsultantPage {
       console.log("Setting up a new consultant");
       this.consultant = {
         id: new Date().getUTCMilliseconds(),
+        bm: '',
         name: '',
         email: '',
         telephone: '',

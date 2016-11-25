@@ -13,10 +13,21 @@
     <ion-title>Consultants</ion-title>
   </ion-navbar>
 
+    <ion-toolbar>
+        <ion-segment secondary [(ngModel)]="consultantsFilter" (ionChange)="filterConsultants()">
+            <ion-segment-button value="mine">
+                My consultants
+            </ion-segment-button>
+            <ion-segment-button value="all">
+                All
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+    
 </ion-header>
 <ion-content no-padding>
 
-  <ion-card *ngIf="consultants===undefined">
+  <ion-card *ngIf="!filteredConsultants">
     <ion-card-header>
       No records available
     </ion-card-header>
@@ -30,7 +41,7 @@
     <button ion-fab color="primary" (click)="newConsultant()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
-  <ion-list no-lines [virtualScroll]="consultants">
+  <ion-list no-lines [virtualScroll]="filteredConsultants" [approxItemHeight]="'132px'">
 
       <ion-card *virtualItem="let consultant" text-wrap>
         <ion-item  (click)="editConsultant($event, consultant)">

@@ -12,7 +12,10 @@
     </button>
     <ion-title>Settings</ion-title>
 
-       <ion-buttons end>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="newUser()">
+        <ion-icon name="add"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="saveSettings()">
         <ion-icon name="checkmark"></ion-icon>
       </button>
@@ -64,15 +67,15 @@
       <ion-input type="number" [(ngModel)]="user.target" ngControl="target"></ion-input>
     </ion-item>
 
-    <ion-item> 
+    <ion-item>
       <button ion-button block primary outline padding (click)="pickProfile()">Select active profile</button>
     </ion-item>
 
-    <ion-item> 
+    <ion-item>
       <button ion-button block primary outline padding (click)="loadDummyData()">Load dummy data</button>
     </ion-item>
 
-    <ion-item> 
+    <ion-item>
       <button ion-button block primary outline padding (click)="reset()">Reset application</button>
     </ion-item>
   </ion-list>

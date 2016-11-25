@@ -64,13 +64,10 @@ export class Page1 {
   /**
    * Assigned
    */
-  user: any;
   consultants: any[];
   clients: any[];
-  bms: any[];
   undefinedCount = 0;
   assignedCount = 0;
-
   today = new Date().toDateString();
 
   constructor(
@@ -81,27 +78,6 @@ export class Page1 {
   }
 
   ionViewDidLoad() {
-
-    this.bmappAPI.getBms().then((val) => {
-      this.bms = val;
-
-      if (this.bms.length > 0) {
-        this.user = this.bmappAPI.getUser();
-      } else {
-        this.user = {
-          id: new Date().getUTCMilliseconds(),
-          name: 'Unregistered User',
-          email: '',
-          contact: '',
-          target: 10,
-          active: true
-
-        };
-        this.bmappAPI.saveBM(this.user);
-        console.log("Welcome " + this.user.name);
-      }
-
-    });
     this.bmappAPI.getConsultants().then((val) => {
       this.consultants = val;
       console.log("Consultants: " + val);
@@ -128,6 +104,7 @@ export class Page1 {
    * Uses the available values to update the chart
    */
   updateChart() {
+    /*
     if (this.user === undefined)
       return;
 
@@ -143,6 +120,7 @@ export class Page1 {
       function (consultant) {
         return consultant.client !== 'Not defined' && new Date(consultant.ending_date) < new Date();
       });
+      */
   }
 
   pushNewConsultant() {

@@ -24,10 +24,11 @@ export class SettingsPage {
     contact: '',
     target: 0,
     notifications: true,
-    auto_inactive: true
+    auto_inactive: true,
+    active: true
   };
 
-  bms: any[];
+  bms;
 
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
@@ -36,15 +37,9 @@ export class SettingsPage {
   }
 
   ionViewDidLoad() {
-    this.user = this.bmappAPI.getUser();
-
     this.bmappAPI.getBms().then((val) => {
-      console.log("BMS->" + val);
       this.bms = val;
-
-      if (this.user.name === '') {
-        this.pickProfile();
-      }
+      this.user = _.find(this.bms, { active: true });
     });
   }
 
@@ -92,34 +87,30 @@ export class SettingsPage {
       });
     }
 
-    alert.addInput({
-      type: 'radio',
-      label: 'New record',
-      value: 'New record',
-      checked: true
-    });
-
     //alert.addButton('Cancel');
     alert.addButton({
       text: 'OK',
       handler: data => {
-        if (data === 'New record') {
-          this.user = {
-            id: new Date().getUTCMilliseconds(),
-            name: '',
-            email: '',
-            contact: '',
-            target: 0,
-            notifications: true,
-            auto_inactive: true
-          };
-        } else {
-          this.user = _.find(this.bms, { name: data })
-        }
+        if (data === undefined)
+          return;
 
+        this.user = _.find(this.bms, { name: data });
       }
     });
     alert.present();
+  }
+
+  newUser() {
+    this.user = {
+      id: new Date().getUTCMilliseconds(),
+      name: '',
+      email: '',
+      contact: '',
+      target: 0,
+      notifications: true,
+      auto_inactive: true,
+      active: true
+    };
   }
 
 }
