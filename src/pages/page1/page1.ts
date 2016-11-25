@@ -66,6 +66,7 @@ export class Page1 {
    */
   consultants: any[];
   clients: any[];
+  user: any;
   undefinedCount = 0;
   assignedCount = 0;
   today = new Date().toDateString();
@@ -96,6 +97,10 @@ export class Page1 {
 
     this.bmappAPI.getClients().then((val) => {
       this.clients = val;
+    });
+
+    this.bmappAPI.getBms().then((val) => {
+      this.user = _.find(val, { active: true });
     });
 
   }
