@@ -19,7 +19,7 @@ export class ConsultantsPage {
   consultants: any[];
   filteredConsultants: any[];
   user;
-  consultantsFilter = 'mine';
+  consultantsFilter = 'all';
 
   constructor(
     public navCtrl: NavController,
@@ -29,7 +29,7 @@ export class ConsultantsPage {
 
     events.subscribe('consultants:new', (data) => {
       this.consultants.push(data);
-      console.log("UPDATED");
+      console.log("UPDATED: " + data);
     });
   }
 
@@ -46,16 +46,17 @@ export class ConsultantsPage {
     });
   }
 
+/**
+ * Filters the list of consultants according to the selected tab
+ */
  filterConsultants(){
     if(this.consultantsFilter === 'all'){
-      this.filteredConsultants = this.consultants;
+      this.filteredConsultants = this.consultants;   
+      console.log(this.filteredConsultants);   
     } else {
-      this.filteredConsultants = _.filter(this.filteredConsultants, s => s.bm === this.user.id);      
+      this.filteredConsultants = _.filter(this.filteredConsultants, s => s.bm === this.user.id);  
+      console.log("FILTERED: " + this.filteredConsultants);    
     }
-
-
-   console.log(this.consultantsFilter);
-   console.log(this.filteredConsultants);
   }
 
   /**
@@ -70,12 +71,12 @@ export class ConsultantsPage {
   }
 
   newConsultant() {
-    this.navCtrl.push(NewConsultantPage);
+    this.navCtrl.push(NewConsultantPage, {'user': this.user});
   }
 
   editConsultant($event, consultant) {
     console.log(consultant.name);
-    this.navCtrl.push(NewConsultantPage, {'consultant': consultant});
+    this.navCtrl.push(NewConsultantPage, {'consultant': consultant, 'user': this.user});
   }
 }
 

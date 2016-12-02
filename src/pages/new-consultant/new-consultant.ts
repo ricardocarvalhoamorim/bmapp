@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, ToastController, NavParams, AlertController, Events } from 'ionic-angular';
 
 import { BMappApi } from '../../shared/BMappApi';
 
@@ -16,12 +16,14 @@ import { BMappApi } from '../../shared/BMappApi';
 export class NewConsultantPage {
 
   consultant: any;
+  user: any;
   clients: any[];
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public toastController: ToastController,
+    public events: Events,
     public alertCtrl: AlertController,
     public bmappApi: BMappApi) {
 
@@ -41,8 +43,15 @@ export class NewConsultantPage {
       };
     } else {
       this.consultant = navParams.get('consultant');
-      console.log("EDITING USER " + this.consultant.id);
+      //console.log("EDITING USER " + this.consultant.id);
     }
+
+    if (!navParams.get('user')) {
+      console.log("An active user is required to create a consultant!");
+      return;
+    }
+
+    this.user = navParams.get('user');
   }
 
   ionViewDidLoad() {
@@ -62,8 +71,10 @@ export class NewConsultantPage {
       return;
     }
 
+    this.consultant.bm = this.user.id;
     this.bmappApi.saveConsultant(this.consultant);
     this.presentToast('Saved successfully');
+    this.events.publish("consultants:new", this.consultant);
     this.navCtrl.pop();
   }
 
@@ -84,7 +95,7 @@ export class NewConsultantPage {
    */
   pickMission() {
     let alert = this.alertCtrl.create();
-    alert.setTitle('Lightsaber color');
+    alert.setTitle('Pick a client');
 
     for (let client of this.clients) {
       alert.addInput({

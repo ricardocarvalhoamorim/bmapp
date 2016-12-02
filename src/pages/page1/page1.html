@@ -29,23 +29,22 @@
           </ion-col>
         </ion-row>
 
-        <ion-row text-wrap *ngIf="consultants">
+        <ion-row text-wrap>
           <ion-col width-10>
             <ion-icon name="person"></ion-icon>
           </ion-col>
 
           <ion-col width-90>
-            <b color="primary" (click)="switchToConsultantsList()">{{consultants.length}} consultants under your supervision</b>
+            <b color="primary" (click)="switchToConsultantsList()">{{assignedCount + standbyCount}} consultants under your supervision</b>
           </ion-col>
         </ion-row>
 
-        <ion-row text-wrap *ngIf="undefinedCount > 0">
+          <ion-row text-wrap *ngIf="standbyCount > 0">
           <ion-col width-10>
             <ion-icon name="clock"></ion-icon>
           </ion-col>
-
           <ion-col width-90>
-            <b color="primary" (click)="switchToClientsList()">{{undefinedCount}} consultants on the bench</b>
+            <b color="primary">{{standbyCount}} consultants waiting for a mission</b>
           </ion-col>
         </ion-row>
 
@@ -64,18 +63,29 @@
   </ion-card>
 
   <ion-card>
-
-    <ion-item>
+    <ion-item  text-wrap>
       <ion-avatar item-right>
         <ion-icon name="analytics"> </ion-icon>
       </ion-avatar>
       <h2>Performance</h2>
+      <p>How you compare to other business managers in your unit, based on your <b>running missions</b></p>
     </ion-item>
-
     <ion-card-content>
-      <chart [options]="barOptions"></chart>
+      <chart [options]="competitionOptions"></chart>
+    </ion-card-content>
+  </ion-card>
 
-      <chart [options]="lineOptions"></chart>
+
+<ion-card>
+    <ion-item  text-wrap>
+      <ion-avatar item-right>
+        <ion-icon name="analytics"> </ion-icon>
+      </ion-avatar>
+      <h2>Your consultants</h2>
+      <p>Your consultants' distribution based on their missions' status</p>
+    </ion-item>
+    <ion-card-content>
+      <chart [options]="consultantsDistributionOptions"></chart>
     </ion-card-content>
   </ion-card>
 
