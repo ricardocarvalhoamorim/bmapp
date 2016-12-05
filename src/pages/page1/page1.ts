@@ -98,6 +98,7 @@ export class Page1 {
     this.bmappAPI.getBms().then((val) => {
       this.user = _.find(val, { active: true });
       this.bms = val;
+      console.log(this.bms);
       if (!this.user) {
 
         console.log("Could not find an acive user, will create one");
@@ -159,7 +160,7 @@ export class Page1 {
     for (let bm of this.bms) {
       var consultantsCount = _.filter(this.consultants, function (consultant) {
         if (consultant.bm === bm.id
-          && consultant.client !== ''
+          //&& consultant.client !== ''
           //&& new Date(consultant.ending_date) < new Date()
         )
           return consultant;

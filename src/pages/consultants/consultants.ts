@@ -46,14 +46,14 @@ export class ConsultantsPage {
     });
   }
 
-/**
- * Filters the list of consultants according to the selected tab
- */
- filterConsultants(){
-    if(this.consultantsFilter === 'all'){
+  /**
+   * Filters the list of consultants according to the selected tab
+   */
+  filterConsultants() {
+    if (this.consultantsFilter === 'all') {
       this.filteredConsultants = this.consultants;
     } else {
-      this.filteredConsultants = _.filter(this.filteredConsultants, s => s.bm === this.user.id);  
+      this.filteredConsultants = _.filter(this.filteredConsultants, s => s.bm === this.user.id);
     }
   }
 
@@ -69,12 +69,12 @@ export class ConsultantsPage {
   }
 
   newConsultant() {
-    this.navCtrl.push(NewConsultantPage, {'user': this.user});
+    this.navCtrl.push(NewConsultantPage, { 'user': this.user });
   }
 
   editConsultant($event, consultant) {
     console.log(consultant.name);
-    this.navCtrl.push(NewConsultantPage, {'consultant': consultant, 'user': this.user});
+    this.navCtrl.push(NewConsultantPage, { 'consultant': consultant, 'user': this.user });
   }
 }
 

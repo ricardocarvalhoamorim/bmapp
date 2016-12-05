@@ -20,6 +20,7 @@ export class SettingsPage {
   user = {
     id: new Date().getUTCMilliseconds(),
     name: '',
+    initials: '',
     email: '',
     contact: '',
     target: 0,
@@ -44,6 +45,8 @@ export class SettingsPage {
   }
 
   saveSettings() {
+    this.user.initials = this.user.name.match(/\b(\w)/g).join('');
+    console.log(this.user.initials);
     this.bmappAPI.saveBM(this.user);
     this.presentToast('Settings successfully save')
   }
@@ -104,6 +107,7 @@ export class SettingsPage {
     this.user = {
       id: new Date().getUTCMilliseconds(),
       name: '',
+      initials: '',
       email: '',
       contact: '',
       target: 0,
