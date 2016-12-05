@@ -100,6 +100,7 @@ export class BMappApi {
             
             businessManager.active = true;
 
+            businessManager.initials = businessManager.name.match(/\b(\w)/g).join('');
             var index = _.indexOf(val, _.find(val, { id: businessManager.id }));
             if (index === -1) {
                 //doesn't exist, just push a new one

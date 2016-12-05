@@ -16,8 +16,8 @@ import * as _ from 'lodash';
 })
 export class ConsultantsPage {
 
-  consultants: any[];
-  filteredConsultants: any[];
+  consultants;
+  filteredConsultants;
   user;
   consultantsFilter = 'all';
 
@@ -30,6 +30,7 @@ export class ConsultantsPage {
     events.subscribe('consultants:new', (data) => {
       this.consultants.push(data);
       console.log("UPDATED: " + data);
+      this.filterConsultants();
     });
   }
 
@@ -52,8 +53,15 @@ export class ConsultantsPage {
   filterConsultants() {
     if (this.consultantsFilter === 'all') {
       this.filteredConsultants = this.consultants;
+      console.log("ALL");
+      console.log("CONSULTANTS: " + this.filteredConsultants);
     } else {
+      /*
       this.filteredConsultants = _.filter(this.filteredConsultants, s => s.bm === this.user.id);
+      console.log("USER: " + this.user.id);
+      console.log("CONSULTANTS: " + this.filteredConsultants.length);
+      */
+      this.filteredConsultants = [];
     }
   }
 
