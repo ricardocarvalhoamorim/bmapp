@@ -51,11 +51,9 @@ export class ConsultantsPage {
  */
  filterConsultants(){
     if(this.consultantsFilter === 'all'){
-      this.filteredConsultants = this.consultants;   
-      console.log(this.filteredConsultants);   
+      this.filteredConsultants = this.consultants;
     } else {
       this.filteredConsultants = _.filter(this.filteredConsultants, s => s.bm === this.user.id);  
-      console.log("FILTERED: " + this.filteredConsultants);    
     }
   }
 
