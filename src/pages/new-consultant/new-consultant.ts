@@ -45,6 +45,7 @@ export class NewConsultantPage {
       };
     } else {
       this.consultant = navParams.get('consultant');
+      console.log(this.consultant);
     }
 
     if (!navParams.get('user')) {

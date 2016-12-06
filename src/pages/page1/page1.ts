@@ -17,21 +17,67 @@ import * as _ from 'lodash';
 })
 export class Page1 {
 
-  public competitionLabels: string[] = [];
-  public competitionsData: any[] = [];
+  /**
+   * The list of the group's consultants
+   */
+  consultants: any[];
+
+  /**
+   * The list of consultants assigned for the active user
+   */
+  userConsultants: any[];
+
+  /**
+   * The client portfolio
+   */
+  clients: any[];
+
+  /**
+   * The registered business managers
+   */
+  bms: any[];
+
+  /**
+    * The active user
+    */
+  user: any;
+
+  /**
+   * Number of consultants currently on a mission
+   */
+  consultantsOnMission = 0;
+
+  /**
+   * Number of consultants waiting for a mission
+   */
+  consultantsOnBench = 0;
+
+  /**
+   * Today's formatted date
+   */
+  today = new Date().toDateString();
+
+  /**
+   * Number of consultants with an active mission
+   */
+  runningMissions = 0;
+
+  /**
+   * The user's progress towards his objectives
+   */
+  progress = 0;
 
   @ViewChild(ChartComponent) competitionComp;
   public competitionOptions = {
     type: 'bar',
     responsive: false,
     data: {
-      labels: this.competitionLabels,
+      labels: [],
       datasets: [
         {
-          data: this.competitionsData,
+          data: [],
           backgroundColor: [
-            'rgba(215, 40, 40, 0.9)',
-            'rgba(222, 222, 222, 0.9)'
+            'rgba(215, 40, 40, 0.9)'
           ]
         }
       ]
@@ -44,42 +90,16 @@ export class Page1 {
     responsive: false,
     data: {
       labels: ['Mission', 'Bench'],
-      backgroundColor: 'rgba(148,159,177,0.2)',
       datasets: [
         {
-          data: [0, 1],
+          data: [],
           backgroundColor: [
-            'rgba(215, 40, 40, 0.9)',
-            'rgba(222, 222, 222, 0.9)'
+            'rgba(215, 40, 40, 0.9)'
           ]
         }
       ]
     }
   };
-
-  consultants: any[];
-  clients: any[];
-  bms: any[];
-
-  /**
-   * The active user
-   */
-  user: any;
-
-  /**
-   * Number of consultants waiting for a mission
-   */
-  standbyCount = 0;
-
-  /**
-   * Number of consultants currently on a mission
-   */
-  assignedCount = 0;
-
-  /**
-   * Today's formatted date
-   */
-  today = new Date().toDateString();
 
   constructor(
     public navCtrl: NavController,
@@ -88,8 +108,14 @@ export class Page1 {
 
     events.subscribe('consultants:new', (data) => {
       this.consultants.push(data);
-      console.log("NEW: " + data);
-      this.updateChart();
+      console.log("1) NEW CONSULTANT: " + data);
+      this.ionViewDidLoad();
+    });
+
+    events.subscribe('clients:new', (data) => {
+      this.clients.push(data);
+      console.log("1) NEW CLIENT: " + data);
+      this.ionViewDidLoad();
     });
   }
 
@@ -97,8 +123,8 @@ export class Page1 {
 
     this.bmappAPI.getBms().then((val) => {
       this.user = _.find(val, { active: true });
+
       this.bms = val;
-      console.log(this.bms);
       if (!this.user) {
 
         console.log("Could not find an acive user, will create one");
@@ -126,10 +152,14 @@ export class Page1 {
         return;
       }
 
-      this.standbyCount = _.filter(
-        this.consultants,
-        _.matchesProperty('client', '')).length;
 
+      //compute the user's stats
+      this.userConsultants =
+        _.filter(this.consultants, cs => cs.bm === this.user.id);
+      this.consultantsOnMission =
+        _.filter(this.userConsultants, cs => cs.clientID !== '-1').length;
+      this.consultantsOnBench = this.userConsultants.length - this.consultantsOnMission;
+      this.progress = this.consultantsOnMission/this.user.target*100;
       this.updateChart();
     });
 
@@ -138,15 +168,13 @@ export class Page1 {
     });
   }
 
+
   /**
    * Uses the available values to update the chart
    */
   updateChart() {
 
     if (this.user === undefined)
-      return;
-
-    if (this.assignedCount === undefined)
       return;
 
     //update bar chart
@@ -166,16 +194,13 @@ export class Page1 {
         )
           return consultant;
       }).length;
-
-      if (this.user.id === bm.id)
-        this.assignedCount = consultantsCount;
-
       this.competitionOptions.data.datasets[0].data.push(consultantsCount);
     }
+
     this.competitionComp.chart.update();
 
     //update pie chart
-    this.consultantsDistributionOptions.data.datasets[0].data = [this.assignedCount, this.standbyCount];
+    this.consultantsDistributionOptions.data.datasets[0].data = [this.consultantsOnMission, this.consultantsOnBench];
 
   }
 

@@ -18,33 +18,31 @@
 
     <ion-card-content>
       <ion-grid>
-
         <ion-row text-wrap *ngIf="clients">
           <ion-col width-10>
-            <ion-icon name="briefcase"></ion-icon>
+            <ion-icon name="ios-briefcase-outline"></ion-icon>
           </ion-col>
 
           <ion-col width-90>
             <b color="primary" (click)="switchToClientsList()">{{clients.length}} clients in your portfolio</b>
           </ion-col>
         </ion-row>
-
         <ion-row text-wrap>
           <ion-col width-10>
-            <ion-icon name="person"></ion-icon>
+            <ion-icon name="ios-person-outline"></ion-icon>
           </ion-col>
-
-          <ion-col width-90>
-            <b color="primary" (click)="switchToConsultantsList()">{{assignedCount + standbyCount}} consultants under your supervision</b>
+          <ion-col width-90 *ngIf="userConsultants">
+            <b color="primary" (click)="switchToConsultantsList()">{{userConsultants.length}} consultants under your supervision</b>
           </ion-col>
         </ion-row>
 
-          <ion-row text-wrap *ngIf="standbyCount > 0">
+        <ion-row text-wrap>
           <ion-col width-10>
-            <ion-icon name="clock"></ion-icon>
+            <ion-icon name="ios-time-outline"></ion-icon>
           </ion-col>
-          <ion-col width-90>
-            <b color="primary">{{standbyCount}} consultants waiting for a mission</b>
+
+          <ion-col width-90 *ngIf="consultantsOnBench > 0">
+            <b color="primary" (click)="switchToConsultantsList()">... {{consultantsOnBench}} waiting for a mission</b>
           </ion-col>
         </ion-row>
 
@@ -62,8 +60,21 @@
 
   </ion-card>
 
+  <ion-card *ngIf="user">
+    <ion-item text-wrap>
+      <ion-avatar item-right>
+        <h1>{{progress}}%</h1>
+      </ion-avatar>
+      <h1>Your objectives</h1>
+      <progress max="{{user.target}}" value="{{consultantsOnMission}}"></progress>
+    </ion-item>
+    <ion-card-content>
+    </ion-card-content>
+
+  </ion-card>
+
   <ion-card>
-    <ion-item  text-wrap>
+    <ion-item text-wrap>
       <ion-avatar item-right>
         <ion-icon name="analytics"> </ion-icon>
       </ion-avatar>
@@ -76,8 +87,8 @@
   </ion-card>
 
 
-<ion-card>
-    <ion-item  text-wrap>
+  <ion-card>
+    <ion-item text-wrap>
       <ion-avatar item-right>
         <ion-icon name="analytics"> </ion-icon>
       </ion-avatar>
@@ -99,8 +110,8 @@
     </ion-item>
 
     <ion-card-content>
-      <p *ngIf="user">You established that you want to have <b>{{user.target}}</b> running missions. You can change this and other settings by tapping
-        the button bellow. Notice that by changing your objectives, some warnings can become obsolete.</p>
+      <p *ngIf="user">You established that you want to have <b>{{user.target}}</b> running missions. You can change this and other settings
+        by tapping the button bellow. Notice that by changing your objectives, some warnings can become obsolete.</p>
       <button ion-button outline block (click)="switchToSettings()">Application Settings</button>
     </ion-card-content>
   </ion-card>

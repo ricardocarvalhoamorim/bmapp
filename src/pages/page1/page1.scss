@@ -1,3 +1,20 @@
 page-page1 {
 
+progress {
+    height: 10px;
+    width: 100%;
+    background: rgba(215, 40, 40, 0.9);
+}
+
+
+/* Firefox */
+progress::-moz-progress-bar { 
+    background: rgba(215, 40, 40, 0.9);  
+}
+
+/* Chrome */
+progress::-webkit-progress-value {
+    background: rgba(215, 40, 40, 0.9);
+}
+
 }

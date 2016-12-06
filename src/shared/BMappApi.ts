@@ -233,7 +233,7 @@ export class BMappApi {
         {
             id: 'cs1',
             bm: 'bm1',
-            clienID: 'c1',
+            clientID: 'c1',
             client: 'ADNEOM Lab',
             name: 'Franz Lizst',
             initials: 'FL',
@@ -248,7 +248,7 @@ export class BMappApi {
         {
             id: 'cs2',
             bm: 'bm2',
-            clienID: 'c1',
+            clientID: 'c1',
             client: 'ADNEOM Lab',
             name: 'Antonín Dvořák',
             initials: 'AD',
@@ -263,7 +263,7 @@ export class BMappApi {
         {
             id: 'cs3',
             bm: 'bm2',
-            clienID: 'c2',
+            clientID: 'c2',
             client: 'Proximus',
             name: 'Gustav Mahler',
             initials: 'GM',
@@ -278,6 +278,8 @@ export class BMappApi {
         {
             id: 'cs4',
             bm: 'bm2',
+            clientID: '-1',
+            client: 'No client',
             name: 'Antonio Vivaldi',
             initials: 'AV',
             email: 'avivaldi@music.com',
@@ -286,12 +288,13 @@ export class BMappApi {
             ending_date: '2016-11-31',
             skills: 'Civil Engineering, Fracture Mechanics, Load balancing',
             languages: 'French, Dutch, Portuguese, German',
-            client: '',
             car: false
         },
         {
             id: 'cs5',
             bm: 'bm1',
+            clientID: '-1',
+            client: 'No client',
             name: 'Johann Sebastian Bach',
             initials: 'JSB',
             email: 'jbach@music.com',
@@ -300,7 +303,6 @@ export class BMappApi {
             ending_date: '2016-11-31',
             skills: 'Mechanical Engineering',
             languages: 'French, Dutch, Portuguese, German',
-            client: 'c3',
             car: false
         }
     ];
