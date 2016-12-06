@@ -56,12 +56,12 @@ export class ConsultantsPage {
       console.log("ALL");
       console.log("CONSULTANTS: " + this.filteredConsultants);
     } else {
-      /*
+      
       this.filteredConsultants = _.filter(this.filteredConsultants, s => s.bm === this.user.id);
       console.log("USER: " + this.user.id);
       console.log("CONSULTANTS: " + this.filteredConsultants.length);
-      */
-      this.filteredConsultants = [];
+      
+      //this.filteredConsultants = [];
     }
   }
 

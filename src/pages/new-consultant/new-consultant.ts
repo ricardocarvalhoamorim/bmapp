@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController, NavParams, AlertController, Events } from 'ionic-angular';
 
+import * as _ from 'lodash';
 import { BMappApi } from '../../shared/BMappApi';
 
 /*
@@ -28,22 +29,22 @@ export class NewConsultantPage {
     public bmappApi: BMappApi) {
 
     if (!navParams.get('consultant')) {
-      console.log("Setting up a new consultant");
       this.consultant = {
         id: new Date().getUTCMilliseconds(),
         bm: '',
+        clienID: '-1',
+        client: 'Not defined',
+        initials: '',
         name: '',
         email: '',
         telephone: '',
         starting_date: '',
         skills: '',
         languages: '',
-        client: 'Not defined',
         car: false
       };
     } else {
       this.consultant = navParams.get('consultant');
-      //console.log("EDITING USER " + this.consultant.id);
     }
 
     if (!navParams.get('user')) {
@@ -101,7 +102,7 @@ export class NewConsultantPage {
       alert.addInput({
         type: 'radio',
         label: client.name,
-        value: client.name,
+        value: client.id,
         checked: false
       });
     }
@@ -110,7 +111,10 @@ export class NewConsultantPage {
     alert.addButton({
       text: 'OK',
       handler: data => {
-        this.consultant.client = data;
+        //data -> client id
+        var client = _.find(this.clients, { id: data });
+        this.consultant.client = client.id;
+        this.consultant.client = client.name;
       }
     });
     alert.present();

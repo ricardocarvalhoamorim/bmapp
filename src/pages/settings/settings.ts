@@ -24,12 +24,10 @@ export class SettingsPage {
     email: '',
     contact: '',
     target: 0,
-    notifications: true,
-    auto_inactive: true,
     active: true
   };
 
-  bms;
+  bms: any[];
 
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
@@ -46,8 +44,13 @@ export class SettingsPage {
 
   saveSettings() {
     console.log(this.user.initials);
+    if (this.user.name === '') {
+
+      this.presentToast('You have to provide a name')
+      return;
+    }
     this.bmappAPI.saveBM(this.user);
-    this.presentToast('Settings successfully save')
+    this.presentToast('Settings successfully saved');
   }
 
   presentToast(message) {
@@ -66,8 +69,9 @@ export class SettingsPage {
   }
 
   reset() {
+    this.newUser();
     this.bmappAPI.reset();
-    this.ionViewDidLoad();
+    //this.ionViewDidLoad();
   }
 
   /**
@@ -110,8 +114,6 @@ export class SettingsPage {
       email: '',
       contact: '',
       target: 0,
-      notifications: true,
-      auto_inactive: true,
       active: true
     };
   }

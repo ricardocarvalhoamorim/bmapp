@@ -29,7 +29,7 @@ export class BMappApi {
                 return;
 
             console.log('CONSULTANTS ENTRY CREATED');
-            this.storage.set('consultants', []);
+            this.storage.set('consultants', this.dummy_consultants);
 
         });
 
@@ -38,7 +38,7 @@ export class BMappApi {
                 return;
 
             console.log('CLIENTS ENTRY CREATED');
-            this.storage.set('clients', []);
+            this.storage.set('clients', this.dummy_clients);
 
         });
 
@@ -47,7 +47,7 @@ export class BMappApi {
                 return;
 
             console.log('BMS ENTRY CREATED');
-            this.storage.set('bms', []);
+            this.storage.set('bms', this.dummy_bms);
         });
     }
 
@@ -81,6 +81,7 @@ export class BMappApi {
                 val = [];
             }
 
+            consultant.initials = consultant.name.match(/\b(\w)/g).join('');
             var index = _.indexOf(val, _.find(val, { id: consultant.id }));
 
             if (index === -1) {
@@ -198,15 +199,6 @@ export class BMappApi {
             contact: '+32 478 62 11 12',
             target: 10,
             active: false
-        },
-        {
-            id: 'bm5',
-            name: 'Alessandre Brasseur',
-            initials: 'AB',
-            email: 'abrasseur@adneom.com',
-            contact: '+32 478 62 11 12',
-            target: 12,
-            active: false
         }
     ];
 
@@ -241,46 +233,53 @@ export class BMappApi {
         {
             id: 'cs1',
             bm: 'bm1',
+            clienID: 'c1',
+            client: 'ADNEOM Lab',
             name: 'Franz Lizst',
+            initials: 'FL',
             email: 'flizst@dolph.com',
             contact: '+32 444 11 11',
             starting_date: '2009-08-11',
             ending_date: '2016-11-31',
             skills: 'Java, Java EE',
-            client: 'c1',
             languages: 'Portuguese, Spanish',
             car: true
         },
         {
             id: 'cs2',
             bm: 'bm2',
+            clienID: 'c1',
+            client: 'ADNEOM Lab',
             name: 'Antonín Dvořák',
+            initials: 'AD',
             email: 'advorak@dolph.com',
             contact: '+32 991 11 11',
             starting_date: '2009-01-29',
             ending_date: '2016-11-31',
             skills: 'AngularJs',
             languages: 'French, Dutch, German',
-            client: 'c1',
             car: true
         },
         {
             id: 'cs3',
             bm: 'bm2',
+            clienID: 'c2',
+            client: 'Proximus',
             name: 'Gustav Mahler',
+            initials: 'GM',
             email: 'gmahler@symphony.com',
             contact: '+32 001 12 22',
             starting_date: '2009-01-10',
             ending_date: '2016-11-31',
             skills: 'Python, SQL Server, Android, Ruby on Rails',
             languages: 'French, Dutch, Portuguese, German',
-            client: 'c2',
             car: false
         },
         {
             id: 'cs4',
             bm: 'bm2',
             name: 'Antonio Vivaldi',
+            initials: 'AV',
             email: 'avivaldi@music.com',
             contact: '+32 001 12 22',
             starting_date: '2009-01-10',
@@ -294,6 +293,7 @@ export class BMappApi {
             id: 'cs5',
             bm: 'bm1',
             name: 'Johann Sebastian Bach',
+            initials: 'JSB',
             email: 'jbach@music.com',
             contact: '+32 001 12 22',
             starting_date: '2009-01-10',
@@ -301,71 +301,6 @@ export class BMappApi {
             skills: 'Mechanical Engineering',
             languages: 'French, Dutch, Portuguese, German',
             client: 'c3',
-            car: false
-        },
-        {
-            id: 'cs6',
-            bm: 'bm4',
-            name: 'Sebastian Javert',
-            email: 'sjavert@music.com',
-            contact: '+32 001 12 22',
-            starting_date: '2009-01-10',
-            ending_date: '2016-12-31',
-            skills: 'Mechanical Engineering',
-            languages: 'French, Dutch, Portuguese, German',
-            client: 'c2',
-            car: false
-        },
-        {
-            id: 'cs7',
-            bm: 'bm4',
-            name: 'Matthieu Longchamp',
-            email: 'mlongchamo@music.com',
-            contact: '+32 001 12 22',
-            starting_date: '2009-01-10',
-            ending_date: '2016-12-31',
-            skills: 'Oracle Java 8',
-            languages: 'French, Dutch, Portuguese, German',
-            client: 'c2',
-            car: false
-        },
-        {
-            id: 'cs8',
-            bm: 'bm4',
-            name: 'Sven',
-            email: 'sven@music.com',
-            contact: '+32 001 12 22',
-            starting_date: '2009-01-10',
-            ending_date: '2016-12-31',
-            skills: 'Oracle Java 8',
-            languages: 'French, Dutch, Portuguese, German, Japanese',
-            client: 'c2',
-            car: false
-        },
-        {
-            id: 'cs9',
-            bm: 'bm4',
-            name: 'Miles Davis',
-            email: 'mdavis@music.com',
-            contact: '+32 001 12 22',
-            starting_date: '2009-01-10',
-            ending_date: '2016-12-31',
-            skills: 'Percussion',
-            languages: 'French, Dutch, English Portuguese, German, Japanese',
-            client: 'c3',
-            car: false
-        },
-        {
-            id: 'bm6',
-            bm: 'bm4',
-            name: 'Ahmed Lordi',
-            email: 'alordin@adneom.com',
-            contact: '+32 478 62 11 12',
-            starting_date: '2009-01-10',
-            ending_date: '2016-12-31',
-            skills: 'Percussion',
-            languages: 'French, Dutch, English Portuguese, German, Japanese',
-            client: 'c1',
             car: false
         }
     ];

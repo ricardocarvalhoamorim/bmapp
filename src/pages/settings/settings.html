@@ -48,20 +48,6 @@
     <ion-item-divider>
       Application behaviour
     </ion-item-divider>
-
-    <ion-item>
-      <p>Whenever a deadline is passed, the application switches the consultant's status to inactive by default. Inactive consultants
-        show up in the statistics as if they were in the lab.</p>
-      <ion-label> Automatically change to inactive</ion-label>
-      <ion-toggle checked="false" [(ngModel)]="user.auto_inactive" ngControl="auto_inactive"></ion-toggle>
-    </ion-item>
-
-    <ion-item>
-      <p>The application can send you notifications whenever a project changes its state.</p>
-      <ion-label> Notifications</ion-label>
-      <ion-toggle checked="false" [(ngModel)]="user.notifications" ngControl="notifications"></ion-toggle>
-    </ion-item>
-
     <ion-item>
       <ion-label>My objectives</ion-label>
       <ion-input type="number" [(ngModel)]="user.target" ngControl="target"></ion-input>
