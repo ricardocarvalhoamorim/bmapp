@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, ToastController, NavParams, AlertController, Events } from 'ionic-angular';
 import { BMappApi } from '../../shared/BMappApi';
 /*
   Generated class for the NewClient page.
@@ -18,6 +18,7 @@ export class NewClientPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public events: Events,
     public toastController: ToastController,
     public alertCtrl: AlertController,
     public bmappApi: BMappApi) {
@@ -41,9 +42,9 @@ export class NewClientPage {
   }
 
   /**
-   * Attempts to save the provided information in a new consultant record
+   * Attempts to save the provided information in a new client record
    */
-  saveConsultant() {
+  saveClient() {
     console.log(this.client);
 
     if (!this.client.name) {
@@ -51,10 +52,12 @@ export class NewClientPage {
       return;
     }
 
-    
-      this.bmappApi.saveClient(this.client);
-      this.presentToast('Saved successfully');
-      this.navCtrl.pop();
+
+
+    this.events.publish('clients:new', this.client);
+    this.bmappApi.saveClient(this.client);
+    this.presentToast('Saved successfully');
+    this.navCtrl.pop();
   }
 
   /**

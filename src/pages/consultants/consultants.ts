@@ -28,8 +28,9 @@ export class ConsultantsPage {
     public bmappAPI: BMappApi) {
 
     events.subscribe('consultants:new', (data) => {
-      this.consultants.push(data);
-      console.log("UPDATED: " + data);
+      if(this.consultants.indexOf(data[0]) == -1)
+        this.filteredConsultants.push(data[0]);
+        
       this.filterConsultants();
     });
   }

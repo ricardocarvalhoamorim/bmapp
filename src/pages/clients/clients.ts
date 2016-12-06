@@ -26,15 +26,14 @@ export class ClientsPage {
     public events: Events,
     public bmappAPI: BMappApi
   ) {
-    events.subscribe('client:new', (data) => {
-      //this.clients.push(data)
-      console.log("UPDATED");
+    events.subscribe('clients:new', (data) => {
+      if (this.clients.indexOf(data[0]) == -1) 
+        this.clients.push(data[0]);
+      //this.ionViewDidLoad();
     });
   }
 
   ionViewDidLoad() {
-    console.log('Hello ClientsPage Page');
-
     this.bmappAPI.getClients().then((val) => {
       this.clients = val;
     });
