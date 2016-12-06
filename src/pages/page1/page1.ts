@@ -105,9 +105,9 @@ export class Page1 {
         this.user = {
           id: new Date().getUTCMilliseconds(),
           name: 'No name provided',
-          email: '',
-          contact: '',
-          target: 6,
+          email: 'n/a',
+          contact: 'n/a',
+          target: 5,
           notifications: true,
           auto_inactive: true,
           active: true

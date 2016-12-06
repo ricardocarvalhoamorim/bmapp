@@ -15,6 +15,40 @@ export class BMappApi {
         storage: Storage,
         public events: Events) {
         this.storage = storage;
+
+        this.dbCheckup();
+    }
+
+    /**
+     * check the database before continuing
+     */
+    dbCheckup() {
+
+        this.storage.get('consultants').then((data) => {
+            if (data != null)
+                return;
+
+            console.log('CONSULTANTS ENTRY CREATED');
+            this.storage.set('consultants', []);
+
+        });
+
+        this.storage.get('clients').then((data) => {
+            if (data != null)
+                return;
+
+            console.log('CLIENTS ENTRY CREATED');
+            this.storage.set('clients', []);
+
+        });
+
+        this.storage.get('bms').then((data) => {
+            if (data != null)
+                return;
+
+            console.log('BMS ENTRY CREATED');
+            this.storage.set('bms', []);
+        });
     }
 
     /**
@@ -71,7 +105,7 @@ export class BMappApi {
                 val = [];
             }
 
-            
+
             var index = _.indexOf(val, _.find(val, { id: client.id }));
             if (index === -1) {
                 val.push(client);
@@ -97,7 +131,7 @@ export class BMappApi {
             _.map(val, function (v) {
                 v.active = false;
             });
-            
+
             businessManager.active = true;
 
             businessManager.initials = businessManager.name.match(/\b(\w)/g).join('');
@@ -125,6 +159,7 @@ export class BMappApi {
 
     reset() {
         this.storage.clear();
+        this.dbCheckup();
     }
 
     dummy_bms = [
