@@ -88,6 +88,12 @@
     </ion-item>
 
     <ion-item>
+      <ion-icon name="ios-cash-outline" item-left></ion-icon>
+      <ion-label>Package</ion-label>
+      <ion-input disabled="{{isReadOnly}}" type="number" [(ngModel)]="consultant.package" ngControl="package"></ion-input>
+    </ion-item>
+
+    <ion-item>
       <ion-icon name="car" item-left></ion-icon>
       <ion-label>Company car</ion-label>
       <ion-toggle disabled="{{isReadOnly}}" checked="false" [(ngModel)]="consultant.car" ngControl="car"></ion-toggle>

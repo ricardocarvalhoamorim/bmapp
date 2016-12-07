@@ -13,17 +13,17 @@
     <ion-title>Consultants</ion-title>
   </ion-navbar>
 
-    <ion-toolbar>
-        <ion-segment secondary [(ngModel)]="consultantsFilter" (ionChange)="filterConsultants()">
-            <ion-segment-button value="mine">
-                My consultants
-            </ion-segment-button>
-            <ion-segment-button value="all">
-                All
-            </ion-segment-button>
-        </ion-segment>
-    </ion-toolbar>
-    
+  <ion-toolbar>
+    <ion-segment secondary [(ngModel)]="consultantsFilter" (ionChange)="filterConsultants()">
+      <ion-segment-button value="mine">
+        My consultants
+      </ion-segment-button>
+      <ion-segment-button value="all">
+        All
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
 </ion-header>
 <ion-content no-padding>
 
@@ -37,61 +37,66 @@
 
   </ion-card>
 
-    <ion-fab padding right bottom>
+  <ion-fab padding right bottom>
     <button ion-fab color="primary" (click)="newConsultant()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
   <ion-list *ngIf="filteredConsultants && filteredConsultants.length > 0" no-lines [virtualScroll]="filteredConsultants" [approxItemHeight]="'132px'">
 
-      <ion-card *virtualItem="let consultant" text-wrap>
-        <ion-item  (click)="editConsultant($event, consultant)">
-          <ion-avatar item-left>
-            <h1>{{consultant.name.substring(0,1)}}</h1>
-          </ion-avatar>
-          <h2>{{consultant.name}}</h2>
-          <p>
-            <ion-badge item-right>{{consultant.client}}</ion-badge>
-          </p>
-        </ion-item>
+    <ion-card *virtualItem="let consultant" text-wrap>
+      <ion-item (click)="editConsultant($event, consultant)">
+        <ion-avatar item-left>
+          <h1>{{consultant.name.substring(0,1)}}</h1>
+        </ion-avatar>
+        <h2>{{consultant.name}}</h2>
+        <p>
+          <ion-badge item-right>{{consultant.client}}</ion-badge>
+        </p>
+      </ion-item>
 
-        <ion-card-content>
-          <p>
-            <ion-icon name="build"> {{consultant.skills}}</ion-icon>
-          </p>
-          <p>
-            <ion-icon name="calendar"> Started: {{consultant.starting_date}}</ion-icon>
-          </p>
-          <p>
-            <ion-icon name="microphone"> {{consultant.languages}}</ion-icon>
-          </p>
-          <p>
-            <ion-icon name="car"> {{consultant.car ? 'Yes' : 'No'}}</ion-icon>
-          </p>
-        </ion-card-content>
-      
+      <ion-card-content>
+        <p>
+          <ion-icon name="cash"> {{consultant.package}} €</ion-icon>
+        </p>
+        <p>
+          <ion-icon name="build"> {{consultant.skills}}</ion-icon>
+        </p>
+        <!--
+        <p>
+          <ion-icon name="calendar"> Started: {{consultant.starting_date}}</ion-icon>
+        </p>
+        -->
+        <p>
+          <ion-icon name="microphone"> {{consultant.languages}}</ion-icon>
+        </p>
+        <p>
+          <ion-icon name="car"> {{consultant.car ? 'Yes' : 'No'}}</ion-icon>
+        </p>
+      </ion-card-content>
+
       <ion-row no-padding>
-      <ion-col>
-        <button ion-button disabled clear color="primary" icon-left (click)="share($event, consultant)">
+        <ion-col>
+          <button ion-button disabled clear color="primary" icon-left (click)="share($event, consultant)">
           <ion-icon name='share-alt'></ion-icon>
           Share
         </button>
-      </ion-col>
-      <ion-col text-center>
-        <button ion-button clear color="primary" icon-left *ngIf="consultant.email" (click)="email($event, consultant)">
+        </ion-col>
+        <ion-col text-center>
+          <button ion-button clear color="primary" icon-left *ngIf="consultant.email" (click)="email($event, consultant)">
           <ion-icon name='mail'></ion-icon>
           Mail
         </button>
-      </ion-col>
-      <ion-col text-right>
-        <button ion-button clear color="primary" icon-left *ngIf="consultant.contact" (click)="call($event, consultant)">
+        </ion-col>
+        <ion-col text-right>
+          <button ion-button clear color="primary" icon-left *ngIf="consultant.contact" (click)="call($event, consultant)">
           <ion-icon name='call'></ion-icon>
           Call
         </button>
-      </ion-col>
-    </ion-row>
+        </ion-col>
+      </ion-row>
 
 
-      </ion-card>
+    </ion-card>
   </ion-list>
 
 </ion-content>

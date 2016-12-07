@@ -45,10 +45,11 @@ export class NewConsultantPage {
         initials: '',
         name: '',
         email: '',
-        telephone: '',
+        contact: '',
         starting_date: '',
         skills: '',
         languages: '',
+        package: 0,
         car: false
       };
 

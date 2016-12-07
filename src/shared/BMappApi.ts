@@ -3,7 +3,6 @@ import { Platform, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import * as _ from 'lodash';
-//import { Http /*, Response*/ } from '@angular/http';
 
 @Injectable()
 export class BMappApi {
@@ -240,6 +239,7 @@ export class BMappApi {
             ending_date: '2016-11-31',
             skills: 'Java, Java EE',
             languages: 'Portuguese, Spanish',
+            package: 2000,
             car: true
         },
         {
@@ -254,6 +254,7 @@ export class BMappApi {
             starting_date: '2009-01-29',
             ending_date: '2016-11-31',
             skills: 'AngularJs',
+            package: 2500,
             languages: 'French, Dutch, German',
             car: true
         },
@@ -268,6 +269,7 @@ export class BMappApi {
             contact: '+32 001 12 22',
             starting_date: '2009-01-10',
             ending_date: '2016-11-31',
+            package: 2800,
             skills: 'Python, SQL Server, Android, Ruby on Rails',
             languages: 'French, Dutch, Portuguese, German',
             car: false
@@ -283,6 +285,7 @@ export class BMappApi {
             contact: '+32 001 12 22',
             starting_date: '2009-01-10',
             ending_date: '2016-11-31',
+            package: 2100,
             skills: 'Civil Engineering, Fracture Mechanics, Load balancing',
             languages: 'French, Dutch, Portuguese, German',
             car: false
@@ -298,6 +301,7 @@ export class BMappApi {
             contact: '+32 001 12 22',
             starting_date: '2009-01-10',
             ending_date: '2016-11-31',
+            package: 2420.29,
             skills: 'Mechanical Engineering',
             languages: 'French, Dutch, Portuguese, German',
             car: false
