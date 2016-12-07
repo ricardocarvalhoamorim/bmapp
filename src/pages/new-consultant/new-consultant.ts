@@ -51,7 +51,7 @@ export class NewConsultantPage {
         languages: '',
         car: false
       };
-      
+
     } else {
       this.consultant = navParams.get('consultant');
       console.log(this.consultant);
@@ -78,6 +78,11 @@ export class NewConsultantPage {
   saveConsultant() {
     console.log(this.consultant);
 
+    if (this.isReadOnly) {
+      this.navCtrl.pop();
+      return;
+    }
+    
     if (!this.consultant.name) {
       this.presentToast('You must provide a name for this record');
       return;
@@ -131,7 +136,7 @@ export class NewConsultantPage {
       handler: data => {
         //data -> client id
         if (data === '-1') {
-          this.consultant.clientID = -1;
+          this.consultant.clientID = '-1';
           this.consultant.client = 'No client';
           console.log(this.consultant);
           return;
@@ -144,5 +149,4 @@ export class NewConsultantPage {
     });
     alert.present();
   }
-
 }

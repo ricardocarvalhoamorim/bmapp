@@ -6,7 +6,12 @@
   </ion-header>
 
   <ion-content>
-    <ion-list >
+    <div class="side-image">
+      <img src="assets/img/home.jpg" />
+      <div class="card-title">ADNEOM</div>
+      <div padding class="card-subtitle">Positive thinking company</div>
+    </div>
+    <ion-list no-lines>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>

@@ -184,7 +184,7 @@ export class BMappApi {
             name: 'Tristan Dumont',
             initials: 'TD',
             email: 'tdumont@adneom.com',
-            contact: '+32 478 62 11 12',
+            contact: '+32 476 416 607',
             target: 40,
             active: false
         },

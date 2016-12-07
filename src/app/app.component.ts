@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { Storage } from '@ionic/storage';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
@@ -15,7 +14,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = Page1;
-
+  today = new Date().toDateString();
   pages: Array<{ title: string, component: any }>;
   consultants: any[];
 
