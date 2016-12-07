@@ -67,23 +67,41 @@ export class Page1 {
    */
   progress = 0;
 
+  /**
+   * Chart with a comparison between business managers
+   */
   @ViewChild(ChartComponent) competitionComp;
   public competitionOptions = {
     type: 'bar',
     responsive: false,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    },
     data: {
       labels: [],
       datasets: [
         {
-          data: [],
+          label: 'Running missions',
+          data: []
+          /*
+          ,
           backgroundColor: [
             'rgba(215, 40, 40, 0.9)'
           ]
+          */
         }
       ]
     }
   };
 
+  /**
+   * Chart with the distribution of consultants according to their occupation
+   * (mission or bench)
+   */
   @ViewChild(ChartComponent) consultantsDistributionComp;
   public consultantsDistributionOptions = {
     type: 'doughnut',
@@ -126,7 +144,6 @@ export class Page1 {
 
       this.bms = val;
       if (!this.user) {
-
         console.log("Could not find an acive user, will create one");
         this.user = {
           id: new Date().getUTCMilliseconds(),
@@ -159,7 +176,7 @@ export class Page1 {
       this.consultantsOnMission =
         _.filter(this.userConsultants, cs => cs.clientID !== '-1').length;
       this.consultantsOnBench = this.userConsultants.length - this.consultantsOnMission;
-      this.progress = this.consultantsOnMission/this.user.target*100;
+      this.progress = this.consultantsOnMission / this.user.target * 100;
       this.updateChart();
     });
 
@@ -197,10 +214,10 @@ export class Page1 {
       this.competitionOptions.data.datasets[0].data.push(consultantsCount);
     }
 
-    this.competitionComp.chart.update();
-
     //update pie chart
     this.consultantsDistributionOptions.data.datasets[0].data = [this.consultantsOnMission, this.consultantsOnBench];
+    //this.competitionComp.chart.update();
+    //this.consultantsDistributionComp.chart.update();
 
   }
 

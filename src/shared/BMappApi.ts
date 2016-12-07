@@ -27,8 +27,6 @@ export class BMappApi {
         this.storage.get('consultants').then((data) => {
             if (data != null)
                 return;
-
-            console.log('CONSULTANTS ENTRY CREATED');
             this.storage.set('consultants', this.dummy_consultants);
 
         });
@@ -36,8 +34,6 @@ export class BMappApi {
         this.storage.get('clients').then((data) => {
             if (data != null)
                 return;
-
-            console.log('CLIENTS ENTRY CREATED');
             this.storage.set('clients', this.dummy_clients);
 
         });
@@ -45,8 +41,6 @@ export class BMappApi {
         this.storage.get('bms').then((data) => {
             if (data != null)
                 return;
-
-            console.log('BMS ENTRY CREATED');
             this.storage.set('bms', this.dummy_bms);
         });
     }
@@ -85,10 +79,10 @@ export class BMappApi {
             var index = _.indexOf(val, _.find(val, { id: consultant.id }));
 
             if (index === -1) {
-                console.log("Creating a new consultant: " + consultant);
+                console.log(consultant);
                 val.push(consultant);
             } else {
-                console.log("Updating a consultant: " + consultant);
+                console.log(consultant);
                 val.splice(index, 1, consultant);
             }
 
@@ -139,25 +133,28 @@ export class BMappApi {
             var index = _.indexOf(val, _.find(val, { id: businessManager.id }));
             if (index === -1) {
                 //doesn't exist, just push a new one
-                console.log("NEW");
                 val.push(businessManager);
             } else {
                 //update an existing one
-                console.log("UPDATE");
                 val.splice(index, 1, businessManager);
             }
-            console.log(val);
             this.storage.set('bms', val);
             this.events.publish('bm:new', businessManager);
         });
     }
 
+    /**
+     * Populates the database with dummy data for demo purposes
+     */
     loadDummyData() {
         this.storage.set('bms', this.dummy_bms);
         this.storage.set('consultants', this.dummy_consultants);
         this.storage.set('clients', this.dummy_clients);
     }
 
+    /**
+     * Clears the database and repopulates it with basic elements
+     */
     reset() {
         this.storage.clear();
         this.dbCheckup();

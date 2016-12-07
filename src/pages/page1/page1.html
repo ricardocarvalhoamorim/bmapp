@@ -12,7 +12,8 @@
   <ion-card>
 
     <ion-item>
-      <h2><b>Summary</b></h2>
+      <h2 *ngIf="user"><b>Welcome back {{user.name}}!</b></h2>
+      <h3>Summary</h3>
       <p>{{today}}</p>
     </ion-item>
 
@@ -66,6 +67,8 @@
         <h1>{{progress}}%</h1>
       </ion-avatar>
       <h1>Your objectives</h1>
+      <p>You established that you want to have <b>{{user.target}}</b> running missions. You can change this and other settings
+        by tapping the button bellow. Notice that by changing your objectives, some warnings can become obsolete.</p>
       <progress max="{{user.target}}" value="{{consultantsOnMission}}"></progress>
     </ion-item>
     <ion-card-content>
@@ -73,7 +76,7 @@
 
   </ion-card>
 
-  <ion-card>
+  <ion-card *ngIf="bms && bms.length > 0">
     <ion-item text-wrap>
       <ion-avatar item-right>
         <ion-icon name="analytics"> </ion-icon>
@@ -87,7 +90,7 @@
   </ion-card>
 
 
-  <ion-card>
+  <ion-card *ngIf="userConsultants && userConsultants.length > 0">
     <ion-item text-wrap>
       <ion-avatar item-right>
         <ion-icon name="analytics"> </ion-icon>
@@ -100,24 +103,33 @@
     </ion-card-content>
   </ion-card>
 
+  <ion-card *ngIf="!userConsultants || userConsultants.length === 0">
+    <ion-item text-wrap>
+      <ion-avatar item-right>
+        <ion-icon name="analytics"> </ion-icon>
+      </ion-avatar>
+      <h2>Your consultants</h2>
+      <p>For the moment, you have no consultants on your record. To see statistics about your portfolio, start by adding consultants
+        by tapping the button below.</p>
+    </ion-item>
+  </ion-card>
+
   <ion-card>
 
     <ion-item>
       <ion-avatar item-right>
         <ion-icon name="cloud"> </ion-icon>
       </ion-avatar>
-      <h2>Objectives</h2>
+      <h2>Settings</h2>
     </ion-item>
 
     <ion-card-content>
-      <p *ngIf="user">You established that you want to have <b>{{user.target}}</b> running missions. You can change this and other settings
-        by tapping the button bellow. Notice that by changing your objectives, some warnings can become obsolete.</p>
       <button ion-button outline block (click)="switchToSettings()">Application Settings</button>
     </ion-card-content>
   </ion-card>
 
 
-
+<!--
   <ion-fab padding right bottom>
     <button ion-fab color="primary"><ion-icon name="add"></ion-icon></button>
     <ion-fab-list side="top">
@@ -125,5 +137,5 @@
       <button ion-fab (click)="pushNewClient()"><ion-icon name="briefcase"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
-
+  -->
 </ion-content>

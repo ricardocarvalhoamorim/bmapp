@@ -62,12 +62,6 @@ export class SettingsPage {
     toast.present();
   }
 
-  loadDummyData() {
-    this.bmappAPI.loadDummyData();
-    this.ionViewDidLoad();
-    this.presentToast('Dummy data successfully loaded');
-  }
-
   reset() {
     this.newUser();
     this.bmappAPI.reset();

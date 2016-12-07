@@ -32,8 +32,8 @@ export class NewConsultantPage {
       this.consultant = {
         id: new Date().getUTCMilliseconds(),
         bm: '',
-        clienID: '-1',
-        client: 'Not defined',
+        clientID: '-1',
+        client: 'No client',
         initials: '',
         name: '',
         email: '',
@@ -108,14 +108,28 @@ export class NewConsultantPage {
       });
     }
 
+    alert.addInput({
+      type: 'radio',
+      label: 'No client',
+      value: '-1',
+      checked: false
+    });
+
     alert.addButton('Cancel');
     alert.addButton({
       text: 'OK',
       handler: data => {
         //data -> client id
+        if (data === '-1') {
+          this.consultant.clientID = -1;
+          this.consultant.client = 'No client';
+          console.log(this.consultant);
+          return;
+        }
         var client = _.find(this.clients, { id: data });
-        this.consultant.client = client.id;
+        this.consultant.clientID = client.id;
         this.consultant.client = client.name;
+        console.log(this.consultant);
       }
     });
     alert.present();
