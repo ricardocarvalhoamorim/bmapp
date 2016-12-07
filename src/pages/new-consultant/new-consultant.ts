@@ -18,6 +18,7 @@ export class NewConsultantPage {
 
   consultant: any;
   user: any;
+  isReadOnly = true;
   clients: any[];
 
   constructor(
@@ -28,10 +29,17 @@ export class NewConsultantPage {
     public alertCtrl: AlertController,
     public bmappApi: BMappApi) {
 
+    if (!navParams.get('user')) {
+      console.log("An active user is required to create a consultant!");
+      return;
+    }
+
+    this.user = navParams.get('user');
+
     if (!navParams.get('consultant')) {
       this.consultant = {
         id: new Date().getUTCMilliseconds(),
-        bm: '',
+        bm: this.user.id,
         clientID: '-1',
         client: 'No client',
         initials: '',
@@ -43,17 +51,19 @@ export class NewConsultantPage {
         languages: '',
         car: false
       };
+      
     } else {
       this.consultant = navParams.get('consultant');
       console.log(this.consultant);
     }
 
-    if (!navParams.get('user')) {
-      console.log("An active user is required to create a consultant!");
+
+    if (this.user.id !== this.consultant.bm) {
+      this.isReadOnly = true;
       return;
     }
 
-    this.user = navParams.get('user');
+    this.isReadOnly = false;
   }
 
   ionViewDidLoad() {

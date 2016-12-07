@@ -10,7 +10,8 @@
       <ion-icon name="menu"></ion-icon>
     </button>
 
-    <ion-title>New Consultant</ion-title>
+    <ion-title *ngIf="consultant.initials === ''">New Consultant</ion-title>
+    <ion-title *ngIf="consultant.initials !== ''">Edit Consultant</ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="saveConsultant()">
@@ -22,12 +23,21 @@
 
 <ion-content>
 
-  <ion-card>
+  <ion-card *ngIf="consultant.initials === ''">
     <ion-card-header>
       Registering a new Consultant
     </ion-card-header>
     <ion-card-content>
       To register a new consultant you will need to provide an email, contact and assign a new or ongoing mission.
+    </ion-card-content>
+  </ion-card>
+
+   <ion-card *ngIf="isReadOnly">
+    <ion-card-header>
+      Notice
+    </ion-card-header>
+    <ion-card-content>
+      You can't edit this consultant because he was registered by another business manager. Should you need to update this record, please contact the correspondant business manager.
     </ion-card-content>
   </ion-card>
 
@@ -40,25 +50,25 @@
     <ion-item>
       <ion-icon name="contact" item-left></ion-icon>
       <ion-label>Full Name</ion-label>
-      <ion-input type="text" value="" [(ngModel)]="consultant.name" ngControl="name"></ion-input>
+      <ion-input disabled="{{isReadOnly}}" type="text" value="" [(ngModel)]="consultant.name" ngControl="name"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-icon name="mail" item-left></ion-icon>
       <ion-label>Email</ion-label>
-      <ion-input type="email" [(ngModel)]="consultant.email" ngControl="email"></ion-input>
+      <ion-input disabled="{{isReadOnly}}" type="email" [(ngModel)]="consultant.email" ngControl="email"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-icon name="call" item-left></ion-icon>
       <ion-label>Phone number</ion-label>
-      <ion-input type="tel" [(ngModel)]="consultant.telephone" ngControl="telephone"></ion-input>
+      <ion-input disabled="{{isReadOnly}}" type="tel" [(ngModel)]="consultant.telephone" ngControl="telephone"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-icon name="briefcase" item-left></ion-icon>
       <ion-label>Starting date</ion-label>
-      <ion-datetime displayFormat="MMM DD, YYYY" pickerFormat="MMM DD, YYYY" [(ngModel)]="consultant.starting_date" ngControl="starting_date"></ion-datetime>
+      <ion-datetime  disabled="{{isReadOnly}}" displayFormat="MMM DD, YYYY" pickerFormat="MMM DD, YYYY" [(ngModel)]="consultant.starting_date" ngControl="starting_date"></ion-datetime>
     </ion-item>
 
     <ion-item-divider>
@@ -68,19 +78,19 @@
     <ion-item>
       <ion-icon name="build" item-left></ion-icon>
       <ion-label>Skills set</ion-label>
-      <ion-input type="text" [(ngModel)]="consultant.skills" ngControl="skills"></ion-input>
+      <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="consultant.skills" ngControl="skills"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-icon name="microphone" item-left></ion-icon>
       <ion-label>Languages</ion-label>
-      <ion-input type="text" [(ngModel)]="consultant.languages" ngControl="languages"></ion-input>
+      <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="consultant.languages" ngControl="languages"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-icon name="car" item-left></ion-icon>
       <ion-label>Company car</ion-label>
-      <ion-toggle checked="false" [(ngModel)]="consultant.car" ngControl="car"></ion-toggle>
+      <ion-toggle disabled="{{isReadOnly}}" checked="false" [(ngModel)]="consultant.car" ngControl="car"></ion-toggle>
     </ion-item>
 
   <ion-item-divider>

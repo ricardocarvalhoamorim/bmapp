@@ -17,9 +17,9 @@
       <p>{{today}}</p>
     </ion-item>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="clients">
       <ion-grid>
-        <ion-row text-wrap *ngIf="clients">
+        <ion-row text-wrap>
           <ion-col width-10>
             <ion-icon name="ios-briefcase-outline"></ion-icon>
           </ion-col>
@@ -28,21 +28,21 @@
             <b color="primary" (click)="switchToClientsList()">{{clients.length}} clients in your portfolio</b>
           </ion-col>
         </ion-row>
-        <ion-row text-wrap>
+        <ion-row text-wrap *ngIf="userConsultants && userConsultants.length > 0">
           <ion-col width-10>
             <ion-icon name="ios-person-outline"></ion-icon>
           </ion-col>
-          <ion-col width-90 *ngIf="userConsultants">
+          <ion-col width-90>
             <b color="primary" (click)="switchToConsultantsList()">{{userConsultants.length}} consultants under your supervision</b>
           </ion-col>
         </ion-row>
 
-        <ion-row text-wrap>
+        <ion-row text-wrap  *ngIf="consultantsOnBench > 0">
           <ion-col width-10>
             <ion-icon name="ios-time-outline"></ion-icon>
           </ion-col>
 
-          <ion-col width-90 *ngIf="consultantsOnBench > 0">
+          <ion-col width-90>
             <b color="primary" (click)="switchToConsultantsList()">... {{consultantsOnBench}} waiting for a mission</b>
           </ion-col>
         </ion-row>
@@ -61,10 +61,10 @@
 
   </ion-card>
 
-  <ion-card *ngIf="user">
+  <ion-card *ngIf="user && user.target > 0 && progress >= 0">
     <ion-item text-wrap>
       <ion-avatar item-right>
-        <h1>{{progress}}%</h1>
+        <h1>{{progress}} %</h1>
       </ion-avatar>
       <h1>Your objectives</h1>
       <p>You established that you want to have <b>{{user.target}}</b> running missions. You can change this and other settings
