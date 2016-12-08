@@ -96,6 +96,7 @@ export class SettingsPage {
           return;
 
         this.user = _.find(this.bms, { name: data });
+        this.saveSettings();
       }
     });
     alert.present();
