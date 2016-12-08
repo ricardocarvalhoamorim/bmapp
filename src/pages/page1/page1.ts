@@ -176,7 +176,7 @@ export class Page1 {
       this.consultantsOnMission =
         _.filter(this.userConsultants, cs => cs.clientID !== '-1').length;
       this.consultantsOnBench = this.userConsultants.length - this.consultantsOnMission;
-      this.progress = this.consultantsOnMission / this.user.target * 100;
+      this.progress = Math.round(this.consultantsOnMission / this.user.target * 100);
       this.updateChart();
     });
 
@@ -206,7 +206,7 @@ export class Page1 {
     for (let bm of this.bms) {
       var consultantsCount = _.filter(this.consultants, function (consultant) {
         if (consultant.bm === bm.id
-          //&& consultant.client !== ''
+          && consultant.clientID !== '-1'
           //&& new Date(consultant.ending_date) < new Date()
         )
           return consultant;

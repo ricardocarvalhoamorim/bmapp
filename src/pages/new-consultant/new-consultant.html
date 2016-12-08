@@ -48,27 +48,33 @@
     </ion-item-divider>
 
     <ion-item>
-      <ion-icon name="contact" item-left></ion-icon>
+      <ion-icon name="ios-contact-outline" item-left></ion-icon>
       <ion-label>Full Name</ion-label>
       <ion-input disabled="{{isReadOnly}}" type="text" value="" [(ngModel)]="consultant.name" ngControl="name"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-icon name="mail" item-left></ion-icon>
+      <ion-icon name="ios-mail-outline" item-left></ion-icon>
       <ion-label>Email</ion-label>
       <ion-input disabled="{{isReadOnly}}" type="email" [(ngModel)]="consultant.email" ngControl="email"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-icon name="call" item-left></ion-icon>
+      <ion-icon name="ios-call-outline" item-left></ion-icon>
       <ion-label>Phone number</ion-label>
       <ion-input disabled="{{isReadOnly}}" type="tel" [(ngModel)]="consultant.telephone" ngControl="telephone"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-icon name="briefcase" item-left></ion-icon>
+      <ion-icon name="ios-calendar-outline" item-left></ion-icon>
       <ion-label>Starting date</ion-label>
       <ion-datetime  disabled="{{isReadOnly}}" displayFormat="MMM DD, YYYY" pickerFormat="MMM DD, YYYY" [(ngModel)]="consultant.starting_date" ngControl="starting_date"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="ios-calendar-outline" item-left></ion-icon>
+      <ion-label>Ending date</ion-label>
+      <ion-datetime  disabled="{{isReadOnly}}" displayFormat="MMM DD, YYYY" pickerFormat="MMM DD, YYYY" [(ngModel)]="consultant.ending_date" ngControl="ending_date"></ion-datetime>
     </ion-item>
 
     <ion-item-divider>
@@ -76,13 +82,13 @@
     </ion-item-divider>
 
     <ion-item>
-      <ion-icon name="build" item-left></ion-icon>
+      <ion-icon name="ios-build-outline" item-left></ion-icon>
       <ion-label>Skills set</ion-label>
       <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="consultant.skills" ngControl="skills"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-icon name="microphone" item-left></ion-icon>
+      <ion-icon name="ios-microphone-outline" item-left></ion-icon>
       <ion-label>Languages</ion-label>
       <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="consultant.languages" ngControl="languages"></ion-input>
     </ion-item>
@@ -94,7 +100,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-icon name="car" item-left></ion-icon>
+      <ion-icon name="ios-car-outline" item-left></ion-icon>
       <ion-label>Company car</ion-label>
       <ion-toggle disabled="{{isReadOnly}}" checked="false" [(ngModel)]="consultant.car" ngControl="car"></ion-toggle>
     </ion-item>

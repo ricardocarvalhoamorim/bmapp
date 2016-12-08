@@ -47,6 +47,7 @@ export class NewConsultantPage {
         email: '',
         contact: '',
         starting_date: '',
+        ending_date: '',
         skills: '',
         languages: '',
         package: 0,
