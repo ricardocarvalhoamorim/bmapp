@@ -38,7 +38,6 @@ export class NewClientPage {
     }
   }
   ionViewDidLoad() {
-    console.log('Hello NewClientPage Page');
   }
 
   /**
@@ -51,8 +50,6 @@ export class NewClientPage {
       this.presentToast('You must provide a name for this record');
       return;
     }
-
-
 
     this.events.publish('clients:new', this.client);
     this.bmappApi.saveClient(this.client);

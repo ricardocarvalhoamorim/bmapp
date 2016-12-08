@@ -37,7 +37,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row text-wrap  *ngIf="consultantsOnBench > 0">
+        <ion-row text-wrap *ngIf="consultantsOnBench > 0">
           <ion-col width-10>
             <ion-icon name="ios-time-outline"></ion-icon>
           </ion-col>
@@ -53,7 +53,7 @@
           </ion-col>
 
           <ion-col width-50>
-            <button ion-button outline small block (click)="switchToClientsList()"><b>My Clients</b></button>
+            <button ion-button outline small block (click)="switchToClientsList()"><b>Clients</b></button>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -67,13 +67,27 @@
         <h1>{{progress}} %</h1>
       </ion-avatar>
       <h1>Your objectives</h1>
-      <p>You established that you want to have <b>{{user.target}}</b> running missions. You can change this and other settings
-        by tapping the button bellow. Notice that by changing your objectives, some warnings can become obsolete.</p>
+      <p>You established that you want to have <b>{{user.target}}</b> running missions. You can change this in the application
+        settings.
+      </p>
       <progress max="{{user.target}}" value="{{consultantsOnMission}}"></progress>
     </ion-item>
     <ion-card-content>
     </ion-card-content>
+  </ion-card>
 
+  <ion-card *ngIf="progress >= 100">
+    <ion-item>
+      <h2><b>Congrats!</b></h2>
+      <p> You have fulfilled your objectives! Maybe its time to take a break...</p>
+       <button ion-button color="primary" icon-left (click)="takeABreak()">
+          <ion-icon name='check'></ion-icon>
+          I want to take a break
+        </button>
+
+    </ion-item>
+    <ion-card-content>
+    </ion-card-content>
   </ion-card>
 
   <ion-card *ngIf="bms && bms.length > 0">
@@ -100,6 +114,20 @@
     </ion-item>
     <ion-card-content>
       <chart [options]="consultantsDistributionOptions"></chart>
+
+
+      <ion-item *ngIf="consultantsOnBench && consultantsOnBench > 0">
+        <ion-icon name="ios-alarm-outline" item-left></ion-icon>
+        Bench
+        <ion-badge item-right>{{consultantsOnBench}} consultants</ion-badge>
+      </ion-item>
+
+      <ion-item *ngIf="consultantsOnMission && consultantsOnMission > 0">
+        <ion-icon name="ios-build-outline" item-left></ion-icon>
+        Assigned
+        <ion-badge color="secondary" item-right>{{consultantsOnBench}} consultants</ion-badge>
+      </ion-item>
+
     </ion-card-content>
   </ion-card>
 
@@ -129,7 +157,7 @@
   </ion-card>
 
 
-<!--
+  <!--
   <ion-fab padding right bottom>
     <button ion-fab color="primary"><ion-icon name="add"></ion-icon></button>
     <ion-fab-list side="top">

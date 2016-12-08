@@ -147,11 +147,12 @@ export class Page1 {
         console.log("Could not find an acive user, will create one");
         this.user = {
           id: new Date().getUTCMilliseconds(),
-          name: 'No name provided',
-          initials: 'Nnp',
-          email: 'n/a',
-          contact: 'n/a',
-          target: 5,
+          name: 'Demo user',
+          initials: 'DU',
+          email: 'duser@adneom.com',
+          contact: '+32 881 77 11',
+          target: 3,
+          isUnitManager: false,
           notifications: true,
           auto_inactive: true,
           active: true
@@ -176,6 +177,7 @@ export class Page1 {
       this.consultantsOnMission =
         _.filter(this.userConsultants, cs => cs.clientID !== '-1').length;
       this.consultantsOnBench = this.userConsultants.length - this.consultantsOnMission;
+      
       this.progress = Math.round(this.consultantsOnMission / this.user.target * 100);
       this.updateChart();
     });
@@ -240,5 +242,9 @@ export class Page1 {
 
   switchToClientsList() {
     this.navCtrl.setRoot(ClientsPage);
+  }
+
+  takeABreak() {
+    window.open(`https://www.youtube.com/watch?v=DJUIgV7t8C0`, '_system');
   }
 }
