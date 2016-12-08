@@ -167,6 +167,7 @@ export class BMappApi {
             email: 'alalaoui@adneom.com',
             contact: '+32',
             target: 15,
+            isUnitManager: false,
             active: false
         },
         {
@@ -176,6 +177,7 @@ export class BMappApi {
             email: 'dwijnans@adneom.com',
             contact: '+32 491 90 69 40',
             target: 10,
+            isUnitManager: false,
             active: false
         },
         {
@@ -185,6 +187,7 @@ export class BMappApi {
             email: 'tdumont@adneom.com',
             contact: '+32 476 416 607',
             target: 10,
+            isUnitManager: true,
             active: true
         },
         {
@@ -194,6 +197,7 @@ export class BMappApi {
             email: 'jdoe@adneom.com',
             contact: '+32 476 416 607',
             target: 4,
+            isUnitManager: false,
             active: false
         }
     ];

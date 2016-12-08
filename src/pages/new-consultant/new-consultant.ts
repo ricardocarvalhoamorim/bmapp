@@ -60,7 +60,7 @@ export class NewConsultantPage {
     }
 
 
-    if (this.user.id !== this.consultant.bm) {
+    if (this.user.id !== this.consultant.bm && !this.user.isUnitManager) {
       this.isReadOnly = true;
       return;
     }

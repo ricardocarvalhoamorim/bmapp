@@ -24,6 +24,7 @@ export class SettingsPage {
     email: '',
     contact: '',
     target: 0,
+    isUnitManager: false,
     active: true
   };
 
@@ -108,6 +109,7 @@ export class SettingsPage {
       email: '',
       contact: '',
       target: 0,
+      isUnitManager: false,
       active: true
     };
   }
