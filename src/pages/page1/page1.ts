@@ -151,12 +151,12 @@ export class Page1 {
 
     events.subscribe('consultants:new', (data) => {
       this.consultants.push(data);
-      this.ionViewDidLoad();
+      this.ionViewDidEnter();
     });
 
     events.subscribe('clients:new', (data) => {
       this.clients.push(data);
-      this.ionViewDidLoad();
+      this.ionViewDidEnter();
     });
   }
 
@@ -172,12 +172,11 @@ export class Page1 {
     console.log("CHANGED");
   }
 
-/**
- * Runs when the page has fully entered and is now the active page.
- * This event will fire, whether it was the first load or a cached page.
- */
+  /**
+   * Runs when the page has fully entered and is now the active page.
+   * This event will fire, whether it was the first load or a cached page.
+   */
   ionViewDidEnter() {
-    console.log("entrei amore");
     this.bmappAPI.getBms().then((val) => {
       this.user = _.find(val, { active: true });
 
@@ -198,7 +197,7 @@ export class Page1 {
         };
 
         this.bmappAPI.saveBM(this.user);
-        this.ionViewDidLoad();
+        this.ionViewDidEnter();
       }
     });
 
@@ -225,14 +224,8 @@ export class Page1 {
     });
   }
 
-  ionViewDidLoad() {
-
-    
-  }
-
-
   /**
-   * Uses the available values to update the chart
+   * Uses the available values to update the charts
    */
   updateChart() {
 
@@ -245,9 +238,6 @@ export class Page1 {
       return;
     }
 
-    this.competitionOptions.data.labels = _.map(this.bms, 'initials');
-    this.competitionOptions.data.datasets[0].data = [];
-    this.competitionOptions.data.datasets[1].data = [];
     this.bUnitMissionCount = 0;
 
     for (let bm of this.bms) {
@@ -264,6 +254,8 @@ export class Page1 {
       this.competitionOptions.data.datasets[1].data.push(bm.target);
     }
 
+    this.competitionOptions.data.labels = _.map(this.bms, 'initials');
+    
     //update pie chart
     this.consultantsDistributionOptions.data.datasets[0].data = [this.consultantsOnMission, this.consultantsOnBench];
 

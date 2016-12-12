@@ -89,7 +89,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="bms && bms.length > 0">
+  <ion-card *ngIf="userConsultants && userConsultants.length > 0">
     <ion-item text-wrap>
       <ion-avatar item-right>
         <ion-icon name="analytics"> </ion-icon>
@@ -104,6 +104,7 @@
       <h2><b>Total running missions for {{user.initials}}:</b> {{consultantsOnMission}}</h2>
     </ion-card-content>
   </ion-card>
+
 
 
   <ion-card *ngIf="userConsultants && userConsultants.length > 0">
