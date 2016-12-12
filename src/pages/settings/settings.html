@@ -16,9 +16,6 @@
       <button ion-button icon-only (click)="newUser()">
         <ion-icon name="add"></ion-icon>
       </button>
-      <button ion-button icon-only (click)="saveSettings()">
-        <ion-icon name="checkmark"></ion-icon>
-      </button>
     </ion-buttons>
   </ion-navbar>
 
@@ -60,7 +57,11 @@
     </ion-item>
 
     <ion-item>
-      <button ion-button block primary outline padding (click)="pickProfile()">Select active profile</button>
+      <button ion-button block primary full outline (click)="pickProfile()">Select active profile</button>
+    </ion-item>
+
+    <ion-item>
+      <button ion-button primary full (click)="saveSettings()">Save settings</button>
     </ion-item>
 
     <ion-item>

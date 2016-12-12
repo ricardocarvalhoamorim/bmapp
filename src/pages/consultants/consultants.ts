@@ -54,15 +54,8 @@ export class ConsultantsPage {
   filterConsultants() {
     if (this.consultantsFilter === 'all') {
       this.filteredConsultants = this.consultants;
-      console.log("ALL");
-      console.log("CONSULTANTS: " + this.filteredConsultants);
     } else {
-      
       this.filteredConsultants = _.filter(this.filteredConsultants, s => s.bm === this.user.id);
-      console.log("USER: " + this.user.id);
-      console.log("CONSULTANTS: " + this.filteredConsultants.length);
-      
-      //this.filteredConsultants = [];
     }
   }
 
@@ -82,7 +75,6 @@ export class ConsultantsPage {
   }
 
   editConsultant($event, consultant) {
-    console.log(consultant.name);
     this.navCtrl.push(NewConsultantPage, { 'consultant': consultant, 'user': this.user });
   }
 }

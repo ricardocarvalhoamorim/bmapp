@@ -87,12 +87,10 @@ export class Page1 {
         {
           label: 'Running missions',
           data: []
-          /*
+          
           ,
-          backgroundColor: [
+          backgroundColor: 
             'rgba(215, 40, 40, 0.9)'
-          ]
-          */
         }
       ]
     }
@@ -126,13 +124,11 @@ export class Page1 {
 
     events.subscribe('consultants:new', (data) => {
       this.consultants.push(data);
-      console.log("1) NEW CONSULTANT: " + data);
       this.ionViewDidLoad();
     });
 
     events.subscribe('clients:new', (data) => {
       this.clients.push(data);
-      console.log("1) NEW CLIENT: " + data);
       this.ionViewDidLoad();
     });
   }
@@ -166,10 +162,8 @@ export class Page1 {
     this.bmappAPI.getConsultants().then((val) => {
       this.consultants = val;
       if (this.consultants.length === 0) {
-        console.log("There are no consultants");
         return;
       }
-
 
       //compute the user's stats
       this.userConsultants =
@@ -218,7 +212,7 @@ export class Page1 {
 
     //update pie chart
     this.consultantsDistributionOptions.data.datasets[0].data = [this.consultantsOnMission, this.consultantsOnBench];
-    //this.competitionComp.chart.update();
+    this.competitionComp.chart.update(2000);
     //this.consultantsDistributionComp.chart.update();
 
   }

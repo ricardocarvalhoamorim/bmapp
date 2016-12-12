@@ -44,7 +44,6 @@ export class SettingsPage {
   }
 
   saveSettings() {
-    console.log(this.user.initials);
     if (this.user.name === '') {
 
       this.presentToast('You have to provide a name')
@@ -66,7 +65,6 @@ export class SettingsPage {
   reset() {
     this.newUser();
     this.bmappAPI.reset();
-    //this.ionViewDidLoad();
   }
 
   /**
