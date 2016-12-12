@@ -60,6 +60,21 @@
     </ion-row>
   </ion-card>
 
+
+  <ion-card *ngIf="progress >= 100">
+    <ion-item text-wrap>
+      <h1><b>Congrats!</b></h1>
+      <h2> You have fulfilled your objectives! Maybe its time to take a break...</h2>
+      <button ion-button full color="primary" icon-left (click)="takeABreak()">
+          <ion-icon name='check'></ion-icon>
+          <b>I want to take a break!!</b>
+        </button>
+
+    </ion-item>
+    <ion-card-content>
+    </ion-card-content>
+  </ion-card>
+
   <ion-card *ngIf="user && user.target > 0 && progress >= 0">
     <ion-item text-wrap>
       <ion-avatar item-right>
@@ -75,19 +90,6 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="progress >= 100">
-    <ion-item>
-      <h2><b>Congrats!</b></h2>
-      <p> You have fulfilled your objectives! Maybe its time to take a break...</p>
-      <button ion-button color="primary" icon-left (click)="takeABreak()">
-          <ion-icon name='check'></ion-icon>
-          I want to take a break
-        </button>
-
-    </ion-item>
-    <ion-card-content>
-    </ion-card-content>
-  </ion-card>
 
   <ion-card *ngIf="userConsultants && userConsultants.length > 0">
     <ion-item text-wrap>
