@@ -30,7 +30,7 @@
     <button ion-fab color="primary" (click)="newClient()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
-  <ion-list no-lines [virtualScroll]="clients">
+  <ion-list no-lines [virtualScroll]="clients" [approxItemHeight]="'100px'">
     <ion-card *virtualItem="let client">
       <ion-item  (click)="editClient($event, client)">
         <ion-avatar item-left>
@@ -54,13 +54,13 @@
         </button>
         </ion-col>
         <ion-col text-center>
-          <button ion-button clear color="primary" icon-left *ngIf="client.email" [disabled]="client.email===''" (click)="email($event, client)">
+          <button ion-button clear color="primary" icon-left [disabled]="!client.email" [disabled]="client.email===''" (click)="email($event, client)">
           <ion-icon name='mail'></ion-icon>
           Mail
         </button>
         </ion-col>
         <ion-col text-right>
-          <button ion-button clear color="primary" icon-left *ngIf="client.contact" [disabled]="client.contact===''" (click)="call($event, client)">
+          <button ion-button clear color="primary" icon-left [disabled]="!client.contact" (click)="call($event, client)">
           <ion-icon name='call'></ion-icon>
           Call
         </button>
