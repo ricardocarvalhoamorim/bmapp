@@ -97,8 +97,11 @@
       <h2>Performance</h2>
       <p>How you compare to other business managers in your unit, based on your <b>running missions</b></p>
     </ion-item>
-    <ion-card-content>
+    <ion-card-content >
       <chart [options]="competitionOptions"></chart>
+
+      <h2><b>Total running missions for BU:</b> {{bUnitMissionCount}}</h2>
+      <h2><b>Total running missions for {{user.initials}}:</b> {{consultantsOnMission}}</h2>
     </ion-card-content>
   </ion-card>
 
@@ -127,6 +130,25 @@
         <ion-badge color="secondary" item-right>{{consultantsOnMission}} consultants</ion-badge>
       </ion-item>
 
+    </ion-card-content>
+  </ion-card>
+
+    <ion-card *ngIf="userConsultants && userConsultants.length > 0">
+    <ion-item text-wrap>
+      <ion-avatar item-right>
+        <ion-icon name="analytics"> </ion-icon>
+      </ion-avatar>
+      <h2>Your clients</h2>
+      <p>Your consultants' distribution based on your portfolio</p>
+    </ion-item>
+    <ion-card-content>
+      <chart 
+      [options]="clientsOptions">
+      </chart>
+
+      <button ion-button full (click)="toggleColors()">
+        <ion-icon name="ios-eye-outline">Toggle collors</ion-icon>
+      </button>
     </ion-card-content>
   </ion-card>
 

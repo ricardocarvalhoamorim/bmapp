@@ -71,10 +71,10 @@
       <ion-datetime  disabled="{{isReadOnly}}" displayFormat="MMM DD, YYYY" pickerFormat="MMM DD, YYYY" [(ngModel)]="consultant.starting_date" ngControl="starting_date"></ion-datetime>
     </ion-item>
 
-    <ion-item>
+    <ion-item>  
       <ion-icon name="ios-calendar-outline" item-left></ion-icon>
       <ion-label>Ending date</ion-label>
-      <ion-datetime  disabled="{{isReadOnly}}" displayFormat="MMM DD, YYYY" pickerFormat="MMM DD, YYYY" [(ngModel)]="consultant.ending_date" ngControl="ending_date"></ion-datetime>
+      <ion-datetime  disabled="{{isReadOnly}}" max="2020-12-31" displayFormat="MMM DD, YYYY" pickerFormat="MMM DD, YYYY" [(ngModel)]="consultant.ending_date" ngControl="ending_date"></ion-datetime>
     </ion-item>
 
     <ion-item-divider>

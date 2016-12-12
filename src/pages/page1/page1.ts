@@ -68,11 +68,17 @@ export class Page1 {
   progress = 0;
 
   /**
+   * Overall Mission count
+   */
+  bUnitMissionCount = 0;
+
+  /**
    * Chart with a comparison between business managers
    */
   @ViewChild(ChartComponent) competitionComp;
   public competitionOptions = {
     type: 'bar',
+    responsive: false,
     data: {
       labels: [],
       datasets: [
@@ -81,6 +87,12 @@ export class Page1 {
           data: [],
           backgroundColor:
           'rgba(215, 40, 40, 0.9)'
+        },
+        {
+          label: 'Objectives',
+          data: [],
+          backgroundColor:
+          'rgba(29, 40, 40, 0.3)'
         }
       ]
     }
@@ -107,6 +119,31 @@ export class Page1 {
     }
   };
 
+
+  /**
+     * Chart with a distribution of consultants across the clients portfolio
+     */
+  @ViewChild(ChartComponent) clientsComp;
+  public clientsOptions = {
+    type: 'doughnut',
+    data: {
+      labels: [],
+      datasets: [
+        {
+          label: '',
+          data: [],
+          backgroundColor: [
+            '#E57373',
+            '#E53935',
+            '#D50000',
+            '#C62828',
+            '#B71C1C'
+          ]
+        }
+      ]
+    }
+  };
+
   constructor(
     public navCtrl: NavController,
     public events: Events,
@@ -123,8 +160,24 @@ export class Page1 {
     });
   }
 
-  ionViewDidLoad() {
+  toggleColors() {
+    this.clientsOptions.data.datasets[0].backgroundColor = [
+      '#607D8B',
+      '#1565C0',
+      '#00695C',
+      '#FFD600',
+      '#4E342E'
+    ];
+    this.updateChart();
+    console.log("CHANGED");
+  }
 
+/**
+ * Runs when the page has fully entered and is now the active page.
+ * This event will fire, whether it was the first load or a cached page.
+ */
+  ionViewDidEnter() {
+    console.log("entrei amore");
     this.bmappAPI.getBms().then((val) => {
       this.user = _.find(val, { active: true });
 
@@ -163,12 +216,18 @@ export class Page1 {
       this.consultantsOnBench = this.userConsultants.length - this.consultantsOnMission;
 
       this.progress = Math.round(this.consultantsOnMission / this.user.target * 100);
+
       this.updateChart();
     });
 
     this.bmappAPI.getClients().then((val) => {
       this.clients = val;
     });
+  }
+
+  ionViewDidLoad() {
+
+    
   }
 
 
@@ -188,6 +247,8 @@ export class Page1 {
 
     this.competitionOptions.data.labels = _.map(this.bms, 'initials');
     this.competitionOptions.data.datasets[0].data = [];
+    this.competitionOptions.data.datasets[1].data = [];
+    this.bUnitMissionCount = 0;
 
     for (let bm of this.bms) {
       var consultantsCount = _.filter(this.consultants, function (consultant) {
@@ -197,14 +258,27 @@ export class Page1 {
         )
           return consultant;
       }).length;
+
+      this.bUnitMissionCount += consultantsCount;
       this.competitionOptions.data.datasets[0].data.push(consultantsCount);
+      this.competitionOptions.data.datasets[1].data.push(bm.target);
     }
 
     //update pie chart
     this.consultantsDistributionOptions.data.datasets[0].data = [this.consultantsOnMission, this.consultantsOnBench];
-    this.competitionComp.chart.update(2000);
-    //this.consultantsDistributionComp.chart.update();
 
+
+    //handle consultants distribution chart
+    var groupedClients = _.map(this.userConsultants, function (consultant) {
+      return consultant.client;
+    });
+
+    this.clientsOptions.data.labels = _.uniq(groupedClients);
+    this.clientsOptions.data.datasets[0].data =
+      _.chain(this.userConsultants)
+        .groupBy("client")
+        .map(function (client) { return client.length })
+        .value();
   }
 
   pushNewConsultant() {
