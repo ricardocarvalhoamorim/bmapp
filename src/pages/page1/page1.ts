@@ -73,24 +73,14 @@ export class Page1 {
   @ViewChild(ChartComponent) competitionComp;
   public competitionOptions = {
     type: 'bar',
-    responsive: false,
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    },
     data: {
       labels: [],
       datasets: [
         {
           label: 'Running missions',
-          data: []
-          
-          ,
-          backgroundColor: 
-            'rgba(215, 40, 40, 0.9)'
+          data: [],
+          backgroundColor:
+          'rgba(215, 40, 40, 0.9)'
         }
       ]
     }
@@ -171,7 +161,7 @@ export class Page1 {
       this.consultantsOnMission =
         _.filter(this.userConsultants, cs => cs.clientID !== '-1').length;
       this.consultantsOnBench = this.userConsultants.length - this.consultantsOnMission;
-      
+
       this.progress = Math.round(this.consultantsOnMission / this.user.target * 100);
       this.updateChart();
     });

@@ -43,9 +43,9 @@
 
   <ion-list *ngIf="filteredConsultants && filteredConsultants.length > 0" no-lines [virtualScroll]="filteredConsultants" [approxItemHeight]="'100px'">
 
-    <ion-card *virtualItem="let consultant" text-wrap (click)="editConsultant($event, consultant)">
+    <ion-card *virtualItem="let consultant" text-wrap >
 
-      <ion-row>
+      <ion-row (click)="editConsultant($event, consultant)">
         <ion-col width-67 style="background-color:#c9001d">
           <h2 style="color:white;"><b>{{consultant.name}}</b></h2>
           <p style="color:white; ">{{consultant.skills}}</p>
@@ -61,16 +61,11 @@
       </ion-row>
 
       <ion-card-content>
-
-        <p>
-          <ion-icon name="build"> {{consultant.skills}}</ion-icon>
-        </p>
-
         <p>
           <ion-icon name="calendar"> Started: {{consultant.starting_date}}</ion-icon>
         </p>
         <p>
-          <ion-icon name="microphone"> {{consultant.languages}}</ion-icon>
+          <ion-icon name="microphone" *ngIf="consultant.languages"> {{consultant.languages}}</ion-icon>
         </p>
         <p>
           <ion-icon name="car" *ngIf="consultant.car"> {{consultant.car ? 'Yes' : 'No'}}</ion-icon>
@@ -85,13 +80,13 @@
         </button>
         </ion-col>
         <ion-col text-center>
-          <button ion-button clear color="primary" icon-left *ngIf="consultant.email" (click)="email($event, consultant)">
+          <button ion-button  clear color="primary" icon-left  [disabled]="consultant.email===''" (click)="email($event, consultant)">
           <ion-icon name='mail'></ion-icon>
           Mail
         </button>
         </ion-col>
         <ion-col text-right>
-          <button ion-button clear color="primary" icon-left *ngIf="consultant.contact" (click)="call($event, consultant)">
+          <button ion-button  clear color="primary" icon-left  [disabled]="consultant.contact===''" (click)="call($event, consultant)">
           <ion-icon name='call'></ion-icon>
           Call
         </button>

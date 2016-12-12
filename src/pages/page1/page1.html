@@ -47,18 +47,17 @@
           </ion-col>
         </ion-row>
 
-        <ion-row>
-          <ion-col width-50>
-            <button ion-button outline small block (click)="switchToConsultantsList()"><b>My Consultants</b></button>
-          </ion-col>
-
-          <ion-col width-50>
-            <button ion-button outline small block (click)="switchToClientsList()"><b>Clients</b></button>
-          </ion-col>
-        </ion-row>
       </ion-grid>
     </ion-card-content>
+    <ion-row>
+      <ion-col width-50>
+        <button ion-button full (click)="switchToConsultantsList()"><b>My Consultants</b></button>
+      </ion-col>
 
+      <ion-col width-50>
+        <button ion-button full (click)="switchToClientsList()"><b>Clients</b></button>
+      </ion-col>
+    </ion-row>
   </ion-card>
 
   <ion-card *ngIf="user && user.target > 0 && progress >= 0">
@@ -80,7 +79,7 @@
     <ion-item>
       <h2><b>Congrats!</b></h2>
       <p> You have fulfilled your objectives! Maybe its time to take a break...</p>
-       <button ion-button color="primary" icon-left (click)="takeABreak()">
+      <button ion-button color="primary" icon-left (click)="takeABreak()">
           <ion-icon name='check'></ion-icon>
           I want to take a break
         </button>
@@ -152,7 +151,8 @@
     </ion-item>
 
     <ion-card-content>
-      <p>The app settings allow you to change some aspects of the application. You can also switch between profiles to see the app from other business managers perspective.</p>
+      <p>The app settings allow you to change some aspects of the application. You can also switch between profiles to see the
+        app from other business managers perspective.</p>
       <button ion-button color="primary" full (click)="switchToSettings()">Application Settings</button>
     </ion-card-content>
   </ion-card>
