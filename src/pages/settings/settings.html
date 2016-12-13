@@ -13,8 +13,8 @@
     <ion-title>Settings</ion-title>
 
     <ion-buttons end>
-      <button ion-button icon-only (click)="newUser()">
-        <ion-icon name="add"></ion-icon>
+      <button ion-button icon-only (click)="saveSettings()">
+        <ion-icon name="md-checkmark"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -56,17 +56,25 @@
       <ion-toggle checked="false" [(ngModel)]="user.isUnitManager" ngControl="isUnitManager"></ion-toggle>
     </ion-item>
 
-    <ion-item>
-      <button ion-button block primary full outline (click)="pickProfile()">Select active profile</button>
-    </ion-item>
 
-    <ion-item>
-      <button ion-button primary full (click)="saveSettings()">Save settings</button>
-    </ion-item>
+    <ion-row>
+      <ion-col width-50>
+        <button ion-button color="light" full (click)="pickProfile()">Select active profile</button>
+      </ion-col>
+      <ion-col width-50>
+        <button ion-button color="light" full (click)="newUser()">New user</button>
+      </ion-col>
+    </ion-row>
 
-    <ion-item>
-      <button ion-button primary full (click)="reset()">Reset application</button>
-    </ion-item>
+
+    <ion-row>
+      <ion-col width-50>
+        <button ion-button color="danger" full (click)="reset()">Reset application</button>
+      </ion-col>
+      <ion-col width-50>
+        <button ion-button color="light" full (click)="report()">Report issues</button>
+      </ion-col>
+    </ion-row>
   </ion-list>
 
 </ion-content>

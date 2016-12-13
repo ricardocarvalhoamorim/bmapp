@@ -10,6 +10,11 @@
     <button ion-button menuToggle> 
       <ion-icon name="menu"></ion-icon>
     </button>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>Consultants</ion-title>
   </ion-navbar>
 
@@ -43,7 +48,7 @@
 
   <ion-list *ngIf="filteredConsultants && filteredConsultants.length > 0" no-lines [virtualScroll]="filteredConsultants" [approxItemHeight]="'100px'">
 
-    <ion-card *virtualItem="let consultant" text-wrap >
+    <ion-card *virtualItem="let consultant" text-wrap>
 
       <ion-row (click)="editConsultant($event, consultant)">
         <ion-col width-67 style="background-color:#c9001d">
@@ -83,13 +88,13 @@
         </button>
         </ion-col>
         <ion-col text-center>
-          <button ion-button  clear color="primary" icon-left  [disabled]="consultant.email===''" (click)="email($event, consultant)">
+          <button ion-button clear color="primary" icon-left [disabled]="consultant.email===''" (click)="email($event, consultant)">
           <ion-icon name='mail'></ion-icon>
           Mail
         </button>
         </ion-col>
         <ion-col text-right>
-          <button ion-button  clear color="primary" icon-left  [disabled]="consultant.contact===''" (click)="call($event, consultant)">
+          <button ion-button clear color="primary" icon-left [disabled]="consultant.contact===''" (click)="call($event, consultant)">
           <ion-icon name='call'></ion-icon>
           Call
         </button>

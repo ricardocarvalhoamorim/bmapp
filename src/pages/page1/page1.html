@@ -94,16 +94,25 @@
   <ion-card *ngIf="userConsultants && userConsultants.length > 0">
     <ion-item text-wrap>
       <ion-avatar item-right>
-        <ion-icon name="analytics"> </ion-icon>
+        <ion-icon name="ios-podium-outline"> </ion-icon>
       </ion-avatar>
       <h2>Performance</h2>
       <p>How you compare to other business managers in your unit, based on your <b>running missions</b></p>
     </ion-item>
-    <ion-card-content >
+    <ion-card-content>
       <chart [options]="competitionOptions"></chart>
 
-      <h2><b>Total running missions for BU:</b> {{bUnitMissionCount}}</h2>
-      <h2><b>Total running missions for {{user.initials}}:</b> {{consultantsOnMission}}</h2>
+      <ion-item>
+        <ion-icon name='ios-people-outline' item-left color="secondary"></ion-icon>
+        Total running missions for BU:
+        <ion-badge item-right>{{bUnitMissionCount}}</ion-badge>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name='ios-person-outline' item-left color="secondary"></ion-icon>
+        Total running missions for {{user.initials}}:
+        <ion-badge color="secondary" item-right>{{consultantsOnMission}}</ion-badge>
+      </ion-item>
     </ion-card-content>
   </ion-card>
 
@@ -136,17 +145,16 @@
     </ion-card-content>
   </ion-card>
 
-    <ion-card *ngIf="userConsultants && userConsultants.length > 0">
+  <ion-card *ngIf="userConsultants && userConsultants.length > 0">
     <ion-item text-wrap>
       <ion-avatar item-right>
-        <ion-icon name="analytics"> </ion-icon>
+        <ion-icon name="ios-people-outline"> </ion-icon>
       </ion-avatar>
       <h2>Your clients</h2>
       <p>Your consultants' distribution based on your portfolio</p>
     </ion-item>
     <ion-card-content>
-      <chart 
-      [options]="clientsOptions">
+      <chart [options]="clientsOptions">
       </chart>
 
       <button ion-button full (click)="toggleColors()">
@@ -170,7 +178,7 @@
 
     <ion-item>
       <ion-avatar item-right>
-        <ion-icon name="cloud"> </ion-icon>
+        <ion-icon name="ios-build-outline"> </ion-icon>
       </ion-avatar>
       <h2>Settings</h2>
     </ion-item>
@@ -178,7 +186,7 @@
     <ion-card-content>
       <p>The app settings allow you to change some aspects of the application. You can also switch between profiles to see the
         app from other business managers perspective.</p>
-      <button ion-button color="primary" full (click)="switchToSettings()">Application Settings</button>
+      <button small ion-button color="primary" outline (click)="switchToSettings()">Application Settings</button>
     </ion-card-content>
   </ion-card>
 

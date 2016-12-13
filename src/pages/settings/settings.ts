@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController, AlertController } from 'ionic-angular';
 import { BMappApi } from '../../shared/BMappApi';
+import { EmailComposer } from 'ionic-native';
 import * as _ from 'lodash';
 
 /*
@@ -17,6 +18,11 @@ export class SettingsPage {
 
   public storage: Storage;
 
+  /**
+   * Business managers list
+   */
+  bms: any[];
+
   user = {
     id: new Date().getUTCMilliseconds(),
     name: '',
@@ -28,7 +34,7 @@ export class SettingsPage {
     active: true
   };
 
-  bms: any[];
+  composerCanSend = false;
 
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
@@ -41,8 +47,17 @@ export class SettingsPage {
       this.bms = val;
       this.user = _.find(this.bms, { active: true });
     });
+
+    EmailComposer.isAvailable().then((available: boolean) => {
+      if (available) {
+        this.composerCanSend = true;
+      }
+    });
   }
 
+  /**
+   * Calls the api to save the changes
+   */
   saveSettings() {
     if (this.user.name === '') {
 
@@ -53,6 +68,9 @@ export class SettingsPage {
     this.presentToast('Settings successfully saved');
   }
 
+  /**
+   * Shows a toast with the specified message
+   */
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
@@ -100,6 +118,9 @@ export class SettingsPage {
     alert.present();
   }
 
+  /**
+   * Clears the fields to create a new user
+   */
   newUser() {
     this.user = {
       id: new Date().getUTCMilliseconds(),
@@ -113,4 +134,10 @@ export class SettingsPage {
     };
   }
 
+  /**
+   * Report an issue with the application
+   */
+  report() {
+    window.open(`mailto:rcamorim@adneom.com?subject=BMApp feedback&body=Hi Ricardo, Here\'s my feedback on the app`, '_system');
+  }
 }

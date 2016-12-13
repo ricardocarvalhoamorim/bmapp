@@ -184,7 +184,7 @@ export class Page1 {
       if (!this.user) {
         console.log("Could not find an acive user, will create one");
         this.bmappAPI.reset();
-        this.ionViewDidEnter();
+        //this.ionViewDidEnter();
       }
     });
 
