@@ -49,4 +49,11 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+
+    /**
+   * Sends an email with feedback for the application
+   */
+  feedback() {
+    window.open(`mailto:rcamorim@adneom.com?subject=BMApp feedback&body=Hi Ricardo, Here\'s my feedback on the app`, '_system');
+  }
 }
