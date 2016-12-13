@@ -111,7 +111,7 @@
 
   <ion-item text-wrap *ngIf="!isReadOnly">
     <p>You can assign a mission to a consultant at any time. To do so, tap the button below and pick a mission or client to assign. You can also provide a project duration, if applicable so you can get alerts on upcoming deadlines.</p>
-    <button ion-button block color="primary" padding (click)="pickMission()">{{consultant.client}}</button>
+    <button ion-button block color="light" padding (click)="pickMission()">{{consultant.client}}</button>
   </ion-item>
 
   <ion-item text-wrap *ngIf="isReadOnly">
@@ -119,7 +119,9 @@
   </ion-item>
 
   <ion-item text-wrap *ngIf="!isReadOnly">
-    <button ion-button block color="light" padding (click)="delete()">Delete this record</button>
+    <button ion-button icon-left block color="primary" padding (click)="delete()">
+      <ion-icon name="ios-trash-outline"></ion-icon>Delete this record
+      </button>
   </ion-item>
   </ion-list>
 </ion-content>

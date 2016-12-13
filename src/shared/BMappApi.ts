@@ -14,7 +14,6 @@ export class BMappApi {
         storage: Storage,
         public events: Events) {
         this.storage = storage;
-
         this.dbCheckup();
     }
 
@@ -27,14 +26,12 @@ export class BMappApi {
             if (data != null)
                 return;
             this.storage.set('consultants', this.dummy_consultants);
-
         });
 
         this.storage.get('clients').then((data) => {
             if (data != null)
                 return;
             this.storage.set('clients', this.dummy_clients);
-
         });
 
         this.storage.get('bms').then((data) => {

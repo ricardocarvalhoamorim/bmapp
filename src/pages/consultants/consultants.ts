@@ -20,6 +20,7 @@ export class ConsultantsPage {
   filteredConsultants;
   user;
   consultantsFilter = 'mine';
+  searchInput = "";
 
   constructor(
     public navCtrl: NavController,
@@ -45,7 +46,7 @@ export class ConsultantsPage {
         console.log("Unable to delete item: " + data[0].name);
         return;
       }
-      
+
       this.consultants.splice(index, 1);
       this.filterConsultants();
       this.presentToast("Consultant deleted");
@@ -95,9 +96,9 @@ export class ConsultantsPage {
     this.navCtrl.push(NewConsultantPage, { 'consultant': consultant, 'user': this.user });
   }
 
-    /**
-   * Displays a toast with the specified message
-   */
+  /**
+ * Displays a toast with the specified message
+ */
   presentToast(message) {
     let toast = this.toastController.create({
       message: message,
@@ -105,5 +106,24 @@ export class ConsultantsPage {
     });
     toast.present();
   }
+
+  onInput($event) {
+    if (this.searchInput === '') {
+      this.onCancel(null);
+      return
+    }
+    let queryTextLower = this.searchInput.toLowerCase();
+    let filteredResults = _.filter(this.filteredConsultants, function (consultant) {
+      return consultant.name.toLowerCase().includes(queryTextLower) || consultant.skills.toLowerCase().includes(queryTextLower);
+    });
+
+console.log(filteredResults);
+    this.filteredConsultants = filteredResults;
+  }
+
+  onCancel($event) {
+    this.filterConsultants();
+  }
+
 }
 
