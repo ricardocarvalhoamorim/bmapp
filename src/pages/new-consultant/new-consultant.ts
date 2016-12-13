@@ -84,7 +84,7 @@ export class NewConsultantPage {
       this.navCtrl.pop();
       return;
     }
-    
+
     if (!this.consultant.name) {
       this.presentToast('You must provide a name for this record');
       return;
@@ -150,5 +150,13 @@ export class NewConsultantPage {
       }
     });
     alert.present();
+  }
+
+  /**
+   * Triggers the consultant's deletion
+   */
+  delete() {
+    this.bmappApi.deleteConsultant(this.consultant);
+    this.navCtrl.pop();
   }
 }

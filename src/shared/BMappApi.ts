@@ -91,6 +91,30 @@ export class BMappApi {
     }
 
     /**
+     * Removes a consultant
+     */
+    deleteConsultant(consultant) {
+        this.getConsultants().then((val) => {
+            if (val === null) {
+                console.log("Tried to delete a consultant from an empty set");
+                return;
+            }
+            var index = _.indexOf(val, _.find(val, { id: consultant.id }));
+
+            if (index === -1) {
+                console.log("Consultant does not exist:" + consultant.name);
+                return;
+            } else {
+                console.log(consultant);
+                val.splice(index, 1);
+            }
+
+            this.storage.set('consultants', val);
+            this.events.publish('consultants:deleted', consultant);
+        });
+    }
+
+    /**
      * Attempts to save a new client to de database
      */
     saveClient(client) {

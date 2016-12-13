@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController, AlertController } from 'ionic-angular';
 import { BMappApi } from '../../shared/BMappApi';
-import { EmailComposer } from 'ionic-native';
 import * as _ from 'lodash';
 
 /*
@@ -34,8 +33,6 @@ export class SettingsPage {
     active: true
   };
 
-  composerCanSend = false;
-
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
@@ -47,12 +44,6 @@ export class SettingsPage {
       this.bms = val;
       this.user = _.find(this.bms, { active: true });
     });
-
-    EmailComposer.isAvailable().then((available: boolean) => {
-      if (available) {
-        this.composerCanSend = true;
-      }
-    });
   }
 
   /**
@@ -60,7 +51,6 @@ export class SettingsPage {
    */
   saveSettings() {
     if (this.user.name === '') {
-
       this.presentToast('You have to provide a name')
       return;
     }

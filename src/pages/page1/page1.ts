@@ -183,8 +183,21 @@ export class Page1 {
       this.bms = val;
       if (!this.user) {
         console.log("Could not find an acive user, will create one");
-        this.bmappAPI.reset();
-        //this.ionViewDidEnter();
+        this.user = {
+          id: new Date().getUTCMilliseconds(),
+          name: 'Demo user',
+          initials: 'DU',
+          email: 'duser@adneom.com',
+          contact: '+32 881 77 11',
+          target: 3,
+          isUnitManager: false,
+          notifications: true,
+          auto_inactive: true,
+          active: true
+        };
+
+        this.bmappAPI.saveBM(this.user);
+        this.ionViewDidEnter();
       }
     });
 

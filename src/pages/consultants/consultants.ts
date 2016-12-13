@@ -19,7 +19,7 @@ export class ConsultantsPage {
   consultants;
   filteredConsultants;
   user;
-  consultantsFilter = 'all';
+  consultantsFilter = 'mine';
 
   constructor(
     public navCtrl: NavController,
@@ -28,9 +28,25 @@ export class ConsultantsPage {
     public bmappAPI: BMappApi) {
 
     events.subscribe('consultants:new', (data) => {
-      if(this.consultants.indexOf(data[0]) == -1)
-        this.filteredConsultants.push(data[0]);
-        
+      if (this.consultants.indexOf(data[0]) == -1)
+        this.consultants.push(data[0]);
+
+      this.filterConsultants();
+    });
+
+    this.events.subscribe('consultants:deleted', (data) => {
+      console.log(data[0].name);
+      var index = _.indexOf(
+        this.consultants,
+        _.find(this.consultants, { id: data[0].id }));
+
+      if (index === -1) {
+        console.log("Unable to delete item: " + data[0].name);
+        return;
+      }
+
+      console.log("IDX: " + index + " - " + this.consultants.length);
+      this.consultants.splice(index, 1);
       this.filterConsultants();
     });
   }
@@ -55,7 +71,7 @@ export class ConsultantsPage {
     if (this.consultantsFilter === 'all') {
       this.filteredConsultants = this.consultants;
     } else {
-      this.filteredConsultants = _.filter(this.filteredConsultants, s => s.bm === this.user.id);
+      this.filteredConsultants = _.filter(this.consultants, s => s.bm === this.user.id);
     }
   }
 
