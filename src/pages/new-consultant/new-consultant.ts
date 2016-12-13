@@ -156,7 +156,29 @@ export class NewConsultantPage {
    * Triggers the consultant's deletion
    */
   delete() {
-    this.bmappApi.deleteConsultant(this.consultant);
-    this.navCtrl.pop();
+    this.showPrompt();
+  }
+
+  /**
+   * Show confirmation dialog
+   */
+  showPrompt() {
+    let prompt = this.alertCtrl.create({
+      title: 'Delete record',
+      message: "Are you sure you want to delete this record?",
+      buttons: [
+        {
+          text: 'No'
+        },
+        {
+          text: 'Yes',
+          handler: data => {
+            this.bmappApi.deleteConsultant(this.consultant);
+            this.navCtrl.pop();
+          }
+        }
+      ]
+    });
+    prompt.present();
   }
 }

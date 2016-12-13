@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Platform, Events } from 'ionic-angular';
+import { NavController, ToastController, Platform, Events } from 'ionic-angular';
 import { BMappApi } from '../../shared/BMappApi';
 import { NewConsultantPage } from '../new-consultant/new-consultant';
 import * as _ from 'lodash';
@@ -23,6 +23,7 @@ export class ConsultantsPage {
 
   constructor(
     public navCtrl: NavController,
+    public toastController: ToastController,
     public platform: Platform,
     public events: Events,
     public bmappAPI: BMappApi) {
@@ -44,10 +45,10 @@ export class ConsultantsPage {
         console.log("Unable to delete item: " + data[0].name);
         return;
       }
-
-      console.log("IDX: " + index + " - " + this.consultants.length);
+      
       this.consultants.splice(index, 1);
       this.filterConsultants();
+      this.presentToast("Consultant deleted");
     });
   }
 
@@ -92,6 +93,17 @@ export class ConsultantsPage {
 
   editConsultant($event, consultant) {
     this.navCtrl.push(NewConsultantPage, { 'consultant': consultant, 'user': this.user });
+  }
+
+    /**
+   * Displays a toast with the specified message
+   */
+  presentToast(message) {
+    let toast = this.toastController.create({
+      message: message,
+      duration: 3000
+    });
+    toast.present();
   }
 }
 
