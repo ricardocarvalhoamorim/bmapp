@@ -13,11 +13,11 @@
     <ion-searchbar [(ngModel)]="searchInput" [showCancelButton]="true" [animated]="true" (ionInput)="onInput($event)"
     (ionCancel)="onCancel($event)">
   </ion-searchbar>
+  
   </ion-navbar>
   
   <ion-toolbar>
-
-    <ion-segment secondary [(ngModel)]="consultantsFilter" (ionChange)="filterConsultants()">
+<ion-segment secondary [(ngModel)]="consultantsFilter" (ionChange)="filterConsultants()">
       <ion-segment-button value="mine">
         My consultants
       </ion-segment-button>
@@ -25,6 +25,7 @@
         All
       </ion-segment-button>
     </ion-segment>
+    
   </ion-toolbar>
 
 </ion-header>
