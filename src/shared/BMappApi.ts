@@ -332,7 +332,8 @@ export class BMappApi {
             skills: 'Tester',
             languages: 'French',
             package: 2000,
-            car: true
+            car: true,
+            internal: true
         },
         {
             id: 'cs2',
@@ -348,7 +349,8 @@ export class BMappApi {
             skills: 'AngularJs, Web',
             package: 2500,
             languages: 'French, Dutch, English',
-            car: true
+            car: true,
+            internal: true
         },
         {
             id: 'cs3',
@@ -364,7 +366,8 @@ export class BMappApi {
             package: 3100,
             skills: 'Systems Engineering',
             languages: 'French, Dutch, English',
-            car: true
+            car: true,
+            internal: true
         },
 
         //dwijnans
@@ -382,7 +385,8 @@ export class BMappApi {
             package: 2100,
             skills: 'UX/UI Designer',
             languages: 'French, Dutch, English',
-            car: false
+            car: false,
+            internal: true
         },
         {
             id: 'cs5',
@@ -398,7 +402,8 @@ export class BMappApi {
             package: 2420.29,
             skills: 'PLC',
             languages: 'French, Dutch, Spanish, English',
-            car: false
+            car: false,
+            internal: true
         },
         {
             id: 'cs6',
@@ -414,7 +419,8 @@ export class BMappApi {
             package: 2903.29,
             skills: 'Project Manager',
             languages: 'French, English',
-            car: false
+            car: false,
+            internal: true
         },
         //tdchassart
         {
@@ -431,7 +437,8 @@ export class BMappApi {
             package: 2000,
             skills: 'Android, IONIC 2, Java',
             languages: 'French, English, Spanish, Portuguese',
-            car: true
+            car: true,
+            internal: true
         },
         {
             id: 'cs8',
@@ -447,7 +454,8 @@ export class BMappApi {
             package: 2000,
             skills: 'Xamarin, dotNet',
             languages: 'French, English, Dutch',
-            car: true
+            car: true,
+            internal: true
         },
         {
             id: 'cs9',
@@ -463,7 +471,8 @@ export class BMappApi {
             package: 3870,
             skills: 'Python',
             languages: 'French, English, Dutch',
-            car: false
+            car: false,
+            internal: true
         },
         {
             id: 'cs10',
@@ -479,7 +488,8 @@ export class BMappApi {
             package: 3870,
             skills: 'Senior Java Swing',
             languages: 'French, English, Dutch',
-            car: true
+            car: true,
+            internal: true
         },
         {
             id: 'cs11',
@@ -495,7 +505,8 @@ export class BMappApi {
             package: 2900,
             skills: 'VoLTE Expert',
             languages: 'French, English, Dutch',
-            car: true
+            car: true,
+            internal: false
         },
         {
             id: 'cs12',
@@ -511,7 +522,8 @@ export class BMappApi {
             package: 3200,
             skills: 'Test Engineering',
             languages: 'French, English, Dutch',
-            car: true
+            car: true,
+            internal: false
         }
     ];
 }
