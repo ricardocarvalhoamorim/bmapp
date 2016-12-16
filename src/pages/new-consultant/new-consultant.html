@@ -42,7 +42,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-list padding>
+  <ion-list>
 
     <ion-item-divider>
       <h2><b>Personal info</b></h2>
@@ -51,19 +51,55 @@
     <ion-item>
       <ion-icon name="ios-contact-outline" item-left></ion-icon>
       <ion-label>Full Name</ion-label>
-      <ion-input disabled="{{isReadOnly}}" type="text" value="" [(ngModel)]="consultant.name" ngControl="name"></ion-input>
+      <ion-input disabled="{{isReadOnly}}" type="text" value="" [(ngModel)]="consultant.name" ngControl="name" clearInput=true></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-icon name="ios-mail-outline" item-left></ion-icon>
       <ion-label>Email</ion-label>
-      <ion-input disabled="{{isReadOnly}}" type="email" [(ngModel)]="consultant.email" ngControl="email"></ion-input>
+      <ion-input disabled="{{isReadOnly}}" type="email" [(ngModel)]="consultant.email" ngControl="email" clearInput=true></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-icon name="ios-call-outline" item-left></ion-icon>
       <ion-label>Phone number</ion-label>
-      <ion-input disabled="{{isReadOnly}}" type="tel" [(ngModel)]="consultant.contact" ngControl="telephone"></ion-input>
+      <ion-input disabled="{{isReadOnly}}" type="tel" [(ngModel)]="consultant.contact" ngControl="telephone" clearInput=true></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="ios-person-outline" item-left></ion-icon>
+      <ion-label>HR</ion-label>
+      <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="consultant.hr" ngControl="hr" clearInput=true></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="ios-microphone-outline" item-left></ion-icon>
+      <ion-label>Languages</ion-label>
+      <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="consultant.languages" ngControl="languages"></ion-input>
+    </ion-item>
+
+    <ion-item-divider>
+      <h2><b>Mission</b></h2>
+    </ion-item-divider>
+
+    <ion-item *ngIf="!isReadOnly">
+      <ion-label>Client</ion-label>
+      <ion-select [(ngModel)]="pickedClient">
+        <ion-option *ngFor="let client of clients" [value]="client.id">{{client.name}}</ion-option>
+        <ion-option [value]="-1">No client</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item text-wrap *ngIf="isReadOnly">
+      <p>This consultant is currently assigned to
+        <ion-badge item-right>{{consultant.client}}</ion-badge>
+      </p>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="ios-build-outline" item-left></ion-icon>
+      <ion-label>Role</ion-label>
+      <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="consultant.skills" ngControl="skills" clearInput=true></ion-input>
     </ion-item>
 
     <ion-item>
@@ -80,26 +116,29 @@
         ngControl="ending_date"></ion-datetime>
     </ion-item>
 
-    <ion-item-divider>
-      <h2><b>Skills</b></h2>
-    </ion-item-divider>
-
-    <ion-item>
-      <ion-icon name="ios-build-outline" item-left></ion-icon>
-      <ion-label>Skills set</ion-label>
-      <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="consultant.skills" ngControl="skills"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="ios-microphone-outline" item-left></ion-icon>
-      <ion-label>Languages</ion-label>
-      <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="consultant.languages" ngControl="languages"></ion-input>
-    </ion-item>
-
     <ion-item>
       <ion-icon name="ios-cash-outline" item-left></ion-icon>
-      <ion-label>Package</ion-label>
-      <ion-input disabled="{{isReadOnly}}" type="number" [(ngModel)]="consultant.package" ngControl="package"></ion-input>
+      <ion-label>Selling price</ion-label>
+      <ion-input disabled="{{isReadOnly}}" (input)='onCostsChanged($event)' type="number" [(ngModel)]="consultant.selling_price"
+        ngControl="selling_price"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="ios-pricetag-outline" item-left></ion-icon>
+      <ion-label>Daily cost</ion-label>
+      <ion-input disabled="{{isReadOnly}}" (input)='onCostsChanged($event)' type="number" [(ngModel)]="consultant.package" ngControl="package"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="logo-usd" item-left></ion-icon>
+      <ion-label>Profit</ion-label>
+      <ion-input disabled="true" type="text" [(ngModel)]="consultant.profit" ngControl="profit"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="ios-globe-outline" item-left></ion-icon>
+      <ion-label>Country</ion-label>
+      <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="consultant.country" ngControl="country" clearInput=true></ion-input>
     </ion-item>
 
     <ion-item>
@@ -108,30 +147,13 @@
       <ion-toggle disabled="{{isReadOnly}}" checked="false" [(ngModel)]="consultant.internal" ngControl="internalr"></ion-toggle>
     </ion-item>
 
-    <ion-item>
-      <ion-icon name="ios-car-outline" item-left></ion-icon>
-      <ion-label>Company car</ion-label>
-      <ion-toggle disabled="{{isReadOnly}}" checked="false" [(ngModel)]="consultant.car" ngControl="car"></ion-toggle>
-    </ion-item>
 
     <ion-item-divider>
-      <h2><b>Mission</b></h2>
+      <h2><b>Delete record</b></h2>
     </ion-item-divider>
 
     <ion-item text-wrap *ngIf="!isReadOnly">
-      <p>You can assign a mission to a consultant at any time. To do so, tap the button below and pick a mission or client to
-        assign. You can also provide a project duration, if applicable so you can get alerts on upcoming deadlines.</p>
-      <button ion-button block color="light" padding (click)="pickMission()">{{consultant.client}}</button>
-    </ion-item>
-
-    <ion-item text-wrap *ngIf="isReadOnly">
-      <p>This consultant is currently assigned to
-        <ion-badge item-right>{{consultant.client}}</ion-badge>
-      </p>
-    </ion-item>
-
-    <ion-item text-wrap *ngIf="!isReadOnly">
-      <button ion-button icon-left block color="primary" padding (click)="delete()">
+      <button ion-button icon-left block color="primary" padding (click)="showDeletePrompt()">
       <ion-icon name="ios-trash-outline"></ion-icon>Delete this record
       </button>
     </ion-item>

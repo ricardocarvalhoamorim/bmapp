@@ -10,14 +10,13 @@
     <button ion-button menuToggle> 
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-searchbar [(ngModel)]="searchInput" [showCancelButton]="true" [animated]="true" (ionInput)="onInput($event)"
-    (ionCancel)="onCancel($event)">
-  </ion-searchbar>
-  
+    <ion-searchbar [(ngModel)]="searchInput" [showCancelButton]="true" [animated]="true" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
+    </ion-searchbar>
+
   </ion-navbar>
-  
+
   <ion-toolbar>
-<ion-segment secondary [(ngModel)]="consultantsFilter" (ionChange)="filterConsultants()">
+    <ion-segment [(ngModel)]="consultantsFilter" (ionChange)="filterConsultants()">
       <ion-segment-button value="mine">
         My consultants
       </ion-segment-button>
@@ -25,7 +24,7 @@
         All
       </ion-segment-button>
     </ion-segment>
-    
+
   </ion-toolbar>
 
 </ion-header>
@@ -51,60 +50,66 @@
 
       <ion-row (click)="editConsultant($event, consultant)">
         <ion-col width-67 style="background-color:#c9001d">
-          <h2 style="color:white;"><b>{{consultant.name}}</b></h2>
-          <p style="color:white; ">{{consultant.skills}}</p>
-        </ion-col>
-        <ion-col style="background: linear-gradient(to left bottom, #fff 50%, #c9001d 50%);border-top:1px solid #c9001d;border-bottom:1px solid #c9001d;">
-        </ion-col>
-        <ion-col width-25 style="background-color:white; border-color:#c9001d; border-width: 1px; border-style: solid;border-left:none; text-align:center; margin:0 auto;">
-          <div style="font-size:15px; color:#c9001d;">
-            <p><b>€{{consultant.package}}</b></p>
-            <b>{{consultant.client}}</b>
-          </div>
-        </ion-col>
-      </ion-row>
+<h2 style="color:white;"><b>{{consultant.name}}</b></h2>
+<p style="color:white; ">{{consultant.skills}}</p>
+</ion-col>
+<ion-col style="background: linear-gradient(to left bottom, #fff 50%, #c9001d 50%);border-top:1px solid #c9001d;border-bottom:1px solid #c9001d;">
+</ion-col>
+<ion-col width-25 style="background-color:white; border-color:#c9001d; border-width: 1px; border-style: solid;border-left:none; text-align:center; margin:0 auto;">
+<div style="font-size:15px; color:#c9001d;">
+<p><b>€{{consultant.package}}</b></p>
+<b>{{consultant.client}}</b>
+</div>
+</ion-col>
+</ion-row>
 
-      <ion-card-content>
-        <p>
-          <ion-icon name="ios-calendar-outline"> Started: {{consultant.starting_date}}</ion-icon>
-        </p>
-        <p>
-          <ion-icon name="ios-calendar-outline"> Until: {{consultant.ending_date}}</ion-icon>
-        </p>
-        <p>
-          <ion-icon name="ios-microphone-outline" *ngIf="consultant.languages"> {{consultant.languages}}</ion-icon>
-        </p>
-        <p>
-          <ion-icon name="ios-car-outline" *ngIf="consultant.car"> {{consultant.car ? 'Yes' : 'No'}}</ion-icon>
-        </p>
-        <p>
-          <ion-icon name="ios-home-outline"> {{consultant.internal ? 'Internal' : 'External'}}</ion-icon>
-        </p>
-      </ion-card-content>
+<ion-card-content>
+  <p>
+    <ion-icon name="ios-calendar-outline"> Started: {{consultant.starting_date}}</ion-icon>
+  </p>
+  <p>
+    <ion-icon name="ios-calendar-outline"> Until: {{consultant.ending_date}}</ion-icon>
+  </p>
+  <p>
+    <ion-icon name="ios-microphone-outline" *ngIf="consultant.languages"> {{consultant.languages}}</ion-icon>
+  </p>
+  <p>
+    <ion-icon name="ios-car-outline" *ngIf="consultant.car"> {{consultant.car ? 'Yes' : 'No'}}</ion-icon>
+  </p>
+  <p>
+    <ion-icon name="ios-home-outline"> {{consultant.internal ? 'Internal' : 'Freelancer'}}</ion-icon>
+  </p>
+  <p>
+    <ion-icon name="ios-person-outline" *ngIf="consultant.hr">{{consultant.hr}}</ion-icon>
+  </p>
+  <p>
+    <ion-icon name="ios-globe-outline" *ngIf="consultant.country">{{consultant.country}}</ion-icon>
+  </p>
+</ion-card-content>
 
-      <ion-row no-padding>
-        <ion-col>
-          <button ion-button disabled clear color="primary" icon-left (click)="share($event, consultant)">
+<ion-row no-padding>
+  <ion-col>
+    <button ion-button disabled clear color="primary" icon-left (click)="share($event, consultant)">
           <ion-icon name='share-alt'></ion-icon>
           Share
         </button>
-        </ion-col>
-        <ion-col text-center>
-          <button ion-button clear color="primary" icon-left [disabled]="consultant.email===''" (click)="email($event, consultant)">
+  </ion-col>
+  <ion-col text-center>
+    <button ion-button clear color="primary" icon-left [disabled]="consultant.email===''" (click)="email($event, consultant)">
           <ion-icon name='mail'></ion-icon>
           Mail
         </button>
-        </ion-col>
-        <ion-col text-right>
-          <button ion-button clear color="primary" icon-left [disabled]="consultant.contact===''" (click)="call($event, consultant)">
+  </ion-col>
+  <ion-col text-right>
+    <button ion-button clear color="primary" icon-left [disabled]="consultant.contact===''" (click)="call($event, consultant)">
           <ion-icon name='call'></ion-icon>
           Call
         </button>
-        </ion-col>
-      </ion-row>
+  </ion-col>
+</ion-row>
 
 
-    </ion-card>
-  </ion-list>
+</ion-card>
+</ion-list>
 
 </ion-content>

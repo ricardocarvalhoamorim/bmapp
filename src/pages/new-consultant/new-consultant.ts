@@ -16,10 +16,26 @@ import { BMappApi } from '../../shared/BMappApi';
 })
 export class NewConsultantPage {
 
+  /**
+   * The consultant object
+   */
   consultant: any;
-  user: any;
-  isReadOnly = true;
+  /**
+   * The list of clients available to pick
+   */
   clients: any[];
+  /**
+   * The current active user
+   */
+  user: any;
+  /**
+   * Whether the layout should or shouldn't allow changes
+   */
+  isReadOnly = true;
+  /**
+   * The id of the selected client
+   */
+  pickedClient;
 
   constructor(
     public navCtrl: NavController,
@@ -51,14 +67,16 @@ export class NewConsultantPage {
         skills: '',
         languages: '',
         package: 0,
+        selling_price: 0,
+        profit: 0,
+        country: "Belgium",
+        hr: "Natalia de Wilde D'Estmael",
         car: false
       };
-
     } else {
       this.consultant = navParams.get('consultant');
-      console.log(this.consultant);
+      this.pickedClient = this.consultant.clientID;
     }
-
 
     if (this.user.id !== this.consultant.bm && !this.user.isUnitManager) {
       this.isReadOnly = true;
@@ -90,6 +108,15 @@ export class NewConsultantPage {
       return;
     }
 
+    if (!this.pickedClient || this.pickedClient == -1) {
+      this.consultant.clientID = '-1';
+      this.consultant.client = 'No client';
+    } else {
+      var client = _.find(this.clients, { id: this.pickedClient });
+      this.consultant.clientID = client.id;
+      this.consultant.client = client.name;
+    }
+
     this.consultant.bm = this.user.id;
     this.bmappApi.saveConsultant(this.consultant);
     this.presentToast('Saved successfully');
@@ -109,60 +136,9 @@ export class NewConsultantPage {
   }
 
   /**
-   * Displays an interface to pick a mission and associates it with the 
-   * current record
+   * Show confirmation dialog and proceeds to delete the record if the user confirms
    */
-  pickMission() {
-    let alert = this.alertCtrl.create();
-    alert.setTitle('Pick a client');
-
-    for (let client of this.clients) {
-      alert.addInput({
-        type: 'radio',
-        label: client.name,
-        value: client.id,
-        checked: false
-      });
-    }
-
-    alert.addInput({
-      type: 'radio',
-      label: 'No client',
-      value: '-1',
-      checked: false
-    });
-
-    alert.addButton('Cancel');
-    alert.addButton({
-      text: 'OK',
-      handler: data => {
-        //data -> client id
-        if (data === '-1') {
-          this.consultant.clientID = '-1';
-          this.consultant.client = 'No client';
-          console.log(this.consultant);
-          return;
-        }
-        var client = _.find(this.clients, { id: data });
-        this.consultant.clientID = client.id;
-        this.consultant.client = client.name;
-        console.log(this.consultant);
-      }
-    });
-    alert.present();
-  }
-
-  /**
-   * Triggers the consultant's deletion
-   */
-  delete() {
-    this.showPrompt();
-  }
-
-  /**
-   * Show confirmation dialog
-   */
-  showPrompt() {
+  showDeletePrompt() {
     let prompt = this.alertCtrl.create({
       title: 'Delete record',
       message: "Are you sure you want to delete this record?",
@@ -180,5 +156,13 @@ export class NewConsultantPage {
       ]
     });
     prompt.present();
+  }
+
+  /**
+   * Updates the margin and profit whenever the input is changed
+   */
+  onCostsChanged($event) {
+    var margin = this.consultant.selling_price - this.consultant.package;
+    this.consultant.profit = margin + " (" + Math.round((margin / this.consultant.selling_price) * 100) + "%)";
   }
 }
