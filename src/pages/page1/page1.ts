@@ -133,11 +133,11 @@ export class Page1 {
           label: '',
           data: [],
           backgroundColor: [
-            '#E57373',
-            '#E53935',
-            '#D50000',
-            '#C62828',
-            '#B71C1C'
+            '#F9A825',
+            '#01579B',
+            '#1B5E20',
+            '#BF360C',
+            '#4E342E'
           ]
         }
       ]
@@ -158,18 +158,6 @@ export class Page1 {
       this.clients.push(data);
       this.ionViewDidEnter();
     });
-  }
-
-  toggleColors() {
-    this.clientsOptions.data.datasets[0].backgroundColor = [
-      '#607D8B',
-      '#1565C0',
-      '#00695C',
-      '#FFD600',
-      '#4E342E'
-    ];
-    this.updateChart();
-    console.log("CHANGED");
   }
 
   /**

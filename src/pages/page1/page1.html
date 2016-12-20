@@ -111,7 +111,7 @@
       <ion-item>
         <ion-icon name='ios-person-outline' item-left color="secondary"></ion-icon>
         Total running missions for {{user.initials}}:
-        <ion-badge color="secondary" item-right>{{consultantsOnMission}}</ion-badge>
+        <ion-badge color="light" item-right>{{consultantsOnMission}}</ion-badge>
       </ion-item>
     </ion-card-content>
   </ion-card>
@@ -133,13 +133,13 @@
       <ion-item *ngIf="consultantsOnBench && consultantsOnBench > 0">
         <ion-icon name="ios-alarm-outline" item-left></ion-icon>
         Bench
-        <ion-badge item-right>{{consultantsOnBench}} consultants</ion-badge>
+        <ion-badge color="light" item-right>{{consultantsOnBench}} consultants</ion-badge>
       </ion-item>
 
       <ion-item *ngIf="consultantsOnMission && consultantsOnMission > 0">
         <ion-icon name="ios-build-outline" item-left></ion-icon>
         Assigned
-        <ion-badge color="secondary" item-right>{{consultantsOnMission}} consultants</ion-badge>
+        <ion-badge color="primary" item-right>{{consultantsOnMission}} consultants</ion-badge>
       </ion-item>
 
     </ion-card-content>
