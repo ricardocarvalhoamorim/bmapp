@@ -35,35 +35,45 @@ export class ClientsPage {
     events.subscribe('clients:new', (data) => {
       if (this.clients.indexOf(data[0]) == -1)
         this.clients.push(data[0]);
-      //this.ionViewDidLoad();
     });
   }
 
   ionViewDidLoad() {
-    this.loadClients();
+    if (!this.clients)
+      this.loadClients(null);
   };
 
   /**
    * Calls the service to dispatch the http request and handles the response
    */
-  loadClients() {
+  loadClients(refresher) {
+
     let loader = this.loadingCtrl.create({
       content: "Loading clients..."
     });
-    loader.present();
+
+    if (!refresher) {
+      loader.present();
+    }
 
     this.bmappService.loadClients()
       .subscribe(
       data => {
         this.clients = data._embedded.clients;
         this.error = null;
-        loader.dismiss();
+        if (null != refresher)
+          refresher.complete();
+        else
+          loader.dismiss();
       },
       err => {
         this.clients = [];
+        console.log(this.clients);
+        if (null != refresher)
+          refresher.complete();
+        else
+          loader.dismiss();
 
-        loader.dismiss();
-        console.log(err)
         this.error = err;
         let toast = this.toastCtrl.create({
           message: 'Something went wrong. Maybe the server is down...',
@@ -72,15 +82,6 @@ export class ClientsPage {
         toast.present();
       }
       )
-  }
-
-  /**
-   * Refreshes the list by launching a new request
-   */
-  refreshList(refresher) {
-    this.loadClients();
-    if (null != refresher)
-      refresher.complete();
   }
 
 

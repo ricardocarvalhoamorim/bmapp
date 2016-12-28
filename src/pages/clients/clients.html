@@ -61,7 +61,7 @@
     <button ion-fab color="primary" (click)="newClient()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
-  <ion-refresher (ionRefresh)="refreshList($event)">
+  <ion-refresher (ionRefresh)="loadClients($event)">
     <ion-refresher-content
      pullingIcon="arrow-dropdown"
       pullingText="Pull to refresh"
