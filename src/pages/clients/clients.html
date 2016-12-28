@@ -35,15 +35,20 @@
     </ion-item>
     <ion-card-content>
       <p>
-        For some reason, BMApp was unable to get the records from the server. Please check your internet connection. This can also
-        be due to a scheduled maitenance. If this persists, please contact the operations team to solve this issue quickly
-        and get BMApp back online.
+        For some reason, BMApp was unable to get the records from the server.
       </p>
+
+      <ul>
+        <li>Please check your internet connection;</li>
+        <li>This can also be due to a scheduled maitenance. Try again in a few minutes;</li>
+        <li>If this persists, please contact the operations team to solve this issue quickly and get BMApp back online.</li>
+      </ul>
+
     </ion-card-content>
 
     <ion-row>
       <ion-col>
-        <button item-right ion-button icon-left clear small>
+        <button item-right ion-button icon-left clear small (click)="refreshList()">
         <ion-icon name="refresh"></ion-icon>
         <div>Refresh</div>
       </button>
@@ -55,6 +60,15 @@
   <ion-fab padding right bottom>
     <button ion-fab color="primary" (click)="newClient()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
+
+  <ion-refresher (ionRefresh)="refreshList($event)">
+    <ion-refresher-content
+     pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+       refreshingSpinner="circles"
+        refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
 
   <ion-list no-lines [virtualScroll]="clients" [approxItemHeight]="'100px'">
     <ion-card *virtualItem="let client">

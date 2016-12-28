@@ -40,6 +40,13 @@ export class ClientsPage {
   }
 
   ionViewDidLoad() {
+    this.loadClients();
+  };
+
+  /**
+   * Calls the service to dispatch the http request and handles the response
+   */
+  loadClients() {
     let loader = this.loadingCtrl.create({
       content: "Loading clients..."
     });
@@ -65,14 +72,16 @@ export class ClientsPage {
         toast.present();
       }
       )
-  };
+  }
 
-  /*
-  this.bmappAPI.getClients().then((val) => {
-    this.clients = val;
-  });
-  */
-
+  /**
+   * Refreshes the list by launching a new request
+   */
+  refreshList(refresher) {
+    this.loadClients();
+    if (null != refresher)
+      refresher.complete();
+  }
 
 
   /**
