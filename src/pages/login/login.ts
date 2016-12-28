@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
+
 /*
   Generated class for the Login page.
 
@@ -13,10 +14,14 @@ import { NavController } from 'ionic-angular';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController) { }
 
   ionViewDidLoad() {
     console.log('Hello LoginPage Page');
+  }
+
+  performLogin() {
+    this.navCtrl.pop();
   }
 
 }

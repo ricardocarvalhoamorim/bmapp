@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, Platform, Events } from 'ionic-angular';
+import { NavController, ToastController, LoadingController, Platform, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage'
 import { BMappApi } from '../../shared/BMappApi';
 import { NewClientPage } from '../new-client/new-client';
+
+import { BmappService } from '../../providers/bmapp-service'
 
 
 /*
@@ -13,31 +15,64 @@ import { NewClientPage } from '../new-client/new-client';
 */
 @Component({
   selector: 'page-clients',
-  templateUrl: 'clients.html'
+  templateUrl: 'clients.html',
+  providers: [BmappService]
 })
 export class ClientsPage {
 
   clients: any[];
+  error;
 
   constructor(
     public navCtrl: NavController,
     public platform: Platform,
     public storage: Storage,
     public events: Events,
-    public bmappAPI: BMappApi
+    public toastCtrl: ToastController,
+    public loadingCtrl: LoadingController,
+    public bmappService: BmappService
   ) {
     events.subscribe('clients:new', (data) => {
-      if (this.clients.indexOf(data[0]) == -1) 
+      if (this.clients.indexOf(data[0]) == -1)
         this.clients.push(data[0]);
       //this.ionViewDidLoad();
     });
   }
 
   ionViewDidLoad() {
-    this.bmappAPI.getClients().then((val) => {
-      this.clients = val;
+    let loader = this.loadingCtrl.create({
+      content: "Loading clients..."
     });
-  }
+    loader.present();
+
+    this.bmappService.loadClients()
+      .subscribe(
+      data => {
+        this.clients = data._embedded.clients;
+        this.error = null;
+        loader.dismiss();
+      },
+      err => {
+        this.clients = [];
+
+        loader.dismiss();
+        console.log(err)
+        this.error = err;
+        let toast = this.toastCtrl.create({
+          message: 'Something went wrong. Maybe the server is down...',
+          duration: 3000
+        });
+        toast.present();
+      }
+      )
+  };
+
+  /*
+  this.bmappAPI.getClients().then((val) => {
+    this.clients = val;
+  });
+  */
+
 
 
   /**

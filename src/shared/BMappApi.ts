@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Platform, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Http } from '@angular/http';
 
 import * as _ from 'lodash';
 
@@ -8,10 +9,12 @@ import * as _ from 'lodash';
 export class BMappApi {
 
     public storage: Storage;
+    baseAddress = "http://192.168.4.82:8080/";
 
     constructor(
         public platform: Platform,
         storage: Storage,
+        public http: Http,
         public events: Events) {
         this.storage = storage;
         this.dbCheckup();
@@ -46,6 +49,18 @@ export class BMappApi {
      */
     getConsultants() {
         return this.storage.get('consultants');
+    }
+
+    getConsultantsFromCloud() {
+        //return this.http.get("https://randomuser.me/api/").map(res => res.json());
+
+        return this.http.get("https://randomuser.me/api/")
+            .subscribe(res => {
+                console.log(res.json());
+            }, (err) => {
+                console.log(err);
+            });
+
     }
 
     /**
@@ -316,7 +331,7 @@ export class BMappApi {
             email: 'info@proximus.be'
         }
     ];
-
+            
     dummy_consultants = [
         {
             id: 'cs1',

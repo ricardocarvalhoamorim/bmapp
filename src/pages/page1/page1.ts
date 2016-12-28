@@ -8,12 +8,15 @@ import { SettingsPage } from '../settings/settings';
 import { BMappApi } from '../../shared/BMappApi';
 import { ChartComponent } from 'ng2-chartjs2';
 
+import { BmappService } from '../../providers/bmapp-service'
+
 import * as _ from 'lodash';
 
 
 @Component({
   selector: 'page-page1',
-  templateUrl: 'page1.html'
+  templateUrl: 'page1.html',
+  providers: [BmappService]
 })
 export class Page1 {
 
@@ -147,7 +150,8 @@ export class Page1 {
   constructor(
     public navCtrl: NavController,
     public events: Events,
-    public bmappAPI: BMappApi) {
+    public bmappAPI: BMappApi,
+    public bmappService: BmappService) {
 
     events.subscribe('consultants:new', (data) => {
       this.consultants.push(data);
@@ -243,7 +247,7 @@ export class Page1 {
     }
 
     this.competitionOptions.data.labels = _.map(this.bms, 'initials');
-    
+
     //update pie chart
     this.consultantsDistributionOptions.data.datasets[0].data = [this.consultantsOnMission, this.consultantsOnBench];
 

@@ -1,25 +1,25 @@
 <ion-menu [content]="content">
-<!-- 
+  <!-- 
   <ion-header>
     <ion-toolbar>
       <ion-title>Menu</ion-title>
     </ion-toolbar>
   </ion-header>
 -->
-  <ion-content>
-    <div class="side-image">
-      <img src="assets/img/home.jpg" />
-      <div class="card-title">ADNEOM</div>
-      <div padding class="card-subtitle">Positive thinking company</div>
-    </div>
-    <ion-list no-lines>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+  <ion-content style="background: #c9001d">
+<div class="side-image">
+  <img src="assets/img/home.jpg" />
+  <div class="card-title">ADNEOM</div>
+  <div class="card-subtitle">Positive thinking company</div>
+</div>
+<ion-list no-lines>
+  <button menuClose color="primary" ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
-    </ion-list>
+</ion-list>
 
-     <button ion-button button color="dark" full outline (click)="feedback()">Feedback</button>
-  </ion-content>
+<button ion-button button color="light" full outline (click)="feedback()">Feedback</button>
+</ion-content>
 
 </ion-menu>
 

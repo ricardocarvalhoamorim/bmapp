@@ -26,13 +26,39 @@
 
   </ion-card>
 
+  <ion-card *ngIf="error">
+    <ion-item>
+      <ion-avatar item-left>
+        <img src="img/cloud_error.png">
+      </ion-avatar>
+      <h2>Unable to fetch resources</h2>
+    </ion-item>
+    <ion-card-content>
+      <p>
+        For some reason, BMApp was unable to get the records from the server. Please check your internet connection. This can also
+        be due to a scheduled maitenance. If this persists, please contact the operations team to solve this issue quickly
+        and get BMApp back online.
+      </p>
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col>
+        <button item-right ion-button icon-left clear small>
+        <ion-icon name="refresh"></ion-icon>
+        <div>Refresh</div>
+      </button>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+
   <ion-fab padding right bottom>
     <button ion-fab color="primary" (click)="newClient()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
   <ion-list no-lines [virtualScroll]="clients" [approxItemHeight]="'100px'">
     <ion-card *virtualItem="let client">
-      <ion-item  (click)="editClient($event, client)">
+      <ion-item (click)="editClient($event, client)">
         <ion-avatar item-left>
           <!--<img src="img/marty-avatar.png"> -->
           <h1>{{client.name.substring(0,1)}}</h1>
