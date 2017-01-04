@@ -51,18 +51,6 @@ export class BMappApi {
         return this.storage.get('consultants');
     }
 
-    getConsultantsFromCloud() {
-        //return this.http.get("https://randomuser.me/api/").map(res => res.json());
-
-        return this.http.get("https://randomuser.me/api/")
-            .subscribe(res => {
-                console.log(res.json());
-            }, (err) => {
-                console.log(err);
-            });
-
-    }
-
     /**
      * Returns the list of registered clients
      */

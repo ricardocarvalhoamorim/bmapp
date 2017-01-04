@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Events } from 'ionic-angular';
+import { NavController, ToastController, Events, Platform } from 'ionic-angular';
 import { NewConsultantPage } from '../new-consultant/new-consultant';
 import { ConsultantsPage } from '../consultants/consultants';
 import { ClientsPage } from '../clients/clients';
@@ -149,9 +149,27 @@ export class Page1 {
 
   constructor(
     public navCtrl: NavController,
+    public toastCtrl: ToastController,
     public events: Events,
     public bmappAPI: BMappApi,
+    public platform: Platform,
     public bmappService: BmappService) {
+
+    this.platform.ready().then(() => {
+      this.bmappService.loadBusinessManagers().subscribe(
+        data => {
+          console.log(data._embedded);
+          this.bms = data._embedded.businessManagers;
+          this.user = _.find(this.bms, { active: true });
+
+          this.displayMessage("Welcome, " + this.user.name);
+          this.loadAssets();
+        },
+        err => {
+          this.displayMessage('Unable to load the business managers');
+        }
+      )
+    });
 
     events.subscribe('consultants:new', (data) => {
       this.consultants.push(data);
@@ -165,55 +183,66 @@ export class Page1 {
   }
 
   /**
+   * Triggers the API call to load both consultants and clients
+   */
+  loadAssets() {
+    this.bmappService.loadConsultants().subscribe(
+      data => {
+        console.log(data._embedded.consultants);
+        this.consultants = data._embedded.consultants;
+
+        this.userConsultants =
+          _.filter(this.consultants, cs => cs.businessManagerId === this.user.id);
+
+        this.consultantsOnMission =
+          _.filter(this.userConsultants, cs => cs.clientID !== '-1').length;
+        this.consultantsOnBench = this.userConsultants.length - this.consultantsOnMission;
+
+        console.log(this.consultantsOnMission);
+        this.progress = Math.round(this.consultantsOnMission / this.user.target * 100);
+
+        this.updateChart();
+      },
+      err => {
+        this.consultants = [];
+        this.displayMessage("Something went wrong. Maybe the server is down... (consultants)")
+      });
+
+    this.bmappService.loadClients().subscribe(
+      data => {
+        this.clients = data._embedded.clients;
+      },
+      err => {
+        this.clients = [];
+        this.displayMessage('Something went wrong. Maybe the server is down... (clients)');
+      });
+  }
+
+  /**
    * Runs when the page has fully entered and is now the active page.
    * This event will fire, whether it was the first load or a cached page.
    */
   ionViewDidEnter() {
-    this.bmappAPI.getBms().then((val) => {
-      this.user = _.find(val, { active: true });
 
-      this.bms = val;
-      if (!this.user) {
-        console.log("Could not find an acive user, will create one");
-        this.user = {
-          id: new Date().getUTCMilliseconds(),
-          name: 'Demo user',
-          initials: 'DU',
-          email: 'duser@adneom.com',
-          contact: '+32 881 77 11',
-          target: 3,
-          isUnitManager: false,
-          notifications: true,
-          auto_inactive: true,
-          active: true
-        };
-
-        this.bmappAPI.saveBM(this.user);
-        this.ionViewDidEnter();
-      }
-    });
-
-    this.bmappAPI.getConsultants().then((val) => {
-      this.consultants = val;
-      if (this.consultants.length === 0) {
-        return;
-      }
-
-      //compute the user's stats
-      this.userConsultants =
-        _.filter(this.consultants, cs => cs.bm === this.user.id);
-      this.consultantsOnMission =
-        _.filter(this.userConsultants, cs => cs.clientID !== '-1').length;
-      this.consultantsOnBench = this.userConsultants.length - this.consultantsOnMission;
-
-      this.progress = Math.round(this.consultantsOnMission / this.user.target * 100);
-
-      this.updateChart();
-    });
-
-    this.bmappAPI.getClients().then((val) => {
-      this.clients = val;
-    });
+    /*
+        this.bmappAPI.getConsultants().then((val) => {
+          this.consultants = val;
+          if (this.consultants.length === 0) {
+            return;
+          }
+    
+          //compute the user's stats
+          this.userConsultants =
+            _.filter(this.consultants, cs => cs.bm === this.user.id);
+          this.consultantsOnMission =
+            _.filter(this.userConsultants, cs => cs.clientID !== '-1').length;
+          this.consultantsOnBench = this.userConsultants.length - this.consultantsOnMission;
+    
+          this.progress = Math.round(this.consultantsOnMission / this.user.target * 100);
+    
+          this.updateChart();
+        });
+    */
   }
 
   /**
@@ -288,5 +317,13 @@ export class Page1 {
 
   takeABreak() {
     window.open(`https://www.youtube.com/watch?v=DJUIgV7t8C0`, '_system');
+  }
+
+  displayMessage(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000
+    });
+    toast.present();
   }
 }

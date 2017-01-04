@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class BmappService {
 
-  baseUri = "http://192.168.1.84:8080";
+  baseUri = "http://192.168.1.20:8080";
   consultants: any[];
   businessManagers: any[];
   clients: any[];
@@ -19,31 +19,31 @@ export class BmappService {
   constructor(public http: Http) {
   }
 
+
+
+  /**
+   * Fetches the consultants list from the TRM backend
+   */
+  loadBusinessManagers() {
+    return this.http
+      .get(this.baseUri + '/businessManagers')
+      .map(res => res.json());
+  }
+
   /**
    * Fetches the consultants list from the TRM backend
    */
   loadConsultants() {
-    if (this.consultants) {
-      // already loaded data
-      return Promise.resolve(this.consultants);
-    }
-
-    // don't have the data yet
-    return new Promise(resolve => {
-      // We're using Angular HTTP provider to request the data,
-      // then on the response, it'll map the JSON data to a parsed JS object.
-      // Next, we process the data and resolve the promise with the new data.
-      this.http.get(this.baseUri + '/consultants')
-        .map(res => res.json())
-        .subscribe(data => {
-          // we've got back the raw data, now generate the core schedule data
-          // and save the data for later reference
-          this.consultants = data;
-          resolve(this.consultants);
-        });
-    });
+    return this.http
+      .get(this.baseUri + '/consultants')
+      .map(res => res.json());
   }
 
+  loadUserConsultants(userID) {
+    return this.http
+      .get(this.baseUri + '/businessManagers/' + userID + '/consultants')
+      .map(res => res.json());
+  }
 
   /**
    * Fetches the clients from the TRM backend

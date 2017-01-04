@@ -21,22 +21,21 @@ export class MyApp {
   constructor(
     public platform: Platform) {
     this.initializeApp();
-
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: Page1 },
-      { title: 'Consultants', component: ConsultantsPage },
-      { title: 'Client portfolio', component: ClientsPage },
-      { title: 'Settings', component: SettingsPage }
-    ];
   }
 
   initializeApp() {
-    
 
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+
+      // used for an example of ngFor and navigation
+      this.pages = [
+        { title: 'Home', component: Page1 },
+        { title: 'Consultants', component: ConsultantsPage },
+        { title: 'Client portfolio', component: ClientsPage },
+        { title: 'Settings', component: SettingsPage }
+      ];
       StatusBar.styleDefault();
       Splashscreen.hide();
     });
@@ -50,9 +49,9 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
 
-    /**
-   * Sends an email with feedback for the application
-   */
+  /**
+ * Sends an email with feedback for the application
+ */
   feedback() {
     window.open(`mailto:rcamorim@adneom.com?subject=BMApp feedback&body=Hi Ricardo, Here\'s my feedback on the app`, '_system');
   }

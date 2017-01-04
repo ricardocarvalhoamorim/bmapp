@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, ToastController, Platform, Events } from 'ionic-angular';
 import { BMappApi } from '../../shared/BMappApi';
 import { NewConsultantPage } from '../new-consultant/new-consultant';
+import { BmappService } from '../../providers/bmapp-service'
 import * as _ from 'lodash';
 
 /*
@@ -12,7 +13,8 @@ import * as _ from 'lodash';
 */
 @Component({
   selector: 'page-consultants',
-  templateUrl: 'consultants.html'
+  templateUrl: 'consultants.html',
+  providers: [BmappService]
 })
 export class ConsultantsPage {
 
@@ -24,9 +26,10 @@ export class ConsultantsPage {
 
   constructor(
     public navCtrl: NavController,
-    public toastController: ToastController,
+    public toastCtrl: ToastController,
     public platform: Platform,
     public events: Events,
+    public bmappService: BmappService,
     public bmappAPI: BMappApi) {
 
     events.subscribe('consultants:new', (data) => {
@@ -54,9 +57,26 @@ export class ConsultantsPage {
   }
 
   ionViewDidLoad() {
+    /*
     this.bmappAPI.getConsultants().then((data) => {
       this.consultants = data;
     });
+    */
+
+    this.bmappService.loadConsultants().subscribe(
+      data => {
+        console.log(data._embedded.consultants);
+        this.consultants = data._embedded.consultants;
+      },
+      err => {
+        this.consultants = [];
+        console.log(this.consultants);
+        let toast = this.toastCtrl.create({
+          message: 'Something went wrong. Maybe the server is down... (consultants)',
+          duration: 3000
+        });
+        toast.present();
+      });
 
     this.bmappAPI.getBms().then((data) => {
       if (data === undefined)
@@ -64,6 +84,8 @@ export class ConsultantsPage {
       this.user = _.find(data, { active: true });
       this.filterConsultants();
     });
+
+
   }
 
   /**
@@ -100,7 +122,7 @@ export class ConsultantsPage {
  * Displays a toast with the specified message
  */
   presentToast(message) {
-    let toast = this.toastController.create({
+    let toast = this.toastCtrl.create({
       message: message,
       duration: 3000
     });
@@ -117,7 +139,7 @@ export class ConsultantsPage {
       return consultant.name.toLowerCase().includes(queryTextLower) || consultant.skills.toLowerCase().includes(queryTextLower);
     });
 
-console.log(filteredResults);
+    console.log(filteredResults);
     this.filteredConsultants = filteredResults;
   }
 
