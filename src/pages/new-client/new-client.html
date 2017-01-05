@@ -10,7 +10,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
 
-    <ion-title>New Client</ion-title>
+    <ion-title>Client record</ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="saveClient()">
@@ -22,12 +22,21 @@
 
 <ion-content>
 
-  <ion-card>
+  <ion-card *ngIf="!client.id">
     <ion-card-header>
       Registering a new Client
     </ion-card-header>
     <ion-card-content>
       To register a new client you will need to provide a company name, an email and contact.
+    </ion-card-content>
+  </ion-card>
+
+    <ion-card *ngIf="client.id">
+    <ion-card-header>
+      Editing {{client.name}}
+    </ion-card-header>
+    <ion-card-content>
+       When you're finished updating this record tap the save button (on the top bar) 
     </ion-card-content>
   </ion-card>
 
