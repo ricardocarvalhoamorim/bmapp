@@ -9,7 +9,8 @@ import * as _ from 'lodash';
 export class BMappApi {
 
     public storage: Storage;
-    baseAddress = "http://192.168.4.82:8080/";
+    public activeUser: any;
+    baseAddress = "http://192.168.1.31:8080/";
 
     constructor(
         public platform: Platform,
@@ -28,19 +29,19 @@ export class BMappApi {
         this.storage.get('consultants').then((data) => {
             if (data != null)
                 return;
-            this.storage.set('consultants', this.dummy_consultants);
+            this.storage.set('consultants', []);
         });
 
         this.storage.get('clients').then((data) => {
             if (data != null)
                 return;
-            this.storage.set('clients', this.dummy_clients);
+            this.storage.set('clients', []);
         });
 
         this.storage.get('bms').then((data) => {
             if (data != null)
                 return;
-            this.storage.set('bms', this.dummy_bms);
+            this.storage.set('bms', []);
         });
     }
 
@@ -136,6 +137,14 @@ export class BMappApi {
         });
     }
 
+    setActiveUser(user) {
+        this.storage.set("active_user", user);
+    }
+
+    getActiveUser() {
+        return this.storage.get("active_user");
+    }
+
     /**
          * Attempts to save a business manager or create a new one
          */
@@ -168,13 +177,13 @@ export class BMappApi {
 
     /**
      * Populates the database with dummy data for demo purposes
-     */
+     
     loadDummyData() {
         this.storage.set('bms', this.dummy_bms);
         this.storage.set('consultants', this.dummy_consultants);
         this.storage.set('clients', this.dummy_clients);
     }
-
+*/
     /**
      * Clears the database and repopulates it with basic elements
      */
@@ -183,6 +192,7 @@ export class BMappApi {
         this.dbCheckup();
     }
 
+/*
     dummy_bms = [
         {
             id: 'bm1',
@@ -562,4 +572,5 @@ export class BMappApi {
             internal: false
         }
     ];
+    */
 }

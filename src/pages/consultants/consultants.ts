@@ -3,6 +3,8 @@ import { NavController, ToastController, Platform, Events } from 'ionic-angular'
 import { BMappApi } from '../../shared/BMappApi';
 import { NewConsultantPage } from '../new-consultant/new-consultant';
 import { BmappService } from '../../providers/bmapp-service'
+
+import { Http } from '@angular/http';
 import * as _ from 'lodash';
 
 /*
@@ -30,62 +32,52 @@ export class ConsultantsPage {
     public platform: Platform,
     public events: Events,
     public bmappService: BmappService,
+    public http: Http,
     public bmappAPI: BMappApi) {
 
-    events.subscribe('consultants:new', (data) => {
-      if (this.consultants.indexOf(data[0]) == -1)
-        this.consultants.push(data[0]);
-
-      this.filterConsultants();
-    });
-
-    this.events.subscribe('consultants:deleted', (data) => {
-      console.log(data[0].name);
-      var index = _.indexOf(
-        this.consultants,
-        _.find(this.consultants, { id: data[0].id }));
-
-      if (index === -1) {
-        console.log("Unable to delete item: " + data[0].name);
-        return;
-      }
-
-      this.consultants.splice(index, 1);
-      this.filterConsultants();
-      this.presentToast("Consultant deleted");
-    });
+    /*
+        events.subscribe('consultants:new', (data) => {
+          if (this.consultants.indexOf(data[0]) == -1)
+            this.consultants.push(data[0]);
+    
+          this.filterConsultants();
+        });
+    
+        this.events.subscribe('consultants:deleted', (data) => {
+          console.log(data[0].name);
+          var index = _.indexOf(
+            this.consultants,
+            _.find(this.consultants, { id: data[0].id }));
+    
+          if (index === -1) {
+            console.log("Unable to delete item: " + data[0].name);
+            return;
+          }
+    
+          this.consultants.splice(index, 1);
+          this.filterConsultants();
+          this.presentToast("Consultant deleted");
+        });
+        */
   }
 
   ionViewDidLoad() {
-    /*
-    this.bmappAPI.getConsultants().then((data) => {
-      this.consultants = data;
-    });
-    */
-
-    this.bmappService.loadConsultants().subscribe(
-      data => {
-        console.log(data._embedded.consultants);
-        this.consultants = data._embedded.consultants;
-      },
-      err => {
-        this.consultants = [];
-        console.log(this.consultants);
-        let toast = this.toastCtrl.create({
-          message: 'Something went wrong. Maybe the server is down... (consultants)',
-          duration: 3000
+    this.bmappAPI.getActiveUser().then(data => {
+      this.user = data;
+      this.http.get(this.bmappService.baseUri + '/consultants').map(
+        res => res.json()).subscribe(
+          data => {
+          this.consultants = data._embedded.consultants;
+          this.filterConsultants();
+        },
+        err => {
+          let toast = this.toastCtrl.create({
+            message: 'Something went wrong. Maybe the server is down... (consultants)',
+            duration: 3000
+          });
+          toast.present();
         });
-        toast.present();
-      });
-
-    this.bmappAPI.getBms().then((data) => {
-      if (data === undefined)
-        return;
-      this.user = _.find(data, { active: true });
-      this.filterConsultants();
     });
-
-
   }
 
   /**
@@ -95,7 +87,7 @@ export class ConsultantsPage {
     if (this.consultantsFilter === 'all') {
       this.filteredConsultants = this.consultants;
     } else {
-      this.filteredConsultants = _.filter(this.consultants, s => s.bm === this.user.id);
+      this.filteredConsultants = _.filter(this.consultants, s => s.businessManagerId === this.user.id);
     }
   }
 

@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class BmappService {
 
-  baseUri = "http://192.168.1.20:8080";
+  baseUri = "http://192.168.1.31:8080";
   consultants: any[];
   businessManagers: any[];
   clients: any[];
@@ -39,18 +39,32 @@ export class BmappService {
       .map(res => res.json());
   }
 
-  loadUserConsultants(userID) {
-    return this.http
-      .get(this.baseUri + '/businessManagers/' + userID + '/consultants')
-      .map(res => res.json());
-  }
-
   /**
    * Fetches the clients from the TRM backend
    */
   loadClients() {
     return this.http
       .get(this.baseUri + '/clients')
+      .map(res => res.json());
+  }
+
+  saveClient(client) {
+    console.log(client.id);
+    if (client.id) {
+      return this.http
+        .put(this.baseUri + "/clients/" + client.id, client)
+        .map(res => res.json());
+    }
+
+    return this.http
+      .post(this.baseUri + "/clients", client)
+      .map(res => res.json());
+  }
+
+  saveConsultant(consultant) {
+    //var data = JSON.stringify({ username: this.data.username });
+    return this.http
+      .post(this.baseUri + "/consultants", consultant)
       .map(res => res.json());
   }
 }

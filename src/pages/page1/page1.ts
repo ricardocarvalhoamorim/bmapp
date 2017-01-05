@@ -158,12 +158,18 @@ export class Page1 {
     this.platform.ready().then(() => {
       this.bmappService.loadBusinessManagers().subscribe(
         data => {
-          console.log(data._embedded);
           this.bms = data._embedded.businessManagers;
-          this.user = _.find(this.bms, { active: true });
 
-          this.displayMessage("Welcome, " + this.user.name);
-          this.loadAssets();
+          this.bmappAPI.getActiveUser().then(data => {
+            if (!data) {
+              this.user = _.find(this.bms, { active: true });
+              this.bmappAPI.setActiveUser(this.user);
+            } else {
+              this.user = data;
+            }
+            this.displayMessage("Welcome, " + this.user.name);
+            this.loadAssets();
+          });
         },
         err => {
           this.displayMessage('Unable to load the business managers');
@@ -188,7 +194,6 @@ export class Page1 {
   loadAssets() {
     this.bmappService.loadConsultants().subscribe(
       data => {
-        console.log(data._embedded.consultants);
         this.consultants = data._embedded.consultants;
 
         this.userConsultants =
@@ -198,7 +203,6 @@ export class Page1 {
           _.filter(this.userConsultants, cs => cs.clientID !== '-1').length;
         this.consultantsOnBench = this.userConsultants.length - this.consultantsOnMission;
 
-        console.log(this.consultantsOnMission);
         this.progress = Math.round(this.consultantsOnMission / this.user.target * 100);
 
         this.updateChart();
