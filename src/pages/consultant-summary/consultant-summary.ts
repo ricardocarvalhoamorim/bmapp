@@ -11,10 +11,10 @@ import { BMappApi } from '../../shared/BMappApi';
   Ionic pages and navigation.
 */
 @Component({
-  selector: 'page-new-consultant',
-  templateUrl: 'new-consultant.html'
+  selector: 'page-consultant-summary',
+  templateUrl: 'consultant-summary.html'
 })
-export class NewConsultantPage {
+export class ConsultantSummaryPage {
 
   /**
    * The consultant object
@@ -54,7 +54,6 @@ export class NewConsultantPage {
 
     if (!navParams.get('consultant')) {
       this.consultant = {
-        id: new Date().getUTCMilliseconds(),
         bm: this.user.id,
         clientID: '-1',
         client: 'No client',
@@ -71,12 +70,42 @@ export class NewConsultantPage {
         profit: 0,
         country: "Belgium",
         hr: "Natalia de Wilde D'Estmael",
-        car: false
+        car: false,
+        missions: []
       };
     } else {
       this.consultant = navParams.get('consultant');
       this.pickedClient = this.consultant.clientID;
+
+      //TODO: remove when backend is updated
+      this.consultant.missions = [
+        {
+          "id": 3,
+          "startDate": "2016-08-31",
+          "endDate": "2017-01-17",
+          "role": "Senior Java Developer",
+          "sellingPrice": 870,
+          "country": "Belgium",
+          "clientId": "4",
+          "clientName": "Proximus",
+          "consultantId": 7,
+          "consultantName": "Ricardo Amorim"
+        },
+        {
+          "id": 3,
+          "startDate": "2016-08-31",
+          "endDate": "2017-01-17",
+          "role": "Senior Java Developer",
+          "sellingPrice": 490,
+          "country": "Luxembourg",
+          "clientId": "4",
+          "clientName": "Proximus",
+          "consultantId": 7,
+          "consultantName": "Ricardo Amorim"
+        }
+      ]
     }
+
 
     if (this.user.id !== this.consultant.bm && !this.user.isUnitManager) {
       this.isReadOnly = true;

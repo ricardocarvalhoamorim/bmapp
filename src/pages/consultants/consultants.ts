@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController, Platform, Events } from 'ionic-angular';
 import { BMappApi } from '../../shared/BMappApi';
-import { NewConsultantPage } from '../new-consultant/new-consultant';
 import { BmappService } from '../../providers/bmapp-service'
-
+import { ConsultantHomePage } from '../consultant-home/consultant-home'
 import { Http } from '@angular/http';
 import * as _ from 'lodash';
 
@@ -66,7 +65,7 @@ export class ConsultantsPage {
       this.user = data;
       this.http.get(this.bmappService.baseUri + '/consultants').map(
         res => res.json()).subscribe(
-          data => {
+        data => {
           this.consultants = data._embedded.consultants;
           this.filterConsultants();
         },
@@ -78,6 +77,14 @@ export class ConsultantsPage {
           toast.present();
         });
     });
+  }
+
+  newConsultant() {
+    this.navCtrl.push(ConsultantHomePage, { 'user': this.user });
+  }
+
+  editConsultant($event, consultant) {
+    this.navCtrl.push(ConsultantHomePage, { 'consultant': consultant, 'user': this.user });
   }
 
   /**
@@ -102,13 +109,7 @@ export class ConsultantsPage {
     window.open(`mailto:${client.email}`, '_system')
   }
 
-  newConsultant() {
-    this.navCtrl.push(NewConsultantPage, { 'user': this.user });
-  }
 
-  editConsultant($event, consultant) {
-    this.navCtrl.push(NewConsultantPage, { 'consultant': consultant, 'user': this.user });
-  }
 
   /**
  * Displays a toast with the specified message

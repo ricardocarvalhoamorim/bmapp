@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, LoadingController,NavParams, AlertController, Events } from 'ionic-angular';
+import { NavController, ToastController, LoadingController, NavParams, AlertController, Events } from 'ionic-angular';
 import { BMappApi } from '../../shared/BMappApi';
 import { BmappService } from '../../providers/bmapp-service'
 /*

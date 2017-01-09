@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController, Events, Platform } from 'ionic-angular';
-import { NewConsultantPage } from '../new-consultant/new-consultant';
 import { ConsultantsPage } from '../consultants/consultants';
 import { ClientsPage } from '../clients/clients';
 import { NewClientPage } from '../new-client/new-client';
@@ -296,10 +295,6 @@ export class Page1 {
         .groupBy("client")
         .map(function (client) { return client.length })
         .value();
-  }
-
-  pushNewConsultant() {
-    this.navCtrl.push(NewConsultantPage, { 'user': this.user });
   }
 
 
