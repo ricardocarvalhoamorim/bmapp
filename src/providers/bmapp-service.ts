@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
@@ -15,8 +15,10 @@ export class BmappService {
   consultants: any[];
   businessManagers: any[];
   clients: any[];
+  headers;
 
   constructor(public http: Http) {
+    this.headers = new Headers();
   }
 
   /**
@@ -24,7 +26,7 @@ export class BmappService {
    */
   loadBusinessManagers() {
     return this.http
-      .get(this.baseUri + '/businessManagers')
+      .get(this.baseUri + '/businessManagers', this.headers)
       .map(res => res.json());
   }
 
@@ -33,7 +35,7 @@ export class BmappService {
    */
   loadConsultants() {
     return this.http
-      .get(this.baseUri + '/consultants')
+      .get(this.baseUri + '/consultants', this.headers)
       .map(res => res.json());
   }
 

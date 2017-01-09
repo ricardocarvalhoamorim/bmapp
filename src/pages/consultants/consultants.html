@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle> 
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -43,6 +43,11 @@
   <ion-fab padding right bottom>
     <button ion-fab color="primary" (click)="newConsultant()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
+
+  <ion-refresher (ionRefresh)="loadConsultants($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
 
   <ion-list *ngIf="filteredConsultants && filteredConsultants.length > 0" no-lines [virtualScroll]="filteredConsultants" [approxItemHeight]="'100px'">
 

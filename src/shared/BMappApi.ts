@@ -10,7 +10,7 @@ export class BMappApi {
 
     public storage: Storage;
     public activeUser: any;
-    baseAddress = "http://192.168.1.31:8080/";
+    baseAddress = "http://192.168.1.109:8080/";
 
     constructor(
         public platform: Platform,

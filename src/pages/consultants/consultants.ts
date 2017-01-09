@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, Platform, Events } from 'ionic-angular';
+import { NavController, ToastController, LoadingController, Platform, Events } from 'ionic-angular';
 import { BMappApi } from '../../shared/BMappApi';
 import { BmappService } from '../../providers/bmapp-service'
 import { ConsultantHomePage } from '../consultant-home/consultant-home'
@@ -24,10 +24,12 @@ export class ConsultantsPage {
   user;
   consultantsFilter = 'mine';
   searchInput = "";
+  error;
 
   constructor(
     public navCtrl: NavController,
     public toastCtrl: ToastController,
+    public loadingCtrl: LoadingController,
     public platform: Platform,
     public events: Events,
     public bmappService: BmappService,
@@ -63,20 +65,43 @@ export class ConsultantsPage {
   ionViewDidLoad() {
     this.bmappAPI.getActiveUser().then(data => {
       this.user = data;
-      this.http.get(this.bmappService.baseUri + '/consultants').map(
-        res => res.json()).subscribe(
-        data => {
-          this.consultants = data._embedded.consultants;
-          this.filterConsultants();
-        },
-        err => {
-          let toast = this.toastCtrl.create({
-            message: 'Something went wrong. Maybe the server is down... (consultants)',
-            duration: 3000
-          });
-          toast.present();
-        });
+      this.loadConsultants(null);
     });
+  }
+
+  /**
+   * Loads the consultants and populates the list
+   */
+  loadConsultants(refresher) {
+    let loader = this.loadingCtrl.create({
+      content: "Loading consultants..."
+    });
+
+    if (!refresher) {
+      loader.present();
+    }
+
+    this.bmappService.loadConsultants().subscribe(
+      data => {
+        this.consultants = data._embedded.consultants;
+        this.filterConsultants();
+        this.error = null;
+
+        if (null != refresher)
+          refresher.complete();
+        else
+          loader.dismiss();
+      },
+      err => {
+        this.error = err;
+        console.log(err);
+
+        if (null != refresher)
+          refresher.complete();
+        else
+          loader.dismiss();
+      }
+    );
   }
 
   newConsultant() {

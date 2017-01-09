@@ -62,6 +62,10 @@ export class ConsultantHomePage {
         */
   }
 
+  saveConsultant(){
+    console.log("Save consultant not implemented");
+  }
+
   ionViewDidLoad() {
     console.log('Hello ConsultantHomePage Page');
   }
