@@ -80,7 +80,21 @@ export class ConsultantsPage {
   }
 
   newConsultant() {
-    this.navCtrl.push(ConsultantHomePage, { 'user': this.user });
+    this.navCtrl.push(ConsultantHomePage, {
+      'consultant': {
+        bm: this.user.id,
+        initials: '',
+        name: '',
+        email: '',
+        contact: '',
+        skills: '',
+        languages: '',
+        package: 0,
+        country: "Belgium",
+        hr: "",
+        car: false
+      }
+    });
   }
 
   editConsultant($event, consultant) {

@@ -25,7 +25,6 @@ export class ConsultantMissionsPage {
     public loadingCtrl: LoadingController,
     public bmService: BmappService) {
     this.consultant = params.data;
-    console.log(this.consultant);
   }
 
   ionViewDidLoad() {
@@ -54,6 +53,8 @@ export class ConsultantMissionsPage {
           refresher.complete();
         else
           loader.dismiss();
+
+        this.error = null;
       },
       err => {
         this.error = err;

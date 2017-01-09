@@ -149,30 +149,7 @@ export class BMappApi {
          * Attempts to save a business manager or create a new one
          */
     saveBM(businessManager) {
-        this.getBms().then((val) => {
-            if (val === null) {
-                val = [];
-            }
-
-            //disable all other users
-            _.map(val, function (v) {
-                v.active = false;
-            });
-
-            businessManager.active = true;
-
-            businessManager.initials = businessManager.name.match(/\b(\w)/g).join('');
-            var index = _.indexOf(val, _.find(val, { id: businessManager.id }));
-            if (index === -1) {
-                //doesn't exist, just push a new one
-                val.push(businessManager);
-            } else {
-                //update an existing one
-                val.splice(index, 1, businessManager);
-            }
-            this.storage.set('bms', val);
-            this.events.publish('bm:new', businessManager);
-        });
+        this.storage.set("active_user", businessManager);
     }
 
     /**

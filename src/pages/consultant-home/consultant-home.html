@@ -6,11 +6,19 @@
 -->
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>{{consultant.name}}</ion-title>
+    <ion-title *ngIf="consultant.name">{{consultant.name}}</ion-title>
+    <ion-title *ngIf="!consultant.name">New consultant</ion-title>
+
+     <ion-buttons end>
+      <button ion-button icon-only (click)="saveClient()">
+        <ion-icon name="md-checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 
-<ion-tabs>
+<ion-tabs >
   <ion-tab tabTitle="Summary" [root]="consultantSummary" [rootParams]="consultant" tabIcon="person"></ion-tab>
-  <ion-tab tabTitle="Missions" [root]="consultantMissions" [rootParams]="consultant" tabIcon="person"></ion-tab>
+  <ion-tab *ngIf="consultant.id" tabTitle="Missions" [root]="consultantMissions" [rootParams]="consultant" tabIcon="person"></ion-tab>
 </ion-tabs>

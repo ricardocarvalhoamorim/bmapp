@@ -67,6 +67,12 @@
     </ion-item>
 
     <ion-item>
+      <ion-icon name="ios-microphone-outline" item-left></ion-icon>
+      <ion-label>Skills</ion-label>
+      <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="consultant.skills" ngControl="skills"></ion-input>
+    </ion-item>
+
+    <ion-item>
       <ion-icon name="ios-person-outline" item-left></ion-icon>
       <ion-label>HR</ion-label>
       <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="consultant.hr" ngControl="hr" clearInput=true></ion-input>

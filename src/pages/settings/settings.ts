@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController, AlertController } from 'ionic-angular';
 import { BMappApi } from '../../shared/BMappApi';
+import { BmappService } from '../../providers/bmapp-service'
 import * as _ from 'lodash';
 
 /*
@@ -11,7 +12,8 @@ import * as _ from 'lodash';
 */
 @Component({
   selector: 'page-settings',
-  templateUrl: 'settings.html'
+  templateUrl: 'settings.html',
+  providers: [BmappService]
 })
 export class SettingsPage {
 
@@ -21,6 +23,7 @@ export class SettingsPage {
    * Business managers list
    */
   bms: any[];
+  error;
 
   user = {
     id: new Date().getUTCMilliseconds(),
@@ -36,14 +39,38 @@ export class SettingsPage {
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
+    public bmappService: BmappService,
     public bmappAPI: BMappApi) {
   }
 
   ionViewDidLoad() {
+    this.bmappAPI.getActiveUser().then((val) => {
+      this.user = val;
+    });
+
+    this.loadBusinessManagers();
+    /*
     this.bmappAPI.getBms().then((val) => {
       this.bms = val;
       this.user = _.find(this.bms, { active: true });
     });
+    */
+  }
+
+  /**
+   * Dispatches the request to load the business managers in the background
+   */
+  loadBusinessManagers() {
+    this.bmappService.loadBusinessManagers().subscribe(
+      data => {
+        this.bms = data._embedded.businessManagers;
+        this.error = null;
+      },
+      err => {
+        console.log(err);
+        this.error = err;
+      }
+    );
   }
 
   /**
