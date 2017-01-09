@@ -37,6 +37,8 @@ export class ConsultantSummaryPage {
    */
   pickedClient;
 
+  error;
+
   constructor(
     params: NavParams,
     public navCtrl: NavController,
@@ -54,10 +56,11 @@ export class ConsultantSummaryPage {
           this.isReadOnly = true;
           return;
         }
-
+        
         this.isReadOnly = false;
       },
       err => {
+        this.error = err;
         console.log("unable to get user (summary)");
       }
     )

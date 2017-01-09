@@ -32,7 +32,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-refresher (ionRefresh)="loadMissions($event)">
+  <ion-refresher (ionRefresh)="fetchMissions($event)">
     <ion-refresher-content
      pullingIcon="arrow-dropdown"
       pullingText="Pull to refresh"
@@ -44,16 +44,14 @@
   <ion-list no-lines [virtualScroll]="missions" [approxItemHeight]="'100px'">
     <ion-card *virtualItem="let mission">
       <ion-item (click)="editMission($event, mission)">
-        <ion-avatar item-left>
-          <!--<img src="img/marty-avatar.png"> -->
-          <h1>{{mission.role.substring(0,1)}}</h1>
-        </ion-avatar>
         <h2>{{mission.role}}</h2>
-        <p *ngIf="mission.sellingPrice">Selling price: €{{mission.sellingPrice}}</p>
         <p *ngIf="mission.country">{{mission.country}}</p>
       </ion-item>
       <ion-card-content>
-        <p>No description available</p>
+        <p *ngIf="mission.sellingPrice">Selling price: €{{mission.sellingPrice}}</p>
+        <p *ngIf="mission.sellingPrice">Cost: €{{mission.cost}}</p>
+        <hr>
+        <p item-right><b>Profit: €{{mission.margin}} ({{mission.percentage}}%)</b></p>
       </ion-card-content>
     </ion-card>
   </ion-list>
