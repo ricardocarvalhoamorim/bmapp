@@ -38,81 +38,30 @@ export class ConsultantSummaryPage {
   pickedClient;
 
   constructor(
+    params: NavParams,
     public navCtrl: NavController,
-    public navParams: NavParams,
     public toastController: ToastController,
     public events: Events,
     public alertCtrl: AlertController,
     public bmappApi: BMappApi) {
 
-    if (!navParams.get('user')) {
-      console.log("An active user is required to create a consultant!");
-      return;
-    }
+    this.consultant = params.data;
 
-    this.user = navParams.get('user');
-
-    if (!navParams.get('consultant')) {
-      this.consultant = {
-        bm: this.user.id,
-        clientID: '-1',
-        client: 'No client',
-        initials: '',
-        name: '',
-        email: '',
-        contact: '',
-        starting_date: '',
-        ending_date: '',
-        skills: '',
-        languages: '',
-        package: 0,
-        selling_price: 0,
-        profit: 0,
-        country: "Belgium",
-        hr: "Natalia de Wilde D'Estmael",
-        car: false,
-        missions: []
-      };
-    } else {
-      this.consultant = navParams.get('consultant');
-      this.pickedClient = this.consultant.clientID;
-
-      //TODO: remove when backend is updated
-      this.consultant.missions = [
-        {
-          "id": 3,
-          "startDate": "2016-08-31",
-          "endDate": "2017-01-17",
-          "role": "Senior Java Developer",
-          "sellingPrice": 870,
-          "country": "Belgium",
-          "clientId": "4",
-          "clientName": "Proximus",
-          "consultantId": 7,
-          "consultantName": "Ricardo Amorim"
-        },
-        {
-          "id": 3,
-          "startDate": "2016-08-31",
-          "endDate": "2017-01-17",
-          "role": "Senior Java Developer",
-          "sellingPrice": 490,
-          "country": "Luxembourg",
-          "clientId": "4",
-          "clientName": "Proximus",
-          "consultantId": 7,
-          "consultantName": "Ricardo Amorim"
+    this.bmappApi.getActiveUser().then(
+      data => {
+        this.user = data;
+        if (this.user.id !== this.consultant.bm && !this.user.isUnitManager) {
+          this.isReadOnly = true;
+          return;
         }
-      ]
-    }
 
+        this.isReadOnly = false;
+      },
+      err => {
+        console.log("unable to get user (summary)");
+      }
+    )
 
-    if (this.user.id !== this.consultant.bm && !this.user.isUnitManager) {
-      this.isReadOnly = true;
-      return;
-    }
-
-    this.isReadOnly = false;
   }
 
   ionViewDidLoad() {

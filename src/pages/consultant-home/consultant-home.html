@@ -6,23 +6,11 @@
 -->
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>Consultant</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="goHome()">
-                <ion-icon name="home"></ion-icon>
-            </button>
-    </ion-buttons>
+    <ion-title>{{consultant.name}}</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-
-  <ion-footer no-border>
-
-    <ion-tabs>
-      <ion-tab tabTitle="Summary" [root]="consultantSummary" [rootParams]="consultant" tabIcon="person"></ion-tab>
-    </ion-tabs>
-  </ion-footer>
-
-
-</ion-content>
+<ion-tabs>
+  <ion-tab tabTitle="Summary" [root]="consultantSummary" [rootParams]="consultant" tabIcon="person"></ion-tab>
+  <ion-tab tabTitle="Missions" [root]="consultantMissions" [rootParams]="consultant" tabIcon="person"></ion-tab>
+</ion-tabs>

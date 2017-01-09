@@ -46,6 +46,16 @@ export class BmappService {
       .map(res => res.json());
   }
 
+
+  /**
+   * Fetches the clients from the TRM backend
+   */
+  loadMissions() {
+    return this.http
+      .get(this.baseUri + '/missions')
+      .map(res => res.json());
+  }
+
   saveClient(client) {
     console.log(client.id);
     if (client.id) {

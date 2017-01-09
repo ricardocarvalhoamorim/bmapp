@@ -176,6 +176,13 @@ export class BMappApi {
     }
 
     /**
+     * Gets the missions from storage or the cloud
+     */
+    getMissions() {
+        return [];
+    }
+
+    /**
      * Populates the database with dummy data for demo purposes
      
     loadDummyData() {

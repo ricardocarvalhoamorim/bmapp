@@ -1,0 +1,60 @@
+<!--
+  Generated template for the ConsultantMissions page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-header>
+    <ion-navbar></ion-navbar>
+</ion-header>
+
+<ion-content>
+
+<ion-card *ngIf="error">
+    <ion-item>
+      <ion-avatar item-left>
+        <img src="img/cloud_error.png">
+      </ion-avatar>
+      <h2>Unable to fetch resources</h2>
+    </ion-item>
+    <ion-card-content>
+      <p>
+        For some reason, BMApp was unable to get the records from the server.
+      </p>
+
+      <ul>
+        <li>Please check your internet connection;</li>
+        <li>This can also be due to a scheduled maitenance. Try again in a few minutes;</li>
+        <li>If this persists, please contact the operations team to solve this issue quickly and get BMApp back online.</li>
+      </ul>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-refresher (ionRefresh)="loadMissions($event)">
+    <ion-refresher-content
+     pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+       refreshingSpinner="circles"
+        refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list no-lines [virtualScroll]="missions" [approxItemHeight]="'100px'">
+    <ion-card *virtualItem="let mission">
+      <ion-item (click)="editMission($event, mission)">
+        <ion-avatar item-left>
+          <!--<img src="img/marty-avatar.png"> -->
+          <h1>{{mission.role.substring(0,1)}}</h1>
+        </ion-avatar>
+        <h2>{{mission.role}}</h2>
+        <p *ngIf="mission.sellingPrice">Selling price: €{{mission.sellingPrice}}</p>
+        <p *ngIf="mission.country">{{mission.country}}</p>
+      </ion-item>
+      <ion-card-content>
+        <p>No description available</p>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>

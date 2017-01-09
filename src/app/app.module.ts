@@ -8,6 +8,7 @@ import { ClientsPage } from '../pages/clients/clients';
 import { SettingsPage } from '../pages/settings/settings';
 import { ConsultantHomePage } from '../pages/consultant-home/consultant-home'
 import { ConsultantSummaryPage } from '../pages/consultant-summary/consultant-summary'
+import { ConsultantMissionsPage } from '../pages/consultant-missions/consultant-missions'
 
 import { BMappApi } from '../shared/BMappApi';
 import { Storage } from '@ionic/storage';
@@ -23,7 +24,8 @@ import { ChartModule } from 'ng2-chartjs2';
     ClientsPage,
     SettingsPage,
     ConsultantHomePage,
-    ConsultantSummaryPage
+    ConsultantSummaryPage,
+    ConsultantMissionsPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -38,7 +40,8 @@ import { ChartModule } from 'ng2-chartjs2';
     ClientsPage,
     SettingsPage,
     ConsultantHomePage,
-    ConsultantSummaryPage
+    ConsultantSummaryPage,
+    ConsultantMissionsPage
   ],
   providers: [
     BMappApi,
@@ -46,3 +49,4 @@ import { ChartModule } from 'ng2-chartjs2';
   ]
 })
 export class AppModule { }
+
