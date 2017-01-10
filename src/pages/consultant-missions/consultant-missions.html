@@ -48,6 +48,9 @@
         <p *ngIf="mission.country">{{mission.country}}</p>
       </ion-item>
       <ion-card-content>
+
+        <p *ngIf="mission.startDate">From: {{mission.startDate}}</p>
+        <p *ngIf="mission.endDate">To: {{mission.endDate}}</p>
         <p *ngIf="mission.sellingPrice">Selling price: €{{mission.sellingPrice}}</p>
         <p *ngIf="mission.sellingPrice">Cost: €{{mission.cost}}</p>
         <hr>

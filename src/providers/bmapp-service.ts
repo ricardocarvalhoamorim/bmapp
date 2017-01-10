@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class BmappService {
 
-  baseUri = "http://192.168.1.109:8080";
+  baseUri = "http://192.168.1.114:8080";
   consultants: any[];
   businessManagers: any[];
   clients: any[];
@@ -50,7 +50,7 @@ export class BmappService {
 
 
   /**
-   * Fetches the clients from the TRM backend
+   * Fetches the missions from the TRM backend
    */
   loadMissions() {
     return this.http
