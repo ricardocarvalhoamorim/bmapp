@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, ToastController, NavParams } from 'ionic-angular';
 
+import { BmappService } from '../../providers/bmapp-service'
 import { ConsultantSummaryPage } from '../consultant-summary/consultant-summary'
 import { ConsultantMissionsPage } from '../consultant-missions/consultant-missions'
 
@@ -12,7 +13,8 @@ import { ConsultantMissionsPage } from '../consultant-missions/consultant-missio
 */
 @Component({
   selector: 'page-consultant-home',
-  templateUrl: 'consultant-home.html'
+  templateUrl: 'consultant-home.html',
+  providers: [BmappService]
 })
 export class ConsultantHomePage {
 
@@ -23,7 +25,9 @@ export class ConsultantHomePage {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    private toastCtrl: ToastController,
+    private bmappService: BmappService) {
     if (!navParams.get('consultant')) {
       console.log("Missing consultant");
       return;
@@ -31,43 +35,32 @@ export class ConsultantHomePage {
 
     this.consultant = navParams.get('consultant');
     this.user = navParams.get('user');
-    /*
-        this.consultant.missions = [
-          {
-            "id": 3,
-            "startDate": "2016-08-31",
-            "endDate": "2017-01-17",
-            "role": "Senior Java Developer",
-            "sellingPrice": 870,
-            "country": "Belgium",
-            "clientId": "4",
-            "clientName": "Proximus",
-            "consultantId": 7,
-            "consultantName": "Ricardo Amorim"
-          },
-          {
-            "id": 3,
-            "startDate": "2016-08-31",
-            "endDate": "2017-01-17",
-            "role": "Senior Java Developer",
-            "sellingPrice": 490,
-            "country": "Luxembourg",
-            "clientId": "4",
-            "clientName": "Proximus",
-            "consultantId": 7,
-            "consultantName": "Ricardo Amorim"
-          }
-        ]
-    
-        */
   }
 
-  saveConsultant(){
-    console.log("Save consultant not implemented");
+  saveConsultant() {
+    this.bmappService.saveConsultant(this.consultant).subscribe(
+      data => {
+        this.consultant = data;
+        this.presentToast("Record saved successfully");
+        this.navCtrl.pop();
+      },
+      err => {
+        console.log(err);
+        this.presentToast("Something went wrong, please try again later");
+      }
+    );
   }
 
   ionViewDidLoad() {
     console.log('Hello ConsultantHomePage Page');
   }
+
+  presentToast(message) {
+  let toast = this.toastCtrl.create({
+    message: message,
+      duration: 3000
+  });
+  toast.present();
+}
 
 }

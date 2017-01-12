@@ -68,7 +68,6 @@ export class BmappService {
   }
 
   saveClient(client) {
-    console.log(client.id);
     if (client.id) {
       return this.http
         .put(this.baseUri + "/clients/" + client.id, client)
@@ -81,7 +80,12 @@ export class BmappService {
   }
 
   saveConsultant(consultant) {
-    //var data = JSON.stringify({ username: this.data.username });
+     if (consultant.id) {
+      return this.http
+        .put(this.baseUri + "/consultants/" + consultant.id, consultant)
+        .map(res => res.json());
+    }
+
     return this.http
       .post(this.baseUri + "/consultants", consultant)
       .map(res => res.json());
