@@ -41,7 +41,7 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-list no-lines [virtualScroll]="missions" [approxItemHeight]="'100px'">
+  <ion-list no-lines [virtualScroll]="consultant.missions" [approxItemHeight]="'100px'">
     <ion-card *virtualItem="let mission">
       <ion-item (click)="editMission($event, mission)">
         <h2>{{mission.role}}</h2>

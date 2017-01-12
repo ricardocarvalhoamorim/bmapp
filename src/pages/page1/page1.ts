@@ -191,6 +191,8 @@ export class Page1 {
    * Triggers the API call to load both consultants and clients
    */
   loadAssets() {
+
+    //LOAD CONSULTANTS
     this.bmappService.loadConsultants().subscribe(
       data => {
         this.consultants = data._embedded.consultants;
@@ -211,6 +213,7 @@ export class Page1 {
         this.displayMessage("Something went wrong. Maybe the server is down... (consultants)")
       });
 
+    //LOAD CLIENTS
     this.bmappService.loadClients().subscribe(
       data => {
         this.clients = data._embedded.clients;
@@ -278,7 +281,7 @@ export class Page1 {
       this.competitionOptions.data.datasets[1].data.push(bm.target);
     }
 
-    this.competitionOptions.data.labels = _.map(this.bms, 'initials');
+    this.competitionOptions.data.labels = _.map(this.bms, 'name');
 
     //update pie chart
     this.consultantsDistributionOptions.data.datasets[0].data = [this.consultantsOnMission, this.consultantsOnBench];

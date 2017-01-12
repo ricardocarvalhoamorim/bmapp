@@ -95,7 +95,6 @@ export class ConsultantsPage {
       err => {
         this.error = err;
         console.log(err);
-
         if (null != refresher)
           refresher.complete();
         else

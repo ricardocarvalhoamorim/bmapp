@@ -18,7 +18,6 @@ export class ConsultantMissionsPage {
 
   error;
   consultant: any;
-  missions: any[];
 
   constructor(params: NavParams,
     public navCtrl: NavController,
@@ -28,7 +27,12 @@ export class ConsultantMissionsPage {
   }
 
   ionViewDidLoad() {
-    this.fetchMissions(null);
+    //this.fetchMissions(null);
+    this.consultant.missions = _.map(this.consultant.missions, mission => {
+          mission.margin = mission.sellingPrice - mission.cost;
+          mission.percentage = Math.round(mission.margin / mission.cost * 100);
+          return mission;
+        });
   }
 
   fetchMissions(refresher) {
@@ -41,10 +45,10 @@ export class ConsultantMissionsPage {
       loader.present();
     }
 
-    this.bmService.loadMissions().subscribe(
+    this.bmService.loadConsultants().subscribe(
       data => {
-        this.missions = data._embedded.missions;
-        this.missions = _.map(this.missions, mission => {
+        this.consultant = data;
+        this.consultant.missions = _.map(this.consultant.missions, mission => {
           mission.margin = mission.sellingPrice - mission.cost;
           mission.percentage = Math.round(mission.margin / mission.cost * 100);
           return mission;
