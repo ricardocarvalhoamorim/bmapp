@@ -56,11 +56,11 @@ export class ConsultantHomePage {
   }
 
   presentToast(message) {
-  let toast = this.toastCtrl.create({
-    message: message,
+    let toast = this.toastCtrl.create({
+      message: message,
       duration: 3000
-  });
-  toast.present();
-}
+    });
+    toast.present();
+  }
 
 }

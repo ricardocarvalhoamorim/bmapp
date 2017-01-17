@@ -32,6 +32,16 @@
     </ion-card-content>
   </ion-card>
 
+    <ion-card *ngIf="(!consultant.missions || consultant.missions.length === 0) && !error">
+    <ion-card-header>
+      No missions available
+    </ion-card-header>
+    <ion-card-content>
+      Currently, this consultant has no missions. You can register new missions below.
+    </ion-card-content>
+
+  </ion-card>
+
   <ion-refresher (ionRefresh)="fetchMissions($event)">
     <ion-refresher-content
      pullingIcon="arrow-dropdown"

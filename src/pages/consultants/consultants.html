@@ -94,7 +94,7 @@
 <ion-col width-25 style="background-color:white; border-color:#c9001d; border-width: 1px; border-style: solid;border-left:none; text-align:center; margin:0 auto;">
 <div style="font-size:15px; color:#c9001d;">
 <p><b>€{{consultant.package}}</b></p>
-<b>{{consultant.client}}</b>
+<b *ngIf="consultant.missions.length > 0">{{consultant.missions[0].clientName}}</b>
 </div>
 </ion-col>
 </ion-row>
