@@ -4,6 +4,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { Page1 } from '../pages/page1/page1';
 import { ConsultantsPage } from '../pages/consultants/consultants';
+import { MissionsPage } from '../pages/missions/missions';
 import { ClientsPage } from '../pages/clients/clients';
 import { SettingsPage } from '../pages/settings/settings';
 
@@ -33,14 +34,13 @@ export class MyApp {
       this.pages = [
         { title: 'Home', component: Page1 },
         { title: 'Consultants', component: ConsultantsPage },
+        { title: 'Missions', component: MissionsPage },
         { title: 'Client portfolio', component: ClientsPage },
         { title: 'Settings', component: SettingsPage }
       ];
       StatusBar.styleDefault();
       Splashscreen.hide();
     });
-
-
   }
 
   openPage(page) {
