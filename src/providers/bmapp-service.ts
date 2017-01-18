@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class BmappService {
 
-  baseUri = "http://192.168.1.46:8080";
+  baseUri = "http://192.168.1.23:8080";
   consultants: any[];
   businessManagers: any[];
   clients: any[];
@@ -80,14 +80,17 @@ export class BmappService {
   }
 
   saveConsultant(consultant) {
-
-    consultant.businessManger = "businessManagers/" + consultant.businessManager;
+    
+    consultant.businessManger = "businessManagers/" + consultant.bm;
+    consultant.businessManagerId = consultant.bm;
+    console.log(consultant);
+     /*
      if (consultant.id) {
       return this.http
         .put(this.baseUri + "/consultants/" + consultant.id, consultant)
         .map(res => res.json());
     }
-
+*/
     return this.http
       .post(this.baseUri + "/consultants", consultant)
       .map(res => res.json());

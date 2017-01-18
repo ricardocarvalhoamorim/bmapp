@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, NavParams } from 'ionic-angular';
+import { NavController, LoadingController, ToastController, NavParams } from 'ionic-angular';
 import { BmappService } from '../../providers/bmapp-service';
 import * as _ from 'lodash';
 
@@ -20,19 +20,20 @@ export class ConsultantMissionsPage {
   consultant: any;
 
   constructor(params: NavParams,
-    public navCtrl: NavController,
-    public loadingCtrl: LoadingController,
-    public bmService: BmappService) {
+    private navCtrl: NavController,
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController,
+    private bmService: BmappService) {
     this.consultant = params.data;
   }
 
   ionViewDidLoad() {
     //this.fetchMissions(null);
     this.consultant.missions = _.map(this.consultant.missions, mission => {
-          mission.margin = mission.sellingPrice - mission.cost;
-          mission.percentage = Math.round(mission.margin / mission.cost * 100);
-          return mission;
-        });
+      mission.margin = mission.sellingPrice - mission.cost;
+      mission.percentage = Math.round(mission.margin / mission.cost * 100);
+      return mission;
+    });
   }
 
   fetchMissions(refresher) {
@@ -69,5 +70,16 @@ export class ConsultantMissionsPage {
           loader.dismiss();
       }
     );
+  }
+
+  /**
+   * Launches the new mission view
+   */
+  newMission() {
+    let toast = this.toastCtrl.create({
+      message: 'This feature will be available soon',
+      duration: 3000
+    });
+    toast.present();
   }
 }

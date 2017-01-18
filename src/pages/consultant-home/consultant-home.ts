@@ -37,6 +37,9 @@ export class ConsultantHomePage {
     this.user = navParams.get('user');
   }
 
+/**
+ * Calls the service to save the record
+ */
   saveConsultant() {
     this.bmappService.saveConsultant(this.consultant).subscribe(
       data => {

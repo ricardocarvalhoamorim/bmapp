@@ -269,9 +269,9 @@ export class Page1 {
 
     for (let bm of this.bms) {
       var consultantsCount = _.filter(this.consultants, function (consultant) {
-        if (consultant.bm === bm.id
-          && consultant.clientID !== '-1'
-          //&& new Date(consultant.ending_date) < new Date()
+        if (consultant.businessManagerId === bm.id
+          && consultant.missions.length > 0
+          && new Date(consultant.missions[0].startDate) < new Date()
         )
           return consultant;
       }).length;

@@ -6,12 +6,14 @@
 -->
 
 <ion-header>
-    <ion-navbar></ion-navbar>
+  <ion-navbar></ion-navbar>
 </ion-header>
 
 <ion-content>
 
-<ion-card *ngIf="error">
+
+
+  <ion-card *ngIf="error">
     <ion-item>
       <ion-avatar item-left>
         <img src="img/cloud_error.png">
@@ -32,7 +34,7 @@
     </ion-card-content>
   </ion-card>
 
-    <ion-card *ngIf="(!consultant.missions || consultant.missions.length === 0) && !error">
+  <ion-card *ngIf="(!consultant.missions || consultant.missions.length === 0) && !error">
     <ion-card-header>
       No missions available
     </ion-card-header>
@@ -43,17 +45,14 @@
   </ion-card>
 
   <ion-refresher (ionRefresh)="fetchMissions($event)">
-    <ion-refresher-content
-     pullingIcon="arrow-dropdown"
-      pullingText="Pull to refresh"
-       refreshingSpinner="circles"
-        refreshingText="Refreshing...">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
 
   <ion-list no-lines [virtualScroll]="consultant.missions" [approxItemHeight]="'100px'">
     <ion-card *virtualItem="let mission">
       <ion-item (click)="editMission($event, mission)">
+        <h1>{{mission.clientName}}</h1>
         <h2>{{mission.role}}</h2>
         <p *ngIf="mission.country">{{mission.country}}</p>
       </ion-item>
@@ -68,4 +67,10 @@
       </ion-card-content>
     </ion-card>
   </ion-list>
+
+  <ion-fab bottom right>
+    <button ion-fab (click)="newMission()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+
+
 </ion-content>

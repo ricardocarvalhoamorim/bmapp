@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController, NavParams, AlertController, Events } from 'ionic-angular';
-
-import * as _ from 'lodash';
 import { BMappApi } from '../../shared/BMappApi';
 
 /*
@@ -52,7 +50,7 @@ export class ConsultantSummaryPage {
     this.bmappApi.getActiveUser().then(
       data => {
         this.user = data;
-        if (this.user.id !== this.consultant.bm && !this.user.isUnitManager) {
+        if (this.user.id !== this.consultant.businessManagerId && !this.user.isUnitManager) {
           this.isReadOnly = true;
           return;
         }
@@ -89,16 +87,7 @@ export class ConsultantSummaryPage {
       return;
     }
 
-    if (!this.pickedClient || this.pickedClient == -1) {
-      this.consultant.clientID = '-1';
-      this.consultant.client = 'No client';
-    } else {
-      var client = _.find(this.clients, { id: this.pickedClient });
-      this.consultant.clientID = client.id;
-      this.consultant.client = client.name;
-    }
-
-    this.consultant.bm = this.user.id;
+    this.consultant.businessManagerId = this.user.id;
     this.bmappApi.saveConsultant(this.consultant);
     this.presentToast('Saved successfully');
     this.events.publish("consultants:new", this.consultant);
