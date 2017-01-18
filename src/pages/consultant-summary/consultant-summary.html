@@ -84,6 +84,25 @@
       <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="consultant.languages" ngControl="languages"></ion-input>
     </ion-item>
 
+    <ion-item>
+      <ion-icon name="ios-home-outline" item-left></ion-icon>
+      <ion-label>Internal</ion-label>
+      <ion-toggle disabled="{{isReadOnly}}" checked="false" [(ngModel)]="consultant.internal" ngControl="internalr"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="ios-pricetag-outline" item-left></ion-icon>
+      <ion-label>Daily cost / Package</ion-label>
+      <ion-input disabled="{{isReadOnly}}" (input)='onCostsChanged($event)' type="number" [(ngModel)]="consultant.package" ngControl="package"></ion-input>
+    </ion-item>
+
+
+    <ion-item text-wrap *ngIf="!isReadOnly">
+      <button ion-button icon-left full color="primary" padding (click)="showDeletePrompt()">
+      <ion-icon name="ios-trash-outline"></ion-icon>Delete this record
+      </button>
+    </ion-item>
+
 
     <!--
     <ion-item *ngIf="!isReadOnly">
@@ -158,11 +177,7 @@
       <h2><b>Delete record</b></h2>
     </ion-item-divider>
 
-    <ion-item text-wrap *ngIf="!isReadOnly">
-      <button ion-button icon-left block color="primary" padding (click)="showDeletePrompt()">
-      <ion-icon name="ios-trash-outline"></ion-icon>Delete this record
-      </button>
-    </ion-item>
+  
 
     -->
   </ion-list>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 
 /*
@@ -12,13 +13,17 @@ import 'rxjs/add/operator/map';
 export class BmappService {
 
   baseUri = "http://192.168.1.23:8080";
+  public storage: Storage;
   consultants: any[];
   businessManagers: any[];
   clients: any[];
   headers;
 
-  constructor(public http: Http) {
+  constructor(
+    public http: Http,
+    storage: Storage) {
     this.headers = new Headers();
+    this.storage = storage;
   }
 
   /**
@@ -39,9 +44,9 @@ export class BmappService {
       .map(res => res.json());
   }
 
-   /**
-   * Fetches the consultants list from the TRM backend
-   */
+  /**
+  * Fetches the consultants list from the TRM backend
+  */
   loadConsultant(id) {
     return this.http
       .get(this.baseUri + '/consultants/' + id, this.headers)
@@ -79,20 +84,41 @@ export class BmappService {
       .map(res => res.json());
   }
 
+  /**
+   * Saves a consultant record either updating it or creating a new one
+   */
   saveConsultant(consultant) {
-    
-    consultant.businessManger = "businessManagers/" + consultant.bm;
-    consultant.businessManagerId = consultant.bm;
+
+    //consultant.businessManger = "businessManagers/" + consultant.businessManagerId;
     console.log(consultant);
-     /*
-     if (consultant.id) {
+
+    if (consultant.id) {
       return this.http
         .put(this.baseUri + "/consultants/" + consultant.id, consultant)
         .map(res => res.json());
     }
-*/
+
     return this.http
       .post(this.baseUri + "/consultants", consultant)
       .map(res => res.json());
+  }
+
+  /**
+   * Attempts to delete a consultant record
+   */
+  deleteConsultant(consultant) {
+    console.log(consultant);
+
+    return this.http
+      .delete(this.baseUri + "/consultants/" + consultant.id)
+      .map(res => res.json());
+  }
+
+  setActiveUser(user) {
+    this.storage.set("active_user", user);
+  }
+
+  getActiveUser() {
+    return this.storage.get("active_user");
   }
 }

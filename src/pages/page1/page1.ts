@@ -159,10 +159,10 @@ export class Page1 {
         data => {
           this.bms = data._embedded.businessManagers;
 
-          this.bmappAPI.getActiveUser().then(data => {
+          this.bmappService.getActiveUser().then(data => {
             if (!data) {
-              this.user = _.find(this.bms, { active: true });
-              this.bmappAPI.setActiveUser(this.user);
+              //this.user = _.find(this.bms, { active: true });
+              this.bmappService.setActiveUser(this.user);
             } else {
               this.user = data;
             }

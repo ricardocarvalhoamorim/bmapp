@@ -103,20 +103,22 @@ export class ConsultantsPage {
     );
   }
 
+/**
+ * Creates a new consultant object and opens the view to customize the record
+ */
   newConsultant() {
     this.navCtrl.push(ConsultantHomePage, {
       'consultant': {
-        bm: this.user.id,
-        initials: '',
+        businessManagerId: this.user.id,
         name: '',
         email: '',
         contact: '',
         skills: '',
         languages: '',
         package: 0,
-        country: "Belgium",
         hr: "",
-        car: false
+        internal: true,
+        hasCar: false
       }
     });
   }

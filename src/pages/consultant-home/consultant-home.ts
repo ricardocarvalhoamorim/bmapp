@@ -41,6 +41,8 @@ export class ConsultantHomePage {
  * Calls the service to save the record
  */
   saveConsultant() {
+    console.error(this.consultant);
+    /*
     this.bmappService.saveConsultant(this.consultant).subscribe(
       data => {
         this.consultant = data;
@@ -52,6 +54,7 @@ export class ConsultantHomePage {
         this.presentToast("Something went wrong, please try again later");
       }
     );
+    */
   }
 
   ionViewDidLoad() {

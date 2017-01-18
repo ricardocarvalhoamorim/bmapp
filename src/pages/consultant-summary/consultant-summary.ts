@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController, NavParams, AlertController, Events } from 'ionic-angular';
-import { BMappApi } from '../../shared/BMappApi';
+import { BmappService } from '../../providers/bmapp-service';
+import { ConsultantsPage } from '../consultants/consultants'
 
 /*
   Generated class for the NewConsultant page.
@@ -43,18 +44,18 @@ export class ConsultantSummaryPage {
     public toastController: ToastController,
     public events: Events,
     public alertCtrl: AlertController,
-    public bmappApi: BMappApi) {
+    public bmappService: BmappService) {
 
     this.consultant = params.data;
 
-    this.bmappApi.getActiveUser().then(
+    this.bmappService.getActiveUser().then(
       data => {
         this.user = data;
         if (this.user.id !== this.consultant.businessManagerId && !this.user.isUnitManager) {
           this.isReadOnly = true;
           return;
         }
-        
+
         this.isReadOnly = false;
       },
       err => {
@@ -66,9 +67,13 @@ export class ConsultantSummaryPage {
   }
 
   ionViewDidLoad() {
-    this.bmappApi.getClients().then((val) => {
-      this.clients = val;
-    });
+    this.bmappService.loadClients().subscribe(
+      (val) => {
+        this.clients = val;
+      },
+      err => {
+        console.log(err);
+      });
   }
 
   /**
@@ -88,10 +93,18 @@ export class ConsultantSummaryPage {
     }
 
     this.consultant.businessManagerId = this.user.id;
-    this.bmappApi.saveConsultant(this.consultant);
-    this.presentToast('Saved successfully');
-    this.events.publish("consultants:new", this.consultant);
-    this.navCtrl.pop();
+    this.bmappService.saveConsultant(this.consultant).subscribe(
+      data => {
+        this.presentToast('Saved successfully');
+        this.events.publish("consultants:new", this.consultant);
+        this.navCtrl.pop();
+      },
+      err => {
+        this.presentToast('An error occurred when saving this record');
+        console.log(err);
+      }
+    );
+
   }
 
   /**
@@ -119,8 +132,17 @@ export class ConsultantSummaryPage {
         {
           text: 'Yes',
           handler: data => {
-            this.bmappApi.deleteConsultant(this.consultant);
-            this.navCtrl.pop();
+
+            this.bmappService.deleteConsultant(this.consultant).subscribe(
+              data => {
+                this.presentToast("Unable to delete this record");
+                this.navCtrl.setRoot(ConsultantsPage);
+              },
+              err => {
+                this.presentToast("Unable to delete this record");
+                console.log(err);
+              }
+            );
           }
         }
       ]
