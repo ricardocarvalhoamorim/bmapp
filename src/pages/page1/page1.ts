@@ -201,7 +201,9 @@ export class Page1 {
           _.filter(this.consultants, cs => cs.businessManagerId === this.user.id);
 
         this.consultantsOnMission =
-          _.filter(this.userConsultants, cs => cs.clientID !== '-1').length;
+          _.filter(this.userConsultants, consultant =>
+            consultant.missions.length > 0
+            && new Date(consultant.missions[0].startDate) < new Date()).length;
         this.consultantsOnBench = this.userConsultants.length - this.consultantsOnMission;
 
         this.progress = Math.round(this.consultantsOnMission / this.user.target * 100);
