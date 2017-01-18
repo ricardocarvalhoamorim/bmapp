@@ -22,7 +22,7 @@ export class BmappService {
   constructor(
     public http: Http,
     storage: Storage) {
-    this.headers = new Headers();
+    this.headers = new Headers();  
     this.storage = storage;
   }
 
