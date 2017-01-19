@@ -40,6 +40,11 @@ export class Page1 {
   bms: any[];
 
   /**
+   * Array of all the unit's missions
+   */
+  missions: any[];
+
+  /**
     * The active user
     */
   user: any;
@@ -209,6 +214,20 @@ export class Page1 {
         this.progress = Math.round(this.consultantsOnMission / this.user.target * 100);
 
         this.updateChart();
+
+        this.missions = [];
+        for (let consultant of this.consultants)
+          this.missions = this.missions.concat(consultant.missions);
+
+        _.map(this.consultants, function (consultant) {
+          console.log(consultant.missions);
+
+          //  this.missions = this.missions.concat(consultant.missions);
+
+          //if (consultant.missions && consultant.missions.length > 0)
+          //  this.missions.push(consultant.missions);
+        });
+        console.log(this.missions);
       },
       err => {
         this.consultants = [];
