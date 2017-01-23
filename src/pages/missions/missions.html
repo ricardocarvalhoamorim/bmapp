@@ -5,16 +5,89 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
+
+  <ion-navbar color="primary">
+    <button ion-button menuToggle> 
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Missions</ion-title>
+    <ion-searchbar [(ngModel)]="searchInput" [showCancelButton]="true" [animated]="true" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
+    </ion-searchbar>
+
   </ion-navbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="missionFilter" (ionChange)="filterMissions()">
+      <ion-segment-button value="mine">
+        My missions
+      </ion-segment-button>
+      <ion-segment-button value="all">
+        All
+      </ion-segment-button>
+    </ion-segment>
+
+  </ion-toolbar>
 
 </ion-header>
+<ion-content no-padding>
+
+  <ion-card *ngIf="(!filteredMissions || filteredMissions.length === 0) && !error">
+    <ion-card-header>
+      No records available
+    </ion-card-header>
+    <ion-card-content>
+      You have no registered missions. You can add new missions by tapping the button below.
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card *ngIf="error">
+    <ion-item>
+      <ion-avatar item-left>
+        <img src="img/cloud_error.png">
+      </ion-avatar>
+      <h2>Unable to fetch resources</h2>
+    </ion-item>
+    <ion-card-content>
+      <p>
+        For some reason, BMApp was unable to get the records from the server.
+      </p>
+
+      <ul>
+        <li>Please check your internet connection;</li>
+        <li>This can also be due to a scheduled maitenance. Try again in a few minutes;</li>
+        <li>If this persists, please contact the operations team to solve this issue quickly and get BMApp back online.</li>
+      </ul>
+
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col>
+        <button item-right ion-button icon-left clear small (click)="loadConsultants()">
+        <ion-icon name="refresh"></ion-icon>
+        <div>Refresh ({{error.status}})</div>
+      </button>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+
+  <ion-fab padding right bottom>
+    <button ion-fab color="primary" (click)="newMission()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+
+  <ion-refresher (ionRefresh)="loadMissions($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngIf="filteredMissions && filteredMissions.length > 0" no-lines [virtualScroll]="filteredMissions" [approxItemHeight]="'100px'">
+
+    <ion-card *virtualItem="let mission" text-wrap>
+
+      {{mission.role}}
 
 
-<ion-content padding>
+
+    </ion-card>
+  </ion-list>
 
 </ion-content>

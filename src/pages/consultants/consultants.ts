@@ -172,7 +172,6 @@ export class ConsultantsPage {
       return consultant.name.toLowerCase().includes(queryTextLower) || consultant.skills.toLowerCase().includes(queryTextLower);
     });
 
-    console.log(filteredResults);
     this.filteredConsultants = filteredResults;
   }
 
