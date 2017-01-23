@@ -25,7 +25,7 @@
 
   <ion-list>
     <ion-item-divider>
-      Personal Information
+      <h1>Personal Information</h1>
     </ion-item-divider>
     <ion-item>
       <ion-label>My Name</ion-label>
@@ -42,27 +42,14 @@
       <ion-input type="tel" [(ngModel)]="user.contact" ngControl="contact"></ion-input>
     </ion-item>
 
-    <ion-item-divider>
-      Application behaviour
-    </ion-item-divider>
     <ion-item>
       <ion-label>My objectives</ion-label>
       <ion-input type="number" [(ngModel)]="user.target" ngControl="target"></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-icon name="ios-people-outline" item-left></ion-icon>
-      <ion-label>Unit manager</ion-label>
-      <ion-toggle checked="false" [(ngModel)]="user.isUnitManager" ngControl="isUnitManager"></ion-toggle>
-    </ion-item>
-
-
     <ion-row>
-      <ion-col width-50>
+      <ion-col>
         <button ion-button color="light" full (click)="pickProfile()">Select active profile</button>
-      </ion-col>
-      <ion-col width-50>
-        <button ion-button color="light" full (click)="newUser()">New user</button>
       </ion-col>
     </ion-row>
 
