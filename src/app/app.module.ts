@@ -10,6 +10,7 @@ import { ConsultantHomePage } from '../pages/consultant-home/consultant-home'
 import { ConsultantSummaryPage } from '../pages/consultant-summary/consultant-summary'
 import { ConsultantMissionsPage } from '../pages/consultant-missions/consultant-missions'
 import { MissionsPage } from '../pages/missions/missions'
+import { NewMissionPage } from '../pages/new-mission/new-mission'
 
 import { BMappApi } from '../shared/BMappApi';
 import { Storage } from '@ionic/storage';
@@ -21,6 +22,7 @@ import { ChartModule } from 'ng2-chartjs2';
     MyApp,
     Page1,
     NewClientPage,
+    NewMissionPage,
     ConsultantsPage,
     ClientsPage,
     MissionsPage,
@@ -38,6 +40,7 @@ import { ChartModule } from 'ng2-chartjs2';
     MyApp,
     Page1,
     NewClientPage,
+    NewMissionPage,
     ConsultantsPage,
     ClientsPage,
     MissionsPage,

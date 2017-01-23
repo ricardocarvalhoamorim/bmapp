@@ -165,12 +165,12 @@ export class Page1 {
           this.bms = data._embedded.businessManagers;
 
           this.bmappService.getActiveUser().then(data => {
-            console.log(data);
             if (data) {
               this.user = data;
             } else {
               //this.user = _.find(this.bms, { active: true });
-              console.log("NO USER")
+              //TODO: should have a predefined user
+              console.error("NO USER")
               this.user = _.find(this.bms, { unitManager: true });
               this.bmappService.setActiveUser(this.user);
             }            
@@ -203,8 +203,6 @@ export class Page1 {
     this.bmappService.loadConsultants().subscribe(
       data => {
         this.consultants = data._embedded.consultants;
-        console.log("CONSULTATNS");
-        console.log(this.consultants);
 
         this.userConsultants =
           _.filter(this.consultants, cs => cs.businessManagerId === this.user.id);
@@ -233,9 +231,6 @@ export class Page1 {
     this.bmappService.loadClients().subscribe(
       data => {
         this.clients = data._embedded.clients;
-
-        console.log("CLIENTS");
-        console.log(this.clients);
       },
       err => {
         this.clients = [];
@@ -280,7 +275,7 @@ export class Page1 {
 
     //update bar chart
     if (this.bms.length == 0) {
-      console.log("No BMs, skipping update");
+      console.error("No BMs, skipping update");
       return;
     }
 
@@ -307,16 +302,18 @@ export class Page1 {
 
 
     //handle consultants distribution chart
-    var groupedClients = _.map(this.userConsultants, function (consultant) {
-      return consultant.client;
+    var groupedClients = _.map(this.missions, function (mission) {
+      return mission.clientName;
     });
 
     this.clientsOptions.data.labels = _.uniq(groupedClients);
     this.clientsOptions.data.datasets[0].data =
-      _.chain(this.userConsultants)
-        .groupBy("client")
+      _.chain(this.missions)
+        .groupBy("clientName")
         .map(function (client) { return client.length })
         .value();
+
+        console.log(this.clientsOptions.data.datasets[0]);
   }
 
 

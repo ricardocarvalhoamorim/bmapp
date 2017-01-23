@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, LoadingController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
+import { NewMissionPage } from '../new-mission/new-mission'
 import { BmappService } from '../../providers/bmapp-service';
 import * as _ from 'lodash';
 
@@ -109,6 +110,10 @@ export class MissionsPage {
 
   onCancel($event) {
     this.filterMissions();
+  }
+
+  newMission() {
+    this.navCtrl.push(NewMissionPage, this.consultants, this.user);
   }
 
 }
