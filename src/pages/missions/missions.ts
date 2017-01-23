@@ -57,6 +57,12 @@ export class MissionsPage {
         for (let consultant of this.consultants)
           this.missions = this.missions.concat(consultant.missions);
 
+        this.missions = _.map(this.missions, mission => {
+          mission.margin = mission.sellingPrice - mission.cost;
+          mission.percentage = Math.round(mission.margin / mission.cost * 100);
+          return mission;
+        });
+
         this.filterMissions();
         this.error = null;
 

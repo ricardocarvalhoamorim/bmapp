@@ -83,7 +83,20 @@
 
     <ion-card *virtualItem="let mission" text-wrap>
 
-      {{mission.role}}
+     <ion-item (click)="editMission($event, mission)">
+        <h1>{{mission.clientName}}</h1>
+        <h2>{{mission.role}}</h2>
+        <p *ngIf="mission.country">{{mission.country}}</p>
+      </ion-item>
+      <ion-card-content>
+
+        <p *ngIf="mission.startDate">From: {{mission.startDate}}</p>
+        <p *ngIf="mission.endDate">To: {{mission.endDate}}</p>
+        <p *ngIf="mission.sellingPrice">Selling price: €{{mission.sellingPrice}}</p>
+        <p *ngIf="mission.sellingPrice">Cost: €{{mission.cost}}</p>
+        <hr>
+        <p item-right><b>Profit: €{{mission.margin}} ({{mission.percentage}}%)</b></p>
+      </ion-card-content>
 
 
 
