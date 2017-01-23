@@ -173,8 +173,7 @@ export class Page1 {
               console.log("NO USER")
               this.user = _.find(this.bms, { unitManager: true });
               this.bmappService.setActiveUser(this.user);
-            }
-            //this.displayMessage("Welcome, " + this.user.name);
+            }            
             this.loadAssets();
           });
         },
