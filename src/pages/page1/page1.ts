@@ -165,13 +165,16 @@ export class Page1 {
           this.bms = data._embedded.businessManagers;
 
           this.bmappService.getActiveUser().then(data => {
-            if (!data) {
-              //this.user = _.find(this.bms, { active: true });
-              this.bmappService.setActiveUser(this.user);
-            } else {
+            console.log(data);
+            if (data) {
               this.user = data;
+            } else {
+              //this.user = _.find(this.bms, { active: true });
+              console.log("NO USER")
+              this.user = _.find(this.bms, { unitManager: true });
+              this.bmappService.setActiveUser(this.user);
             }
-            this.displayMessage("Welcome, " + this.user.name);
+            //this.displayMessage("Welcome, " + this.user.name);
             this.loadAssets();
           });
         },
@@ -201,6 +204,8 @@ export class Page1 {
     this.bmappService.loadConsultants().subscribe(
       data => {
         this.consultants = data._embedded.consultants;
+        console.log("CONSULTATNS");
+        console.log(this.consultants);
 
         this.userConsultants =
           _.filter(this.consultants, cs => cs.businessManagerId === this.user.id);
@@ -218,16 +223,7 @@ export class Page1 {
         this.missions = [];
         for (let consultant of this.consultants)
           this.missions = this.missions.concat(consultant.missions);
-
-        _.map(this.consultants, function (consultant) {
-          console.log(consultant.missions);
-
-          //  this.missions = this.missions.concat(consultant.missions);
-
-          //if (consultant.missions && consultant.missions.length > 0)
-          //  this.missions.push(consultant.missions);
-        });
-        console.log(this.missions);
+        
       },
       err => {
         this.consultants = [];
@@ -238,6 +234,9 @@ export class Page1 {
     this.bmappService.loadClients().subscribe(
       data => {
         this.clients = data._embedded.clients;
+
+        console.log("CLIENTS");
+        console.log(this.clients);
       },
       err => {
         this.clients = [];

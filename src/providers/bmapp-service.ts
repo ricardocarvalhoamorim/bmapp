@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class BmappService {
 
-  baseUri = "http://192.168.1.39:8080";
+  baseUri = "http://13.74.165.237:8080/TRM-1.0";
   public storage: Storage;
   consultants: any[];
   businessManagers: any[];
