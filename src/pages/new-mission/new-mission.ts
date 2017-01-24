@@ -52,8 +52,13 @@ export class NewMissionPage {
         consultantId: -1,
         country: ''
       }
+      this.isReadOnly = false;
     } else {
       this.mission = navParams.get('mission');
+      if (this.mission.businessManagerId == this.user.id)
+        this.isReadOnly = false;
+      else
+        this.isReadOnly = true;
     }
 
     console.log(this.mission);
