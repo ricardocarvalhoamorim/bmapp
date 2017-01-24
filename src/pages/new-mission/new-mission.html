@@ -1,18 +1,112 @@
 <!--
-  Generated template for the NewMission page.
+  Generated template for the NewClient page.
 
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
 
-  <ion-navbar>
-    <ion-title>new-mission</ion-title>
+    <ion-title>Mission</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="saveMission()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
+<ion-content>
 
-<ion-content padding>
+  <ion-card *ngIf="!mission.id">
+    <ion-card-header>
+      Registering a mission
+    </ion-card-header>
+    <ion-card-content>
+      To register a new mission, start by choosing both the client and the consultant to link. You can then specify the start and
+      ending dates, along with the finantial details for this record.
+    </ion-card-content>
+  </ion-card>
 
+  <ion-card *ngIf="mission.id">
+    <ion-card-header>
+      Editing a mission
+    </ion-card-header>
+    <ion-card-content>
+      When you're finished updating this record tap the save button (on the top bar)
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+
+    <ion-item-divider>
+      <h1>Summary</h1>
+    </ion-item-divider>
+
+    <ion-item>
+      <ion-label>Consultant</ion-label>
+      <ion-select [(ngModel)]="consultant" disabled="{{isReadOnly}}">
+        <ion-option *ngFor="let consultant of consultants" [value]="consultant" checked="false">{{consultant.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+
+
+    <ion-item>
+      <ion-label>Client</ion-label>
+      <ion-select [(ngModel)]="client" disabled="{{isReadOnly}}">
+        <ion-option *ngFor="let client of clients" [value]="client" checked="false">{{client.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label>Starting</ion-label>
+      <ion-datetime disabled="{{isReadOnly}}" displayFormat="DD MMM YYYY" min="2014-01-01" max="2020-12-31" [(ngModel)]="mission.startDate"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Until</ion-label>
+      <ion-datetime disabled="{{isReadOnly}}" displayFormat="DD MMM YYYY" min="2014-01-01" max="2020-12-31" [(ngModel)]="mission.endDate"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="ios-hammer-outline" item-left></ion-icon>
+      <ion-label>Role</ion-label>
+      <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="mission.role" ngControl="role"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="ios-map-outline" item-left></ion-icon>
+      <ion-label>Country</ion-label>
+      <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="mission.country" ngControl="country"></ion-input>
+    </ion-item>
+
+    <ion-item-divider>
+      <h1>Financial</h1>
+    </ion-item-divider>
+
+
+    <ion-item>
+      <ion-icon name="ios-clipboard-outline" item-left></ion-icon>
+      <ion-label>Daily cost</ion-label>
+      <ion-input disabled="{{isReadOnly}}" (input)='onCostsChanged($event)' type="number" [(ngModel)]="mission.cost" ngControl="cost"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="ios-pricetag-outline" item-left></ion-icon>
+      <ion-label>Selling price</ion-label>
+      <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="mission.sellingPrice" ngControl="sellingPrice"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="logo-usd" item-right></ion-icon>
+      <ion-label>Margin <b>€{{this.mission.margin}}</b> ({{this.mission.percentage}}%)</ion-label>
+    </ion-item>
+
+  </ion-list>
 </ion-content>

@@ -113,7 +113,11 @@ export class MissionsPage {
   }
 
   newMission() {
-    this.navCtrl.push(NewMissionPage, this.consultants, this.user);
+    this.navCtrl.push(NewMissionPage, { consultants: this.consultants, user: this.user });
+  }
+
+  editMission($event, mission) {
+    this.navCtrl.push(NewMissionPage, { mission: mission, consultants: this.consultants, user: this.user });
   }
 
 }

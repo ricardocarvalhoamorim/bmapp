@@ -103,9 +103,9 @@ export class ConsultantsPage {
     );
   }
 
-/**
- * Creates a new consultant object and opens the view to customize the record
- */
+  /**
+   * Creates a new consultant object and opens the view to customize the record
+   */
   newConsultant() {
     this.navCtrl.push(ConsultantHomePage, {
       'consultant': {
