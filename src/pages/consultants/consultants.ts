@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController, LoadingController, Platform, Events } from 'ionic-angular';
-import { BMappApi } from '../../shared/BMappApi';
 import { BmappService } from '../../providers/bmapp-service'
 import { ConsultantHomePage } from '../consultant-home/consultant-home'
 import { Http } from '@angular/http';
@@ -33,8 +32,7 @@ export class ConsultantsPage {
     public platform: Platform,
     public events: Events,
     public bmappService: BmappService,
-    public http: Http,
-    public bmappAPI: BMappApi) {
+    public http: Http) {
 
     /*
         events.subscribe('consultants:new', (data) => {
@@ -63,7 +61,7 @@ export class ConsultantsPage {
   }
 
   ionViewDidLoad() {
-    this.bmappAPI.getActiveUser().then(data => {
+    this.bmappService.getActiveUser().then(data => {
       this.user = data;
       this.loadConsultants(null);
     });
@@ -81,7 +79,7 @@ export class ConsultantsPage {
       loader.present();
     }
 
-    this.bmappService.loadConsultants().subscribe(
+    this.bmappService.getConsultants().subscribe(
       data => {
         this.consultants = data._embedded.consultants;
         this.filterConsultants();

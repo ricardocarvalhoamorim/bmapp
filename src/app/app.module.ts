@@ -12,7 +12,6 @@ import { ConsultantMissionsPage } from '../pages/consultant-missions/consultant-
 import { MissionsPage } from '../pages/missions/missions'
 import { NewMissionPage } from '../pages/new-mission/new-mission'
 
-import { BMappApi } from '../shared/BMappApi';
 import { Storage } from '@ionic/storage';
 import { ChartModule } from 'ng2-chartjs2';
 
@@ -50,7 +49,6 @@ import { ChartModule } from 'ng2-chartjs2';
     ConsultantMissionsPage
   ],
   providers: [
-    BMappApi,
     Storage
   ]
 })

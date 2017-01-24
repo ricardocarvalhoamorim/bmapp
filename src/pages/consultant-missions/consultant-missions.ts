@@ -46,7 +46,7 @@ export class ConsultantMissionsPage {
       loader.present();
     }
 
-    this.bmService.loadConsultants().subscribe(
+    this.bmService.getConsultants().subscribe(
       data => {
         this.consultant = data;
         this.consultant.missions = _.map(this.consultant.missions, mission => {

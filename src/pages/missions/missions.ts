@@ -50,7 +50,7 @@ export class MissionsPage {
       loader.present();
     }
 
-    this.bmappService.loadConsultants().subscribe(
+    this.bmappService.getConsultants().subscribe(
       data => {
         this.consultants = data._embedded.consultants;
 

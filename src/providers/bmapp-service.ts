@@ -22,14 +22,14 @@ export class BmappService {
   constructor(
     public http: Http,
     storage: Storage) {
-    this.headers = new Headers();  
+    this.headers = new Headers();
     this.storage = storage;
   }
 
   /**
    * Fetches the consultants list from the TRM backend
    */
-  loadBusinessManagers() {
+  getBusinessManagers() {
     return this.http
       .get(this.baseUri + '/businessManagers', this.headers)
       .map(res => res.json());
@@ -38,7 +38,7 @@ export class BmappService {
   /**
    * Fetches the consultants list from the TRM backend
    */
-  loadConsultants() {
+  getConsultants() {
     return this.http
       .get(this.baseUri + '/consultants', this.headers)
       .map(res => res.json());
@@ -56,7 +56,7 @@ export class BmappService {
   /**
    * Fetches the clients from the TRM backend
    */
-  loadClients() {
+  getClients() {
     return this.http
       .get(this.baseUri + '/clients')
       .map(res => res.json());
@@ -66,7 +66,7 @@ export class BmappService {
   /**
    * Fetches the missions from the TRM backend
    */
-  loadMissions() {
+  getMissions() {
     return this.http
       .get(this.baseUri + '/missions')
       .map(res => res.json());
@@ -100,6 +100,21 @@ export class BmappService {
 
     return this.http
       .post(this.baseUri + "/consultants", consultant)
+      .map(res => res.json());
+  }
+
+  /**
+   * Creates or updates a mission
+   */
+  saveMission(mission) {
+    if (mission.id) {
+      return this.http
+        .put(this.baseUri + "/missions/" + mission.id, mission)
+        .map(res => res.json());
+    }
+
+    return this.http
+      .post(this.baseUri + "/missions", mission)
       .map(res => res.json());
   }
 

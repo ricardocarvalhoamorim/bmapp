@@ -67,7 +67,7 @@ export class ConsultantSummaryPage {
   }
 
   ionViewDidLoad() {
-    this.bmappService.loadClients().subscribe(
+    this.bmappService.getClients().subscribe(
       (val) => {
         this.clients = val;
       },

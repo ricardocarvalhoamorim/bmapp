@@ -35,15 +35,13 @@ export class NewMissionPage {
     this.consultants = navParams.get('consultants');
     this.user = navParams.get('user');
 
-    let loader = this.loadingCtrl.create({
-      content: "Loading data..."
-    });
+
 
     if (!navParams.get('mission')) {
       console.log("Didn't receive the required object!");
       this.mission = {
-        startDate: new Date(),
-        endDate: new Date(),
+        startDate: '',
+        endDate: '',
         role: '',
         sellingPrice: '',
         businessManagerId: this.user.id,
@@ -61,9 +59,15 @@ export class NewMissionPage {
         this.isReadOnly = true;
     }
 
-    console.log(this.mission);
 
-    this.bmappService.loadClients().subscribe(
+  }
+
+  ionViewDidLoad() {
+    let loader = this.loadingCtrl.create({
+      content: "Loading data..."
+    });
+
+    this.bmappService.getClients().subscribe(
       data => {
         this.clients = data._embedded.clients;
         this.error = null;
@@ -79,10 +83,6 @@ export class NewMissionPage {
         loader.dismiss();
       }
     )
-  }
-
-  ionViewDidLoad() {
-    console.log('Hello NewMissionPage Page');
   }
 
   /**
@@ -111,6 +111,8 @@ export class NewMissionPage {
       this.presentToast("Please specify the time coverage for this mission");
       return;
     }
+
+    this.presentToast("Back end is still not accepting this feature");
   }
 
   /**

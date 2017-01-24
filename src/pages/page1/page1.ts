@@ -4,7 +4,6 @@ import { ConsultantsPage } from '../consultants/consultants';
 import { ClientsPage } from '../clients/clients';
 import { NewClientPage } from '../new-client/new-client';
 import { SettingsPage } from '../settings/settings';
-import { BMappApi } from '../../shared/BMappApi';
 import { ChartComponent } from 'ng2-chartjs2';
 
 import { BmappService } from '../../providers/bmapp-service'
@@ -155,12 +154,11 @@ export class Page1 {
     public navCtrl: NavController,
     public toastCtrl: ToastController,
     public events: Events,
-    public bmappAPI: BMappApi,
     public platform: Platform,
     public bmappService: BmappService) {
 
     this.platform.ready().then(() => {
-      this.bmappService.loadBusinessManagers().subscribe(
+      this.bmappService.getBusinessManagers().subscribe(
         data => {
           this.bms = data._embedded.businessManagers;
 
@@ -200,7 +198,7 @@ export class Page1 {
   loadAssets() {
 
     //LOAD CONSULTANTS
-    this.bmappService.loadConsultants().subscribe(
+    this.bmappService.getConsultants().subscribe(
       data => {
         this.consultants = data._embedded.consultants;
 
@@ -228,7 +226,7 @@ export class Page1 {
       });
 
     //LOAD CLIENTS
-    this.bmappService.loadClients().subscribe(
+    this.bmappService.getClients().subscribe(
       data => {
         this.clients = data._embedded.clients;
       },
@@ -244,25 +242,7 @@ export class Page1 {
    */
   ionViewDidEnter() {
 
-    /*
-        this.bmappAPI.getConsultants().then((val) => {
-          this.consultants = val;
-          if (this.consultants.length === 0) {
-            return;
-          }
-    
-          //compute the user's stats
-          this.userConsultants =
-            _.filter(this.consultants, cs => cs.bm === this.user.id);
-          this.consultantsOnMission =
-            _.filter(this.userConsultants, cs => cs.clientID !== '-1').length;
-          this.consultantsOnBench = this.userConsultants.length - this.consultantsOnMission;
-    
-          this.progress = Math.round(this.consultantsOnMission / this.user.target * 100);
-    
-          this.updateChart();
-        });
-    */
+   
   }
 
   /**

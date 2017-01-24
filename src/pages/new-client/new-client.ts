@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController, LoadingController, NavParams, AlertController, Events } from 'ionic-angular';
-import { BMappApi } from '../../shared/BMappApi';
 import { BmappService } from '../../providers/bmapp-service'
 /*
   Generated class for the NewClient page.
@@ -24,8 +23,7 @@ export class NewClientPage {
     public toastController: ToastController,
     public alertCtrl: AlertController,
     public bmappService: BmappService,
-    public loadingCtrl: LoadingController,
-    public bmappApi: BMappApi) {
+    public loadingCtrl: LoadingController) {
 
     if (!navParams.get('client')) {
       console.log("Setting up a new client");
@@ -63,7 +61,7 @@ export class NewClientPage {
     this.bmappService.saveClient(this.client).subscribe(
       data => {
         this.events.publish('clients:new', this.client);
-        this.bmappApi.saveClient(this.client);
+        this.bmappService.saveClient(this.client);
         this.presentToast('Saved successfully');
         loader.dismiss();
         this.navCtrl.pop();

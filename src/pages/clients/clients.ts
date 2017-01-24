@@ -55,7 +55,7 @@ export class ClientsPage {
       loader.present();
     }
 
-    this.bmappService.loadClients()
+    this.bmappService.getClients()
       .subscribe(
       data => {
         this.clients = data._embedded.clients;

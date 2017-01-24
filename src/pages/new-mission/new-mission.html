@@ -100,7 +100,7 @@
     <ion-item>
       <ion-icon name="ios-pricetag-outline" item-left></ion-icon>
       <ion-label>Selling price</ion-label>
-      <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="mission.sellingPrice" ngControl="sellingPrice"></ion-input>
+      <ion-input disabled="{{isReadOnly}}" (input)='onCostsChanged($event)' type="number" [(ngModel)]="mission.sellingPrice" ngControl="sellingPrice"></ion-input>
     </ion-item>
 
     <ion-item>

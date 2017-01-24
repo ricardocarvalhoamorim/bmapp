@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController, AlertController } from 'ionic-angular';
-import { BMappApi } from '../../shared/BMappApi';
 import { BmappService } from '../../providers/bmapp-service'
 import * as _ from 'lodash';
 
@@ -39,29 +38,22 @@ export class SettingsPage {
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
-    public bmappService: BmappService,
-    public bmappAPI: BMappApi) {
+    public bmappService: BmappService) {
   }
 
   ionViewDidLoad() {
-    this.bmappAPI.getActiveUser().then((val) => {
+    this.bmappService.getActiveUser().then((val) => {
       this.user = val;
     });
 
     this.loadBusinessManagers();
-    /*
-    this.bmappAPI.getBms().then((val) => {
-      this.bms = val;
-      this.user = _.find(this.bms, { active: true });
-    });
-    */
   }
 
   /**
    * Dispatches the request to load the business managers in the background
    */
   loadBusinessManagers() {
-    this.bmappService.loadBusinessManagers().subscribe(
+    this.bmappService.getBusinessManagers().subscribe(
       data => {
         this.bms = data._embedded.businessManagers;
         this.error = null;
@@ -74,18 +66,6 @@ export class SettingsPage {
   }
 
   /**
-   * Calls the api to save the changes
-   */
-  saveSettings() {
-    if (this.user.name === '') {
-      this.presentToast('You have to provide a name')
-      return;
-    }
-    this.bmappAPI.saveBM(this.user);
-    this.presentToast('Settings successfully saved');
-  }
-
-  /**
    * Shows a toast with the specified message
    */
   presentToast(message) {
@@ -95,11 +75,6 @@ export class SettingsPage {
     });
 
     toast.present();
-  }
-
-  reset() {
-    this.newUser();
-    this.bmappAPI.reset();
   }
 
   /**
@@ -129,7 +104,7 @@ export class SettingsPage {
           return;
 
         this.user = _.find(this.bms, { name: data });
-        this.saveSettings();
+        this.bmappService.setActiveUser(this.user);
       }
     });
     alert.present();
