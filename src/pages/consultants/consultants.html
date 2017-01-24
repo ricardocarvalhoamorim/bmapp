@@ -15,8 +15,8 @@
 
   </ion-navbar>
 
-  <ion-toolbar>
-    <ion-segment [(ngModel)]="consultantsFilter" (ionChange)="filterConsultants()">
+
+    <ion-segment [(ngModel)]="consultantsFilter" (ionChange)="filterConsultants()" color="light" style="background: #c9001d">
       <ion-segment-button value="mine">
         My consultants
       </ion-segment-button>
@@ -25,7 +25,7 @@
       </ion-segment-button>
     </ion-segment>
 
-  </ion-toolbar>
+
 
 </ion-header>
 <ion-content no-padding>

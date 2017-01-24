@@ -14,8 +14,8 @@
     </ion-searchbar>
 
   </ion-navbar>
-  <ion-toolbar>
-    <ion-segment [(ngModel)]="missionFilter" (ionChange)="filterMissions()" color="primary">
+
+    <ion-segment [(ngModel)]="missionFilter" (ionChange)="filterMissions()"  color="light" style="background: #c9001d">
       <ion-segment-button value="mine">
         My missions
       </ion-segment-button>
@@ -23,8 +23,6 @@
         All
       </ion-segment-button>
     </ion-segment>
-
-  </ion-toolbar>
 
 </ion-header>
 <ion-content no-padding>
