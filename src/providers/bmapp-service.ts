@@ -12,7 +12,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class BmappService {
 
-  baseUri = "http://13.74.165.237:8080/TRM-1.0";
+  //baseUri = "http://13.74.165.237:8080/TRM-1.0";
+  baseUri = "http://192.168.1.26:8080";
   public storage: Storage;
   consultants: any[];
   businessManagers: any[];
@@ -40,7 +41,7 @@ export class BmappService {
    */
   getConsultants() {
     return this.http
-      .get(this.baseUri + '/consultants', this.headers)
+      .get(this.baseUri + '/consultants?projection=with_missions', this.headers)
       .map(res => res.json());
   }
 
@@ -90,7 +91,6 @@ export class BmappService {
   saveConsultant(consultant) {
 
     //consultant.businessManger = "businessManagers/" + consultant.businessManagerId;
-    console.log(consultant);
 
     if (consultant.id) {
       return this.http
@@ -106,7 +106,7 @@ export class BmappService {
   /**
    * Creates or updates a mission
    */
-  saveMission(mission) {
+  saveMission(mission) {    
     if (mission.id) {
       return this.http
         .put(this.baseUri + "/missions/" + mission.id, mission)

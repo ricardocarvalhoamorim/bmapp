@@ -77,37 +77,6 @@ export class ConsultantSummaryPage {
   }
 
   /**
-   * Attempts to save the provided information in a new consultant record
-   */
-  saveConsultant() {
-    console.log(this.consultant);
-
-    if (this.isReadOnly) {
-      this.navCtrl.pop();
-      return;
-    }
-
-    if (!this.consultant.name) {
-      this.presentToast('You must provide a name for this record');
-      return;
-    }
-
-    this.consultant.businessManagerId = this.user.id;
-    this.bmappService.saveConsultant(this.consultant).subscribe(
-      data => {
-        this.presentToast('Saved successfully');
-        this.events.publish("consultants:new", this.consultant);
-        this.navCtrl.pop();
-      },
-      err => {
-        this.presentToast('An error occurred when saving this record');
-        console.log(err);
-      }
-    );
-
-  }
-
-  /**
    * Displays a toast with the specified message
    */
   presentToast(message) {

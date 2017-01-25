@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { NavController, LoadingController, Events } from 'ionic-angular';
 import { NewMissionPage } from '../new-mission/new-mission'
 import { BmappService } from '../../providers/bmapp-service';
 import * as _ from 'lodash';
@@ -28,6 +28,7 @@ export class MissionsPage {
   constructor(
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
+    private events: Events,
     private bmappService: BmappService) { }
 
   ionViewDidLoad() {
@@ -35,6 +36,12 @@ export class MissionsPage {
     this.bmappService.getActiveUser().then(data => {
       this.user = data;
       this.loadMissions(null);
+    });
+
+    this.events.subscribe('mission:created', (mission) => {
+      // user and time are the same arguments passed in `events.publish(user, time)`
+      this.missions.push(mission);
+      this.filterMissions();
     });
   }
 

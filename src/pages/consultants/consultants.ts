@@ -106,6 +106,7 @@ export class ConsultantsPage {
    */
   newConsultant() {
     this.navCtrl.push(ConsultantHomePage, {
+      'user': this.user,
       'consultant': {
         businessManagerId: this.user.id,
         name: '',
@@ -122,7 +123,10 @@ export class ConsultantsPage {
   }
 
   editConsultant($event, consultant) {
-    this.navCtrl.push(ConsultantHomePage, { 'consultant': consultant, 'user': this.user });
+    this.navCtrl.push(ConsultantHomePage, {
+      'user': this.user,
+      'consultant': consultant
+    });
   }
 
   /**

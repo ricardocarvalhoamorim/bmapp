@@ -112,7 +112,23 @@ export class NewMissionPage {
       return;
     }
 
-    this.presentToast("Back end is still not accepting this feature");
+
+    this.mission.businessManager = this.user._links.self.href;
+    this.mission.client = this.client._links.self.href;
+    this.mission.consultant = this.consultant._links.self.href;
+
+    console.log(this.mission);
+    this.bmappService.saveMission(this.mission).subscribe(
+      data => { 
+        this.navCtrl.pop();
+        this.presentToast("Successfully saved!");
+      },
+      err => {
+        this.presentToast("An error occurred when saving this record");
+        console.error(err);
+      }
+    );
+    //this.presentToast("Back end is still not accepting this feature");
   }
 
   /**

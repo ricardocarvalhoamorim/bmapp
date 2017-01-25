@@ -37,12 +37,13 @@ export class ConsultantHomePage {
     this.user = navParams.get('user');
   }
 
-/**
- * Calls the service to save the record
- */
+  /**
+   * Calls the service to save the record
+   */
   saveConsultant() {
-    console.error(this.consultant);
-    
+    this.consultant.businessManager = this.user._links.self.href;
+
+    console.log(this.consultant);
     this.bmappService.saveConsultant(this.consultant).subscribe(
       data => {
         this.consultant = data;
