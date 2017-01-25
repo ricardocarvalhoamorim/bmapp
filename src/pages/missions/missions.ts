@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, Events } from 'ionic-angular';
+import { NavController, LoadingController, ToastController, Events } from 'ionic-angular';
 import { NewMissionPage } from '../new-mission/new-mission'
 import { BmappService } from '../../providers/bmapp-service';
 import * as _ from 'lodash';
@@ -28,6 +28,7 @@ export class MissionsPage {
   constructor(
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController,
     private events: Events,
     private bmappService: BmappService) { }
 
@@ -40,8 +41,9 @@ export class MissionsPage {
 
     this.events.subscribe('mission:created', (mission) => {
       // user and time are the same arguments passed in `events.publish(user, time)`
-      this.missions.push(mission);
+      this.loadMissions(null);
       this.filterMissions();
+      this.presentToast("Successfully saved!");
     });
   }
 
@@ -125,6 +127,14 @@ export class MissionsPage {
 
   editMission($event, mission) {
     this.navCtrl.push(NewMissionPage, { mission: mission, consultants: this.consultants, user: this.user });
+  }
+
+  presentToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000
+    });
+    toast.present();
   }
 
 }

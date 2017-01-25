@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, ToastController, NavParams } from 'ionic-angular';
+import { NavController, LoadingController, ToastController, NavParams, Events } from 'ionic-angular';
 import { BmappService } from '../../providers/bmapp-service';
 import * as _ from 'lodash';
 /*
@@ -30,6 +30,7 @@ export class NewMissionPage {
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
     private navParams: NavParams,
+    private events: Events,
     private bmappService: BmappService) {
 
     this.consultants = navParams.get('consultants');
@@ -121,7 +122,7 @@ export class NewMissionPage {
     this.bmappService.saveMission(this.mission).subscribe(
       data => { 
         this.navCtrl.pop();
-        this.presentToast("Successfully saved!");
+        this.events.publish('mission:created', data);
       },
       err => {
         this.presentToast("An error occurred when saving this record");
