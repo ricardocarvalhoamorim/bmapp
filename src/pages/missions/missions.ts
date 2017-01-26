@@ -115,7 +115,6 @@ export class MissionsPage {
       return mission.role.toLowerCase().includes(queryTextLower) || mission.clientName.toLowerCase().includes(queryTextLower);
     });
 
-    console.log(filteredResults);
     this.filteredMissions = filteredResults;
   }
 

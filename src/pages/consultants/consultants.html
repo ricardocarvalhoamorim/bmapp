@@ -105,7 +105,7 @@
 </ion-col>
 <ion-col width-25 style="background-color:white; border-color:#c9001d; border-width: 1px; border-style: solid;border-left:none; text-align:center; margin:0 auto;">
 <div style="font-size:15px; color:#c9001d;">
-<p><b>€ {{consultant.packag}}</b></p>
+<p><b>€ {{consultant.package}}</b></p>
 <b *ngIf="consultant.missions.length > 0">{{consultant.missions[0].clientName}}</b>
 </div>
 </ion-col>
@@ -113,7 +113,15 @@
 
 <ion-card-content>
   <div *ngIf="consultant.missions.length > 0">
-    <h2>Last Mission</h2>
+   <h2>Last mission</h2>
+
+     <p>
+      <button ion-button icon-left clear small>
+        <ion-icon name="ios-calendar-outline"></ion-icon>
+        <div>{{consultant.missions[0].clientName}}</div>
+      </button>
+    </p>
+
     <p>
       <button ion-button icon-left clear small>
         <ion-icon name="ios-calendar-outline"></ion-icon>

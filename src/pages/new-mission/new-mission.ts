@@ -129,7 +129,6 @@ export class NewMissionPage {
         console.error(err);
       }
     );
-    //this.presentToast("Back end is still not accepting this feature");
   }
 
   /**
