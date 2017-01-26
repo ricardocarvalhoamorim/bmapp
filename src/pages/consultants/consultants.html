@@ -15,15 +15,27 @@
 
   </ion-navbar>
 
+  <ion-segment *ngIf="!ios" [(ngModel)]="consultantsFilter" (ionChange)="filterConsultants()" color="light" style="background: #c9001d">
+<ion-segment-button value="mine">
+  My consultants
+</ion-segment-button>
+<ion-segment-button value="all">
+  All
+</ion-segment-button>
+</ion-segment>
 
-    <ion-segment [(ngModel)]="consultantsFilter" (ionChange)="filterConsultants()" color="light">
-      <ion-segment-button value="mine">
-        My consultants
-      </ion-segment-button>
-      <ion-segment-button value="all">
-        All
-      </ion-segment-button>
-    </ion-segment>
+<ion-toolbar *ngIf="ios">
+  <ion-segment [(ngModel)]="consultantsFilter" (ionChange)="filterConsultants()">
+    <ion-segment-button value="mine">
+      My consultants
+    </ion-segment-button>
+    <ion-segment-button value="all">
+      All
+    </ion-segment-button>
+  </ion-segment>
+
+</ion-toolbar>
+
 
 
 
@@ -40,7 +52,7 @@
 
   </ion-card>
 
-    <ion-card *ngIf="error">
+  <ion-card *ngIf="error">
     <ion-item>
       <ion-avatar item-left>
         <img src="img/cloud_error.png">

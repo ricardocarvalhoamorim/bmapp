@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, ToastController, Events } from 'ionic-angular';
+import { NavController, LoadingController, ToastController, Events, Platform } from 'ionic-angular';
 import { NewMissionPage } from '../new-mission/new-mission'
 import { BmappService } from '../../providers/bmapp-service';
 import * as _ from 'lodash';
@@ -19,9 +19,10 @@ export class MissionsPage {
 
   user;
   error;
+  ios;
   consultants: any[];
   missions: any[];
-  filteredMissions: any[];
+  filteredMissions: any[]; 
   searchInput = '';
   missionFilter = 'mine';
 
@@ -29,11 +30,12 @@ export class MissionsPage {
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
+    private platform: Platform,
     private events: Events,
     private bmappService: BmappService) { }
 
   ionViewDidLoad() {
-    console.log('Hello MissionsPage Page');
+    this.ios = this.platform.is('ios');
     this.bmappService.getActiveUser().then(data => {
       this.user = data;
       this.loadMissions(null);

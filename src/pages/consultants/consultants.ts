@@ -24,6 +24,7 @@ export class ConsultantsPage {
   consultantsFilter = 'mine';
   searchInput = "";
   error;
+  ios;
 
   constructor(
     public navCtrl: NavController,
@@ -33,6 +34,8 @@ export class ConsultantsPage {
     public events: Events,
     public bmappService: BmappService,
     public http: Http) {
+
+    this.ios = this.platform.is("ios");
 
     /*
         events.subscribe('consultants:new', (data) => {

@@ -15,15 +15,26 @@
 
   </ion-navbar>
 
-<!-- style="background: #c9001d" -->
-    <ion-segment [(ngModel)]="missionFilter" (ionChange)="filterMissions()"  color="light" >
-      <ion-segment-button value="mine">
-        My missions
-      </ion-segment-button>
-      <ion-segment-button value="all">
-        All
-      </ion-segment-button>
-    </ion-segment>
+  <ion-segment *ngIf="!ios" [(ngModel)]="missionFilter" (ionChange)="filterMissions()" color="light" style="background: #c9001d">
+<ion-segment-button value="mine">
+  My missions
+</ion-segment-button>
+<ion-segment-button value="all">
+  All
+</ion-segment-button>
+</ion-segment>
+
+<ion-toolbar *ngIf="ios">
+  <ion-segment [(ngModel)]="missionFilter" (ionChange)="filterMissions()">
+    <ion-segment-button value="mine">
+      My missions
+    </ion-segment-button>
+    <ion-segment-button value="all">
+      All
+    </ion-segment-button>
+  </ion-segment>
+
+</ion-toolbar>
 
 </ion-header>
 <ion-content no-padding>
@@ -80,9 +91,9 @@
 
   <ion-list *ngIf="filteredMissions && filteredMissions.length > 0" no-lines [virtualScroll]="filteredMissions" [approxItemHeight]="'100px'">
 
-    <ion-card *virtualItem="let mission" text-wrap>
+    <ion-card *virtualItem="let mission" text-wrap  (click)="editMission($event, mission)">
 
-     <ion-item (click)="editMission($event, mission)">
+     <ion-item>
         <h1>{{mission.clientName}}</h1>
         <h2>{{mission.role}}</h2>
         <p *ngIf="mission.country">{{mission.country}}</p>
