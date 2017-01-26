@@ -44,13 +44,17 @@ export class NewMissionPage {
         startDate: '',
         endDate: '',
         role: '',
-        sellingPrice: '',
         businessManagerId: this.user.id,
         clientName: '',
         clientId: -1,
         consultantId: -1,
-        country: ''
+        country: '',
+        sellingPrice: '',
+        marginPercentage: 0,
+        margin: 0,
+        cost: 0
       }
+
       this.isReadOnly = false;
     } else {
       this.mission = navParams.get('mission');
@@ -59,8 +63,6 @@ export class NewMissionPage {
       else
         this.isReadOnly = true;
     }
-
-
   }
 
   ionViewDidLoad() {
@@ -90,11 +92,11 @@ export class NewMissionPage {
  * Updates the margin and profit whenever the input is changed
  */
   onCostsChanged($event) {
-    if (!this.consultant)
-      return;
-
     this.mission.margin = Math.round(this.mission.sellingPrice - this.mission.cost);
-    this.mission.percentage = Math.round(this.mission.margin / this.mission.cost * 100);
+    if (this.mission.cost == 0)
+      this.mission.marginPercentage = 0;
+    else
+      this.mission.marginPercentage = Math.round(this.mission.margin / this.mission.cost * 100);
   }
 
   saveMission() {
@@ -120,7 +122,7 @@ export class NewMissionPage {
 
     console.log(this.mission);
     this.bmappService.saveMission(this.mission).subscribe(
-      data => { 
+      data => {
         this.navCtrl.pop();
         this.events.publish('mission:created', data);
       },
