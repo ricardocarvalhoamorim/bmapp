@@ -1,16 +1,18 @@
-page-consultants {
-
-      ion-card {
-    position: relative;
-    width: 100%;
-    //text-align: center;
-  }
-
-  no-padding {
-    padding: 0px !important;
+.ios {
+    page-consultants {
+        ion-segment {
+            background: #c9001d;
+            padding: 5px;
+        }
+}
 }
 
-
+.android, .md, .wp {
+    page-consultants {
+        ion-segment {
+            background: #c9001d;
+        }
+}
 }
 
 

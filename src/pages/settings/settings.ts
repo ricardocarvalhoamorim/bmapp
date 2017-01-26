@@ -132,4 +132,8 @@ export class SettingsPage {
   report() {
     window.open(`mailto:rcamorim@adneom.com?subject=BMApp feedback&body=Hi Ricardo, Here\'s my feedback on the app`, '_system');
   }
+
+  saveSettings() {
+    this.presentToast("TODO");
+  }
 }

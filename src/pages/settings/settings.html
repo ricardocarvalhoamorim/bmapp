@@ -13,9 +13,6 @@
     <ion-title>Settings</ion-title>
 
     <ion-buttons end>
-      <button ion-button icon-only (click)="saveSettings()">
-        <ion-icon name="md-checkmark"></ion-icon>
-      </button>
     </ion-buttons>
   </ion-navbar>
 
@@ -55,10 +52,7 @@
 
 
     <ion-row>
-      <ion-col width-50>
-        <button ion-button color="danger" full (click)="reset()">Reset application</button>
-      </ion-col>
-      <ion-col width-50>
+      <ion-col>
         <button ion-button color="light" full (click)="report()">Report issues</button>
       </ion-col>
     </ion-row>

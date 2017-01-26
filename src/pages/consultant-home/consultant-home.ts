@@ -58,7 +58,6 @@ export class ConsultantHomePage {
   }
 
   ionViewDidLoad() {
-    console.log('Hello ConsultantHomePage Page');
   }
 
   presentToast(message) {
