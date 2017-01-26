@@ -166,10 +166,9 @@ export class Page1 {
             if (data) {
               this.user = data;
             } else {
-              //this.user = _.find(this.bms, { active: true });
-              //TODO: should have a predefined user
-              console.error("NO USER")
-              this.user = _.find(this.bms, { unitManager: true });
+              
+              //this.user = _.find(this.bms, { unitManager: true });
+              this.user = this.bms[0];
               this.bmappService.setActiveUser(this.user);
             }            
             this.loadAssets();
@@ -207,8 +206,7 @@ export class Page1 {
 
         this.consultantsOnMission =
           _.filter(this.userConsultants, consultant =>
-            consultant.missions.length > 0
-            && new Date(consultant.missions[0].startDate) < new Date()).length;
+            consultant.missions.length > 0).length;
         this.consultantsOnBench = this.userConsultants.length - this.consultantsOnMission;
 
         this.progress = Math.round(this.consultantsOnMission / this.user.target * 100);
@@ -264,9 +262,7 @@ export class Page1 {
     for (let bm of this.bms) {
       var consultantsCount = _.filter(this.consultants, function (consultant) {
         if (consultant.businessManagerId === bm.id
-          && consultant.missions.length > 0
-          && new Date(consultant.missions[0].startDate) < new Date()
-        )
+          && consultant.missions.length > 0)
           return consultant;
       }).length;
 
