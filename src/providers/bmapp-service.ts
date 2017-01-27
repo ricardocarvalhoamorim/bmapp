@@ -32,7 +32,7 @@ export class BmappService {
    */
   getBusinessManagers() {
     return this.http
-      .get(this.baseUri + '/businessManagers', this.headers)
+      .get(this.baseUri + '/businessManagers?sort=name', this.headers)
       .map(res => res.json());
   }
 
@@ -41,7 +41,7 @@ export class BmappService {
    */
   getConsultants() {
     return this.http
-      .get(this.baseUri + '/consultants?projection=with_missions', this.headers)
+      .get(this.baseUri + '/consultants?projection=with_missions&sort=name', this.headers)
       .map(res => res.json());
   }
 
@@ -59,11 +59,11 @@ export class BmappService {
    */
   getClients() {
     return this.http
-      .get(this.baseUri + '/clients')
+      .get(this.baseUri + '/clients?sort=name')
       .map(res => res.json());
   }
 
-
+ 
   /**
    * Fetches the missions from the TRM backend
    */

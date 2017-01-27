@@ -43,9 +43,15 @@ export class MissionsPage {
 
     this.events.subscribe('mission:created', (mission) => {
       // user and time are the same arguments passed in `events.publish(user, time)`
-      this.loadMissions(null);
+      this.missions.push(mission);
       this.filterMissions();
-      this.presentToast("Successfully saved!");
+      this.presentToast("Successfully created!");
+    });
+
+    this.events.subscribe('mission:updated', (mission) => {
+      // user and time are the same arguments passed in `events.publish(user, time)`
+      this.loadMissions(null);
+      this.presentToast("Successfully updated!");
     });
   }
 
@@ -69,6 +75,7 @@ export class MissionsPage {
         for (let consultant of this.consultants)
           this.missions = this.missions.concat(consultant.missions);
 
+ 
         this.filterMissions();
         this.error = null;
 
