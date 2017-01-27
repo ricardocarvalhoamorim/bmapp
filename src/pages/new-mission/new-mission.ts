@@ -33,10 +33,10 @@ export class NewMissionPage {
     private events: Events,
     private bmappService: BmappService) {
 
-    this.consultants = navParams.get('consultants');
     this.user = navParams.get('user');
-
-
+    this.consultants = navParams.get('consultants');
+    this.consultants =
+      _.filter(this.consultants, cs => cs.businessManagerId === this.user.id);
 
     if (!navParams.get('mission')) {
       console.log("Didn't receive the required object!");

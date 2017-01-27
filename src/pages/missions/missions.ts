@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, ToastController, Events, Platform } from 'ionic-angular';
+import { NavController, LoadingController, ToastController, AlertController, Events, Platform } from 'ionic-angular';
 import { NewMissionPage } from '../new-mission/new-mission'
 import { BmappService } from '../../providers/bmapp-service';
 import * as _ from 'lodash';
@@ -22,7 +22,7 @@ export class MissionsPage {
   ios;
   consultants: any[];
   missions: any[];
-  filteredMissions: any[]; 
+  filteredMissions: any[];
   searchInput = '';
   missionFilter = 'mine';
 
@@ -30,6 +30,7 @@ export class MissionsPage {
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
+    private alertCtrl: AlertController,
     private platform: Platform,
     private events: Events,
     private bmappService: BmappService) { }
@@ -75,7 +76,7 @@ export class MissionsPage {
         for (let consultant of this.consultants)
           this.missions = this.missions.concat(consultant.missions);
 
- 
+
         this.filterMissions();
         this.error = null;
 
@@ -123,7 +124,29 @@ export class MissionsPage {
     this.filterMissions();
   }
 
+  /**
+   * Opens up the mission page
+   */
   newMission() {
+    let userConsultants =
+      _.filter(this.consultants, cs => cs.businessManagerId === this.user.id);
+
+    if (userConsultants.length === 0) {
+      let alert = this.alertCtrl.create({
+        title: 'No consultants',
+        subTitle: 'For the moment, you won\'t be able to create missions as you have no consultants under your profile. Please register the consultant that you want to assign to this mission in the first place.',
+        buttons: [
+          {
+            text: 'OK',
+            handler: data => {
+            }
+          }
+        ]
+      });
+      alert.present();
+      return;
+    }
+
     this.navCtrl.push(NewMissionPage, { consultants: this.consultants, user: this.user });
   }
 
