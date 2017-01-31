@@ -1,0 +1,40 @@
+
+
+progress {
+    height: 10px;
+    width: 100%;
+    background: rgba(215, 40, 40, 0.9);
+}
+
+
+/* Firefox */
+progress::-moz-progress-bar { 
+    background: rgba(215, 40, 40, 0.9);  
+}
+
+/* Chrome */
+progress::-webkit-progress-value {
+    background: rgba(215, 40, 40, 0.9);
+}
+
+.side-image {
+    position: relative;
+    text-align: center;
+  }
+
+.card-title {
+    position: absolute;
+    top: 36%;
+    font-size: 2.0em;
+    width: 100%;
+    font-weight: bold;
+    color: #fff;
+}
+
+.card-subtitle {
+    font-size: 1.0em;
+    position: absolute;
+    top: 52%;
+    width: 100%;
+    color: #fff;
+}

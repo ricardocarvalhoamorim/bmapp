@@ -29,7 +29,7 @@ export class SettingsPage {
     name: '',
     initials: '',
     email: '',
-    contact: '',
+    telephone: '',
     target: 0,
     isUnitManager: false,
     active: true
@@ -119,7 +119,7 @@ export class SettingsPage {
       name: '',
       initials: '',
       email: '',
-      contact: '',
+      telephone: '',
       target: 0,
       isUnitManager: false,
       active: true

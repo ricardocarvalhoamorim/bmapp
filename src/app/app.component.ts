@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
-import { Page1 } from '../pages/page1/page1';
+import { HomePage } from '../pages/home/home';
 import { ConsultantsPage } from '../pages/consultants/consultants';
 import { MissionsPage } from '../pages/missions/missions';
 import { ClientsPage } from '../pages/clients/clients';
@@ -12,9 +12,9 @@ import { SettingsPage } from '../pages/settings/settings';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  @ViewChild(Nav) nav: Nav;
+@ViewChild(Nav) nav: Nav;
 
-  rootPage: any = Page1;
+  rootPage: any = HomePage;
   today = new Date().toDateString();
   pages: Array<{ title: string, component: any }>;
   consultants: any[];
@@ -32,7 +32,7 @@ export class MyApp {
 
       // used for an example of ngFor and navigation
       this.pages = [
-        { title: 'Home', component: Page1 },
+        { title: 'Home', component: HomePage },
         { title: 'Consultants', component: ConsultantsPage },
         { title: 'Missions', component: MissionsPage },
         { title: 'Client portfolio', component: ClientsPage },
@@ -55,4 +55,5 @@ export class MyApp {
   feedback() {
     window.open(`mailto:rcamorim@adneom.com?subject=BMApp feedback&body=Hi Ricardo, Here\'s my feedback on the app`, '_system');
   }
+
 }

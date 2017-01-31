@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController, ToastController, NavParams } from 'ionic-angular';
 import { BmappService } from '../../providers/bmapp-service';
-import { NewMissionPage } from '../new-mission/new-mission'
 import * as _ from 'lodash';
 
 /*

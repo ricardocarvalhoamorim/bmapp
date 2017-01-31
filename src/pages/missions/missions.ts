@@ -130,7 +130,7 @@ export class MissionsPage {
   newMission() {
     let userConsultants =
       _.filter(this.consultants, cs => cs.businessManagerId === this.user.id);
-
+      
     if (userConsultants.length === 0) {
       let alert = this.alertCtrl.create({
         title: 'No consultants',

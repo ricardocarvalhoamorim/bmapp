@@ -36,6 +36,15 @@
           </ion-col>
         </ion-row>
 
+         <ion-row text-wrap *ngIf="missions && missions.length > 0">
+          <ion-col width-10>
+            <ion-icon name="ios-speedometer-outline"></ion-icon>
+          </ion-col>
+          <ion-col width-90>
+            <b color="primary" (click)="switchToMissionsList()">{{missions.length}} recorded missions</b>
+          </ion-col>
+        </ion-row>
+
         <ion-row text-wrap *ngIf="consultantsOnBench > 0">
           <ion-col width-10>
             <ion-icon name="ios-time-outline"></ion-icon>
@@ -56,7 +65,10 @@
       <ion-col width-50>
         <button ion-button color="dark" small outline block (click)="switchToClientsList()"><b>Clients</b></button>
       </ion-col>
+      
     </ion-row>
+    <button ion-button color="dark" small outline block (click)="goToLogin()"><b>Login (temp)</b></button>
+
   </ion-card>
 
 
@@ -144,6 +156,7 @@
     </ion-card-content>
   </ion-card>
 
+<!--
   <ion-card *ngIf="userConsultants && userConsultants.length > 0">
     <ion-item text-wrap>
       <ion-avatar item-right>
@@ -158,7 +171,7 @@
 
     </ion-card-content>
   </ion-card>
-
+-->
   <ion-card *ngIf="!userConsultants || userConsultants.length === 0">
     <ion-item text-wrap>
       <ion-avatar item-right>

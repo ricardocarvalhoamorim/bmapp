@@ -12,11 +12,11 @@ import * as _ from 'lodash';
 
 
 @Component({
-  selector: 'page-page1',
-  templateUrl: 'page1.html',
+  selector: 'page-home',
+  templateUrl: 'home.html',
   providers: [BmappService]
 })
-export class Page1 {
+export class HomePage {
 
   /**
    * The list of the group's consultants
@@ -62,11 +62,6 @@ export class Page1 {
    * Today's formatted date
    */
   today = new Date().toDateString();
-
-  /**
-   * Number of consultants with an active mission
-   */
-  runningMissions = 0;
 
   /**
    * The user's progress towards his objectives
@@ -128,7 +123,7 @@ export class Page1 {
 
   /**
      * Chart with a distribution of consultants across the clients portfolio
-     */
+     
   @ViewChild(ChartComponent) clientsComp;
   public clientsOptions = {
     type: 'doughnut',
@@ -149,7 +144,7 @@ export class Page1 {
       ]
     }
   };
-
+*/
   constructor(
     public navCtrl: NavController,
     public toastCtrl: ToastController,
@@ -166,11 +161,11 @@ export class Page1 {
             if (data) {
               this.user = data;
             } else {
-              
+
               //this.user = _.find(this.bms, { unitManager: true });
               this.user = this.bms[0];
               this.bmappService.setActiveUser(this.user);
-            }            
+            }
             this.loadAssets();
           });
         },
@@ -216,7 +211,7 @@ export class Page1 {
         this.missions = [];
         for (let consultant of this.consultants)
           this.missions = this.missions.concat(consultant.missions);
-        
+
       },
       err => {
         this.consultants = [];
@@ -240,7 +235,7 @@ export class Page1 {
    */
   ionViewDidEnter() {
 
-   
+
   }
 
   /**
@@ -278,6 +273,7 @@ export class Page1 {
 
 
     //handle consultants distribution chart
+    /*
     var groupedClients = _.map(this.missions, function (mission) {
       return mission.clientName;
     });
@@ -290,6 +286,7 @@ export class Page1 {
         .value();
 
         console.log(this.clientsOptions.data.datasets[0]);
+        */
   }
 
 
@@ -309,6 +306,9 @@ export class Page1 {
     this.navCtrl.setRoot(ClientsPage);
   }
 
+  /**
+   * Opens up a url with a relaxing video
+   */
   takeABreak() {
     window.open(`https://www.youtube.com/watch?v=DJUIgV7t8C0`, '_system');
   }
@@ -319,5 +319,9 @@ export class Page1 {
       duration: 3000
     });
     toast.present();
+  }
+
+  goToLogin() {
+    //this.navCtrl.push(IntroSlidesPage);
   }
 }

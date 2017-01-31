@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { Page1 } from '../pages/page1/page1';
+import { HomePage } from '../pages/home/home';
 import { NewClientPage } from '../pages/new-client/new-client';
 import { ConsultantsPage } from '../pages/consultants/consultants';
 import { ClientsPage } from '../pages/clients/clients';
@@ -19,7 +19,7 @@ import { ChartModule } from 'ng2-chartjs2';
 @NgModule({
   declarations: [
     MyApp,
-    Page1,
+    HomePage,
     NewClientPage,
     NewMissionPage,
     ConsultantsPage,
@@ -28,7 +28,7 @@ import { ChartModule } from 'ng2-chartjs2';
     SettingsPage,
     ConsultantHomePage,
     ConsultantSummaryPage,
-    ConsultantMissionsPage
+    ConsultantMissionsPage,
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -37,7 +37,7 @@ import { ChartModule } from 'ng2-chartjs2';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    Page1,
+    HomePage,
     NewClientPage,
     NewMissionPage,
     ConsultantsPage,

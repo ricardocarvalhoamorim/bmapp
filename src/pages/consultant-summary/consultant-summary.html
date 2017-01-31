@@ -93,89 +93,11 @@
     </ion-item>
 
 
-    <ion-item text-wrap *ngIf="!isReadOnly">
+    <ion-item text-wrap *ngIf="!isReadOnly && consultant.id">
       <button ion-button icon-left full color="primary" padding (click)="showDeletePrompt()">
       <ion-icon name="ios-trash-outline"></ion-icon>Delete this record
       </button>
     </ion-item>
-
-
-    <!--
-    <ion-item *ngIf="!isReadOnly">
-      <ion-label>Client</ion-label>
-      <ion-select [(ngModel)]="pickedClient">
-        <ion-option *ngFor="let client of clients" [value]="client.id">{{client.name}}</ion-option>
-        <ion-option [value]="-1">No client</ion-option>
-      </ion-select>
-    </ion-item>
-
-    
-
-    <ion-item text-wrap *ngIf="isReadOnly">
-      <p>This consultant is currently assigned to
-        <ion-badge item-right>{{consultant.client}}</ion-badge>
-      </p>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="ios-build-outline" item-left></ion-icon>
-      <ion-label>Role</ion-label>
-      <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="consultant.skills" ngControl="skills" clearInput=true></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="ios-calendar-outline" item-left></ion-icon>
-      <ion-label>Starting date</ion-label>
-      <ion-datetime disabled="{{isReadOnly}}" displayFormat="MMM DD, YYYY" pickerFormat="MMM DD, YYYY" [(ngModel)]="consultant.starting_date"
-        ngControl="starting_date"></ion-datetime>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="ios-calendar-outline" item-left></ion-icon>
-      <ion-label>Ending date</ion-label>
-      <ion-datetime disabled="{{isReadOnly}}" max="2020-12-31" displayFormat="MMM DD, YYYY" pickerFormat="MMM DD, YYYY" [(ngModel)]="consultant.ending_date"
-        ngControl="ending_date"></ion-datetime>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="ios-cash-outline" item-left></ion-icon>
-      <ion-label>Selling price</ion-label>
-      <ion-input disabled="{{isReadOnly}}" (input)='onCostsChanged($event)' type="number" [(ngModel)]="consultant.selling_price"
-        ngControl="selling_price"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="ios-pricetag-outline" item-left></ion-icon>
-      <ion-label>Daily cost</ion-label>
-      <ion-input disabled="{{isReadOnly}}" (input)='onCostsChanged($event)' type="number" [(ngModel)]="consultant.package" ngControl="package"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="logo-usd" item-left></ion-icon>
-      <ion-label>Profit</ion-label>
-      <ion-input disabled="true" type="text" [(ngModel)]="consultant.profit" ngControl="profit"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="ios-globe-outline" item-left></ion-icon>
-      <ion-label>Country</ion-label>
-      <ion-input disabled="{{isReadOnly}}" type="text" [(ngModel)]="consultant.country" ngControl="country" clearInput=true></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="ios-home-outline" item-left></ion-icon>
-      <ion-label>Internal</ion-label>
-      <ion-toggle disabled="{{isReadOnly}}" checked="false" [(ngModel)]="consultant.internal" ngControl="internalr"></ion-toggle>
-    </ion-item>
-
-
-    <ion-item-divider>
-      <h2><b>Delete record</b></h2>
-    </ion-item-divider>
-
-  
-
-    -->
   </ion-list>
 
 
