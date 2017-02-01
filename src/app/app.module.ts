@@ -11,6 +11,7 @@ import { ConsultantSummaryPage } from '../pages/consultant-summary/consultant-su
 import { ConsultantMissionsPage } from '../pages/consultant-missions/consultant-missions'
 import { MissionsPage } from '../pages/missions/missions'
 import { NewMissionPage } from '../pages/new-mission/new-mission'
+import { LoginPage } from '../pages/login/login'
 
 import { Storage } from '@ionic/storage';
 import { ChartModule } from 'ng2-chartjs2';
@@ -29,6 +30,7 @@ import { ChartModule } from 'ng2-chartjs2';
     ConsultantHomePage,
     ConsultantSummaryPage,
     ConsultantMissionsPage,
+    LoginPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -46,7 +48,8 @@ import { ChartModule } from 'ng2-chartjs2';
     SettingsPage,
     ConsultantHomePage,
     ConsultantSummaryPage,
-    ConsultantMissionsPage
+    ConsultantMissionsPage,
+    LoginPage
   ],
   providers: [
     Storage

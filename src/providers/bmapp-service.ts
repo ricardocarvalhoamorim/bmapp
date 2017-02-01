@@ -27,6 +27,11 @@ export class BmappService {
     this.storage = storage;
   }
 
+  authenticate(authentication) {
+     return this.http
+      .get(this.baseUri + '/businessManagers?sort=name', this.headers)
+      .map(res => res.json());
+  }
   /**
    * Fetches the consultants list from the TRM backend
    */
@@ -63,7 +68,7 @@ export class BmappService {
       .map(res => res.json());
   }
 
- 
+
   /**
    * Fetches the missions from the TRM backend
    */
@@ -106,7 +111,7 @@ export class BmappService {
   /**
    * Creates or updates a mission
    */
-  saveMission(mission) {    
+  saveMission(mission) {
     if (mission.id) {
       return this.http
         .put(this.baseUri + "/missions/" + mission.id, mission)

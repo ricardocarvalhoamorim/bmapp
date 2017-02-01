@@ -1,0 +1,44 @@
+<ion-content class="login-content" padding>
+  <ion-row class="logo-row">
+    <ion-col width-80>
+      <img src="assets/img/logo_red.png" />
+    </ion-col>
+  </ion-row>
+  <div>
+
+    <ion-card>
+      <ion-card-header>
+        Your credentials
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-item>
+            <ion-label floating>Email</ion-label>
+            <ion-input type="text" name="user" [(ngModel)]="authentication.user" required></ion-input>
+          </ion-item>
+        </ion-row>
+        <ion-row>
+          <ion-item>
+            <ion-label floating>Password</ion-label>
+            <ion-input type="password" name="password" [(ngModel)]="authentication.password" required></ion-input>
+          </ion-item>
+        </ion-row>
+
+      </ion-card-content>
+    </ion-card>
+
+    <ion-row>
+      <ion-col>
+        <button ion-button outline full color="light" (click)="authenticate()">Login</button>
+        <!-- <button ion-button class="register-btn" block clear (click)="createAccount()">Create New Account</button> -->
+      </ion-col>
+    </ion-row>
+
+  
+
+  </div>
+</ion-content>
+
+<ion-footer padding>
+    <p style="color: lightgray">© 2017 ADNEOM</p>
+</ion-footer>

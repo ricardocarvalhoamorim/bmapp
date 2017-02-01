@@ -1,36 +1,45 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
+import { Storage } from '@ionic/storage';
 
 import { HomePage } from '../pages/home/home';
 import { ConsultantsPage } from '../pages/consultants/consultants';
 import { MissionsPage } from '../pages/missions/missions';
 import { ClientsPage } from '../pages/clients/clients';
 import { SettingsPage } from '../pages/settings/settings';
+import { LoginPage } from '../pages/login/login';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-@ViewChild(Nav) nav: Nav;
+  @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any;
   today = new Date().toDateString();
   pages: Array<{ title: string, component: any }>;
   consultants: any[];
 
   constructor(
-    public platform: Platform) {
+    public platform: Platform,
+    public storage: Storage
+  ) {
     this.initializeApp();
   }
 
   initializeApp() {
 
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
 
-      // used for an example of ngFor and navigation
+      this.storage.get('active_user').then((val) => {
+        if (!val) {
+          this.rootPage = LoginPage;
+        } else {
+          this.rootPage = HomePage;
+        }
+      });
+
       this.pages = [
         { title: 'Home', component: HomePage },
         { title: 'Consultants', component: ConsultantsPage },
