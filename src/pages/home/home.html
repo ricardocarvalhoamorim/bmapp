@@ -24,7 +24,7 @@
           </ion-col>
 
           <ion-col width-90>
-            <b color="primary" (click)="switchToClientsList()">{{clients.length}} clients in your business unit</b>
+            <b ion-text color="primary" (click)="switchToClientsList()">{{clients.length}} clients in your business unit</b>
           </ion-col>
         </ion-row>
         <ion-row text-wrap *ngIf="userConsultants && userConsultants.length > 0">
@@ -32,7 +32,7 @@
             <ion-icon name="ios-person-outline"></ion-icon>
           </ion-col>
           <ion-col width-90>
-            <b color="primary" (click)="switchToConsultantsList()">{{userConsultants.length}} consultants under your supervision</b>
+            <b ion-text color="primary" (click)="switchToConsultantsList()">{{userConsultants.length}} consultants under your supervision</b>
           </ion-col>
         </ion-row>
 
@@ -41,7 +41,7 @@
             <ion-icon name="ios-speedometer-outline"></ion-icon>
           </ion-col>
           <ion-col width-90>
-            <b color="primary" (click)="switchToMissionsList()">{{missions.length}} recorded missions</b>
+            <b ion-text color="primary" (click)="switchToMissionsList()">{{missions.length}} recorded missions</b>
           </ion-col>
         </ion-row>
 
@@ -51,7 +51,7 @@
           </ion-col>
 
           <ion-col width-90>
-            <b color="primary" (click)="switchToConsultantsList()">... {{consultantsOnBench}} waiting for a mission</b>
+            <b ion-text color="primary" (click)="switchToConsultantsList()">... {{consultantsOnBench}} waiting for a mission</b>
           </ion-col>
         </ion-row>
 
@@ -133,7 +133,7 @@
       <ion-avatar item-right>
         <ion-icon name="analytics"> </ion-icon>
       </ion-avatar>
-      <h2>Your consultants</h2>
+      <h2 ion-text>Your consultants</h2>
       <p>Your consultants' distribution based on their missions' status</p>
     </ion-item>
     <ion-card-content>

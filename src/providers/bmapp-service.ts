@@ -12,8 +12,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class BmappService {
 
-  //baseUri = "http://13.74.165.237:8080/TRM-1.1";
-  baseUri = "http://192.168.1.54:8080";
+  baseUri = "http://13.74.165.237:8080/TRM-1.2";
+  //baseUri = "http://192.168.1.54:8080";
   public storage: Storage;
   consultants: any[];
   businessManagers: any[];
@@ -23,8 +23,9 @@ export class BmappService {
   constructor(
     public http: Http,
     storage: Storage) {
-    this.headers = new Headers();
     this.storage = storage;
+
+    this.headers = new Headers();
   }
 
   clear() {
@@ -32,8 +33,11 @@ export class BmappService {
   }
 
   authenticate(authentication) {
-     return this.http
-      .get(this.baseUri + '/businessManagers?sort=name', this.headers)
+    
+    this.headers.append("Authorization", "Basic " + btoa(authentication.user + ":" + authentication.password));
+    this.headers.append("Content-Type", "application/json");
+    return this.http
+      .get(this.baseUri + '/businessManagers', this.headers)
       .map(res => res.json());
   }
   /**
@@ -98,12 +102,6 @@ export class BmappService {
    * Saves a consultant record either updating it or creating a new one
    */
   saveConsultant(consultant) {
-
-    //consultant.businessManger = "businessManagers/" + consultant.businessManagerId;
-
-    console.log("businessManagers/" + consultant.businessManagerId);
-    console.log(consultant);
-
     if (consultant.id) {
       return this.http
         .put(this.baseUri + "/consultants/" + consultant.id, consultant)
@@ -136,7 +134,7 @@ export class BmappService {
   deleteConsultant(consultant) {
     return this.http
       .delete(this.baseUri + "/consultants/" + consultant.id);
-      //.map(res => res.json());
+    //.map(res => res.json());
   }
 
   setActiveUser(user) {

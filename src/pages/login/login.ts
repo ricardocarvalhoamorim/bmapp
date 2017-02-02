@@ -17,8 +17,8 @@ import { BmappService } from '../../providers/bmapp-service'
 export class LoginPage {
 
   authentication: any = {
-    user: "",
-    password: ""
+    user: "tdumont@adneom.com",
+    password: "adneom"
   };
   constructor(
     public navCtrl: NavController,
@@ -69,6 +69,12 @@ export class LoginPage {
       },
       err => {
         loader.dismiss();
+        let toast = this.toastCtrl.create({
+          message: 'Could\'nt validate the provided credentials. Please try again later.',
+          duration: 5000
+        });
+
+        toast.present();
         console.log(err);
       }
     );
