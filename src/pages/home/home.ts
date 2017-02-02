@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ToastController, Events, Platform } from 'ionic-angular';
+import { NavController, ToastController, LoadingController, Events, Platform } from 'ionic-angular';
 import { ConsultantsPage } from '../consultants/consultants';
 import { ClientsPage } from '../clients/clients';
 import { NewClientPage } from '../new-client/new-client';
@@ -73,6 +73,9 @@ export class HomePage {
    */
   bUnitMissionCount = 0;
 
+  loadingPopup = this.loadingCtrl.create({
+    content: 'Loading data...'
+  });
   /**
    * Chart with a comparison between business managers
    */
@@ -147,12 +150,17 @@ export class HomePage {
 */
   constructor(
     public navCtrl: NavController,
+    public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public events: Events,
     public platform: Platform,
     public bmappService: BmappService) {
 
     this.platform.ready().then(() => {
+
+
+      this.loadingPopup.present();
+
       this.bmappService.getBusinessManagers().subscribe(
         data => {
           this.bms = data._embedded.businessManagers;
@@ -211,7 +219,6 @@ export class HomePage {
         this.missions = [];
         for (let consultant of this.consultants)
           this.missions = this.missions.concat(consultant.missions);
-
       },
       err => {
         this.consultants = [];
@@ -287,6 +294,7 @@ export class HomePage {
 
         console.log(this.clientsOptions.data.datasets[0]);
         */
+    this.loadingPopup.dismiss();
   }
 
 
