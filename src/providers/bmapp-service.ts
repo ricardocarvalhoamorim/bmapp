@@ -27,6 +27,10 @@ export class BmappService {
     this.storage = storage;
   }
 
+  clear() {
+    this.storage.clear();
+  }
+
   authenticate(authentication) {
      return this.http
       .get(this.baseUri + '/businessManagers?sort=name', this.headers)

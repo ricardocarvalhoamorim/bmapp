@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController, AlertController } from 'ionic-angular';
-import { BmappService } from '../../providers/bmapp-service'
+import { BmappService } from '../../providers/bmapp-service';
+import { LoginPage } from '../../pages/login/login'
 import * as _ from 'lodash';
 
 /*
@@ -16,8 +17,6 @@ import * as _ from 'lodash';
 })
 export class SettingsPage {
 
-  public storage: Storage;
-
   /**
    * Business managers list
    */
@@ -31,7 +30,7 @@ export class SettingsPage {
     email: '',
     telephone: '',
     target: 0,
-    isUnitManager: false,
+    unitManager: false,
     active: true
   };
 
@@ -110,20 +109,27 @@ export class SettingsPage {
     alert.present();
   }
 
-  /**
-   * Clears the fields to create a new user
-   */
-  newUser() {
-    this.user = {
-      id: new Date().getUTCMilliseconds(),
-      name: '',
-      initials: '',
-      email: '',
-      telephone: '',
-      target: 0,
-      isUnitManager: false,
-      active: true
-    };
+  logout() {
+
+    let alert = this.alertCtrl.create();
+    alert.setTitle('Are you sure you want to logout from the application?');
+    alert.addButton({
+      text: 'Cancel',
+      handler: data => {
+        console.log('Cancel clicked');
+      }
+    });
+    alert.addButton({
+      text: 'Yes',
+      handler: data => {
+        console.log('Logout clicked');
+        this.bmappService.clear();
+        this.navCtrl.setRoot(LoginPage, {}, {animate: true, direction: 'forward'});
+      }
+    });
+    alert.present();
+
+
   }
 
   /**
@@ -131,9 +137,5 @@ export class SettingsPage {
    */
   report() {
     window.open(`mailto:rcamorim@adneom.com?subject=BMApp feedback&body=Hi Ricardo, Here\'s my feedback on the app`, '_system');
-  }
-
-  saveSettings() {
-    this.presentToast("TODO");
   }
 }

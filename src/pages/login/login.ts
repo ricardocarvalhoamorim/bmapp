@@ -49,8 +49,23 @@ export class LoginPage {
     this.bmappService.authenticate(this.authentication).subscribe(
       data => {
         loader.dismiss();
-        this.bmappService.setActiveUser(data._embedded.businessManagers[0]);
-        this.navCtrl.setRoot(HomePage);
+        //For now, we'll just check if it is a registered user
+        //until we have a functionall authentication
+        for (let bm of data._embedded.businessManagers) {
+          if (bm.email === this.authentication.user) {
+            this.bmappService.setActiveUser(bm);
+            this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' });
+            return;
+          }
+        }
+
+        let toast = this.toastCtrl.create({
+          message: 'Your email was not recognized by our servers. Please make sure you have typed it correctly and try again',
+          duration: 5000
+        });
+
+        toast.present();
+
       },
       err => {
         loader.dismiss();
