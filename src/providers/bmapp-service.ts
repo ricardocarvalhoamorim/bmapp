@@ -13,7 +13,7 @@ import 'rxjs/add/operator/map';
 export class BmappService {
 
   //baseUri = "http://13.74.165.237:8080/TRM-1.1";
-  baseUri = "http://192.168.1.79:8080";
+  baseUri = "http://192.168.1.54:8080";
   public storage: Storage;
   consultants: any[];
   businessManagers: any[];
