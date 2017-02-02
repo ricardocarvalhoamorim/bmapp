@@ -12,8 +12,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class BmappService {
 
-  baseUri = "http://13.74.165.237:8080/TRM-1.1";
-  //baseUri = "http://192.168.1.26:8080";
+  //baseUri = "http://13.74.165.237:8080/TRM-1.1";
+  baseUri = "http://192.168.1.79:8080";
   public storage: Storage;
   consultants: any[];
   businessManagers: any[];
@@ -101,6 +101,9 @@ export class BmappService {
 
     //consultant.businessManger = "businessManagers/" + consultant.businessManagerId;
 
+    console.log("businessManagers/" + consultant.businessManagerId);
+    console.log(consultant);
+
     if (consultant.id) {
       return this.http
         .put(this.baseUri + "/consultants/" + consultant.id, consultant)
@@ -131,11 +134,9 @@ export class BmappService {
    * Attempts to delete a consultant record
    */
   deleteConsultant(consultant) {
-    console.log(consultant);
-
     return this.http
-      .delete(this.baseUri + "/consultants/" + consultant.id)
-      .map(res => res.json());
+      .delete(this.baseUri + "/consultants/" + consultant.id);
+      //.map(res => res.json());
   }
 
   setActiveUser(user) {

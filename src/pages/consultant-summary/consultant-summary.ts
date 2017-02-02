@@ -104,8 +104,9 @@ export class ConsultantSummaryPage {
 
             this.bmappService.deleteConsultant(this.consultant).subscribe(
               data => {
-                this.presentToast("Unable to delete this record");
-                this.navCtrl.setRoot(ConsultantsPage);
+                this.presentToast("Deleted successfully");
+                //this.navCtrl.setRoot(ConsultantsPage);
+                this.navCtrl.pop();
               },
               err => {
                 this.presentToast("Unable to delete this record");
