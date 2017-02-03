@@ -17,7 +17,7 @@ import { BmappService } from '../../providers/bmapp-service'
 export class LoginPage {
 
   authentication: any = {
-    user: "tdumont@adneom.com",
+    user: "",
     password: "adneom"
   };
   constructor(
@@ -70,7 +70,7 @@ export class LoginPage {
       err => {
         loader.dismiss();
         let toast = this.toastCtrl.create({
-          message: 'Could\'nt validate the provided credentials. Please try again later.',
+          message: 'Could\'nt validate the provided credentials. Please try again later.' + err,
           duration: 5000
         });
 
