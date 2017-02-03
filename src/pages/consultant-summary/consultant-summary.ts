@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController, NavParams, AlertController, Events } from 'ionic-angular';
 import { BmappService } from '../../providers/bmapp-service';
-import { ConsultantsPage } from '../consultants/consultants'
 
 /*
   Generated class for the NewConsultant page.
@@ -104,9 +103,7 @@ export class ConsultantSummaryPage {
 
             this.bmappService.deleteConsultant(this.consultant).subscribe(
               data => {
-                this.presentToast("Deleted successfully");
-                this.navCtrl.setRoot(ConsultantsPage, {}, { animate: true, direction: 'down' });
-                //this.navCtrl.pop();
+                this.events.publish("consultant:deleted");
               },
               err => {
                 this.presentToast("Unable to delete this record");

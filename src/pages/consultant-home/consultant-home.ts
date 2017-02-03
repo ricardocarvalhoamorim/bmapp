@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, NavParams } from 'ionic-angular';
+import { NavController, ToastController, NavParams, Events } from 'ionic-angular';
+
 
 import { BmappService } from '../../providers/bmapp-service'
 import { ConsultantSummaryPage } from '../consultant-summary/consultant-summary'
 import { ConsultantMissionsPage } from '../consultant-missions/consultant-missions'
-
+import { ConsultantsPage } from '../consultants/consultants'
 /*
   Generated class for the ConsultantHome page.
 
@@ -25,8 +26,9 @@ export class ConsultantHomePage {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
     private toastCtrl: ToastController,
+    public navParams: NavParams,
+    public events: Events,
     private bmappService: BmappService) {
     if (!navParams.get('consultant')) {
       console.log("Missing consultant");
@@ -35,6 +37,12 @@ export class ConsultantHomePage {
 
     this.consultant = navParams.get('consultant');
     this.user = navParams.get('user');
+
+    events.subscribe('consultant:deleted', () => {
+      this.navCtrl.setRoot(ConsultantsPage, { animate: true, direction: 'back' });
+      this.presentToast("Deleted successfully");      
+      //this.navCtrl.setRoot(ConsultantsPage, {}, { animate: true, direction: 'down' });
+    });
   }
 
   /**
