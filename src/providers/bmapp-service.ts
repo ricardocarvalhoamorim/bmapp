@@ -20,6 +20,8 @@ export class BmappService {
   clients: any[];
   headers;
 
+
+
   constructor(
     public http: Http,
     storage: Storage) {
